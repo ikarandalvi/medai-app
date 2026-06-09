@@ -1,0 +1,6 @@
+{
+  "name": "medai-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MedAI conversational MVP. Static chat page plus one serverless function."
+}

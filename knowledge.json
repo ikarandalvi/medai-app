@@ -1,0 +1,60 @@
+{
+  "fever": {
+    "summary": "A fever is the body's response to infection. Most fevers in well people settle with rest and fluids. The cause and any warning signs matter more than the fever itself.",
+    "home_care": ["Give small sips of fluids often: water, ORS, soup, or milk for infants.", "Keep the person lightly dressed and resting in a cool room.", "Check the temperature every few hours."],
+    "see_doctor": ["Fever above 102F (39C) that does not come down", "Fever lasting more than 2 days", "The person seems worse, not better"],
+    "age_notes": "Under 3 months with any fever: see a doctor the same day. Under 5: apply the WHO IMCI danger-sign check closely.",
+    "never": "Do not name or suggest a fever medicine.",
+    "source": "WHO fact sheet, NHP Health A-Z, WHO IMCI"
+  },
+  "diarrhea": {
+    "summary": "For diarrhea, the main risk is dehydration, not the loose stool itself. Replace lost fluid and keep feeding.",
+    "home_care": ["Give ORS after every loose stool.", "Keep giving normal food and fluids. Do not stop feeding.", "For young children, a health worker commonly advises zinc for 14 days. This is a health-worker decision."],
+    "see_doctor": ["Blood in the stool", "No urine for 8 hours or more", "Constant vomiting", "Lasts more than 2 days or person is weaker"],
+    "age_notes": "Infants dehydrate fast. Lower the threshold to seek care.",
+    "source": "WHO fact sheet, NHP Health A-Z"
+  },
+  "cold_and_cough": {
+    "summary": "A common cold or cough is usually a mild viral infection that clears on its own.",
+    "home_care": ["Rest and drink warm fluids.", "Steam can ease a blocked nose.", "Honey can soothe a cough in anyone over 1 year. Never give honey to a baby under 1 year."],
+    "see_doctor": ["Breathing becomes hard or fast", "Fever lasts more than 3 days", "Worse after a week"],
+    "source": "WHO fact sheet, NHP Health A-Z"
+  },
+  "dengue": {
+    "summary": "Dengue is a mosquito-borne viral fever. No medicine, food, or leaf cures it. Care is rest, fluids, and watching for warning signs. A doctor confirms it with a blood test.",
+    "home_care": ["Rest and plenty of fluids.", "A doctor monitors platelet count and hydration."],
+    "see_doctor": ["Any fever in dengue season with body pain or rash, for testing", "Any warning sign, immediately"],
+    "misinformation_notes": "Papaya leaf juice, goat milk, and similar claims are not proven cures. State plainly that no home drink, leaf, or food cures dengue, then give verified guidance and the warning-sign check.",
+    "source": "NHP Health A-Z, NCDC, WHO 2009 dengue guidance"
+  },
+  "knee_and_joint_pain": {
+    "summary": "Most knee or joint pain without an injury is from strain or wear and eases with rest. MedAI cannot say the cause.",
+    "home_care": ["Rest the joint and avoid what makes it worse.", "A cold pack for about 15 minutes can ease swelling.", "Gentle movement once the sharp pain settles prevents stiffness."],
+    "see_doctor": ["Cannot put weight on it", "Badly swollen or out of shape", "Followed a fall or accident", "No better in a few days"],
+    "source": "NHP Health A-Z"
+  },
+  "headache": {
+    "summary": "Most headaches are mild and ease with rest, water, and a break from screens and bright light.",
+    "home_care": ["Rest in a quiet, dim room.", "Drink water."],
+    "red_flags": "Worst headache of one's life, sudden onset, or with weakness, confusion, stiff neck, or trouble speaking. These escalate.",
+    "source": "NHP Health A-Z"
+  },
+  "acidity_and_stomach_upset": {
+    "summary": "Mild acidity or indigestion usually settles with simple changes.",
+    "home_care": ["Smaller meals, less oily or very spicy food.", "Drink water, do not lie down right after eating."],
+    "see_doctor": ["Severe pain", "Black or bloody stools, or vomiting blood (escalate)", "Keeps coming back"],
+    "source": "NHP Health A-Z"
+  },
+  "body_ache_and_fatigue": {
+    "summary": "Body ache and tiredness often come with a viral illness.",
+    "home_care": ["Rest and plenty of fluids.", "Watch for fever, and in dengue season be alert for warning signs."],
+    "see_doctor": ["High fever", "Severe weakness", "Lasts more than a few days"],
+    "source": "WHO fact sheet, NHP Health A-Z"
+  },
+  "medicine_information": {
+    "policy": "MedAI is not a drug database. No doses, interactions, or contraindications, and no recommendations.",
+    "allowed_general_use": {"paracetamol": "Commonly used to reduce fever and mild pain.", "ors": "Replaces water and salts lost in diarrhea or vomiting."},
+    "always_add": "A doctor or pharmacist decides if it is right and how much, because it depends on age, weight, and health. Never give a dose. Prescription medicines: only a doctor decides.",
+    "source": "NHP Health A-Z, WHO"
+  }
+}
