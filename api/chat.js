@@ -9,6 +9,46 @@ const KNOWLEDGE = require('../knowledge.json');
 // Verify the current model string in your Anthropic console if this errors.
 const MODEL = 'claude-sonnet-4-6';
 
+function tryJson(s) {
+  try { return JSON.parse(s); } catch (e) { return null; }
+}
+
+// Turn the model's raw text into a safe reply object. The model is told to
+// return a single JSON object. If stray text surrounds it, extract the JSON by
+// taking the first "{" through the last "}". Only if that fails do we fall back
+// to the prose with any JSON-looking block stripped out, so the user never sees
+// a raw {"type":...} block.
+function extractReply(raw) {
+  const clean = (raw || '').replace(/```json/gi, '').replace(/```/g, '').trim();
+
+  let parsed = tryJson(clean);
+  if (!parsed) {
+    const first = clean.indexOf('{');
+    const last = clean.lastIndexOf('}');
+    if (first !== -1 && last !== -1 && last > first) {
+      parsed = tryJson(clean.slice(first, last + 1));
+    }
+  }
+
+  if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+    return {
+      type: typeof parsed.type === 'string' ? parsed.type : 'normal',
+      text: (typeof parsed.text === 'string' && parsed.text.trim()) ? parsed.text : 'Sorry, please say that again.',
+      source: typeof parsed.source === 'string' ? parsed.source : '',
+      agent: typeof parsed.agent === 'string' ? parsed.agent : ''
+    };
+  }
+
+  // Fallback: show only the prose, stripping any JSON-looking block (leading,
+  // trailing, or a truncated/unterminated one) so no raw object leaks out.
+  const stripped = clean
+    .replace(/\{[\s\S]*\}/g, '')   // complete { ... } block(s)
+    .replace(/\{[\s\S]*$/, '')     // unterminated trailing { ... fragment
+    .replace(/^[\s\S]*?\}/, '')    // orphan leading ... } fragment
+    .trim();
+  return { type: 'normal', text: stripped || 'Sorry, please say that again.', source: '', agent: 'unparsed' };
+}
+
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'Use POST' });

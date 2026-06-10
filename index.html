@@ -36,53 +36,48 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
-  body{
-    font-family:var(--sans);
-    color:var(--ink);
-    background:
-      radial-gradient(120% 80% at 12% 0%, #F4F3FB 0%, transparent 55%),
-      radial-gradient(120% 80% at 90% 100%, #FAFAFF 0%, transparent 55%),
-      var(--bg);
-    display:flex;align-items:center;justify-content:center;
-    min-height:100dvh;padding:0;
-    -webkit-font-smoothing:antialiased;line-height:1.6;
-  }
-  /* App shell */
-  .app{
-    width:100%;max-width:470px;height:100dvh;max-height:900px;
-    background:var(--bg);display:flex;flex-direction:column;
-    overflow:hidden;position:relative;
-  }
-  @media (min-width:520px){
-    .app{height:94dvh;border-radius:26px;box-shadow:var(--sh-lg);border:1px solid var(--line)}
-  }
-  /* Header */
-  .hdr{padding:14px 16px 12px;border-bottom:1px solid var(--line);background:var(--bg)}
-  .hdr-top{display:flex;align-items:center;gap:12px}
-  .logo{flex:none;display:block;height:30px;width:auto}
-  .brand{display:flex;flex-direction:column;line-height:1.05;flex:1;min-width:0}
-  .brand h1{font-family:var(--serif);font-weight:600;font-size:23px;letter-spacing:-.01em}
-  .brand h1 i{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .brand span{font-size:11.5px;color:var(--ink-soft);font-weight:500;margin-top:2px}
-  .hdr-tools{display:flex;align-items:center;gap:6px;margin-top:11px}
-  .toolbtn{
-    display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);
-    font-size:12px;font-weight:600;color:var(--ink-soft);
-    background:var(--surface);border:1px solid var(--line);border-radius:var(--r-pill);
-    padding:7px 11px;cursor:pointer;transition:background .15s,color .15s}
-  .toolbtn:hover{background:var(--surface-2)}
-  .toolbtn svg{width:14px;height:14px}
-  .toolbtn[aria-pressed="true"]{background:var(--grad);color:#fff;border-color:transparent;box-shadow:var(--sh-sm)}
-  .toolbtn.ghost{margin-left:auto;background:transparent;border-color:transparent}
-  .toolbtn.ghost:hover{background:var(--surface)}
-  /* Disclosure strip (persistent) */
-  .disclose{
-    display:flex;align-items:center;gap:8px;padding:8px 16px;
-    background:var(--surface);border-bottom:1px solid var(--line);
-    font-size:11.5px;color:var(--ink-soft);font-weight:500}
-  .disclose svg{width:14px;height:14px;flex:none;color:var(--violet)}
-  /* Chat log */
-  .log{flex:1;overflow-y:auto;padding:18px 14px 8px;display:flex;flex-direction:column;gap:14px;scroll-behavior:smooth}
+  body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;font-size:16px}
+  button{font-family:inherit}
+
+  /* ---------- Layout ---------- */
+  .layout{display:flex;height:100dvh;width:100%;overflow:hidden}
+
+  /* ---------- Sidebar ---------- */
+  .sidebar{width:280px;flex:none;background:var(--surface);border-right:1px solid var(--line);
+    display:flex;flex-direction:column;min-height:0}
+  .side-head{display:flex;align-items:center;gap:10px;padding:16px 16px 12px}
+  .side-head .logo{height:26px;width:auto;display:block;flex:none}
+  .side-head .wm{font-family:var(--serif);font-weight:600;font-size:20px;letter-spacing:-.01em}
+  .side-head .wm i{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .newchat{margin:2px 12px 8px;display:flex;align-items:center;justify-content:center;gap:8px;
+    font-weight:700;font-size:14px;color:#fff;background:var(--grad);border:none;border-radius:var(--r-pill);
+    padding:11px 14px;cursor:pointer;box-shadow:var(--sh-sm);transition:box-shadow .15s,transform .1s}
+  .newchat:hover{box-shadow:var(--sh-md)}
+  .newchat:active{transform:translateY(1px)}
+  .newchat svg{width:16px;height:16px}
+  .side-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-faint);font-weight:700;padding:10px 18px 4px}
+  .convo-list{flex:1;overflow-y:auto;min-height:0;padding:0 8px 16px;display:flex;flex-direction:column;gap:2px}
+  .convo-item{display:block;width:100%;text-align:left;font-size:13.5px;font-weight:500;color:var(--ink-soft);
+    background:transparent;border:none;border-radius:var(--r-sm);padding:9px 10px;cursor:pointer;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .convo-item:hover{background:var(--surface-2);color:var(--ink)}
+  .convo-item.active{background:var(--grad-soft);color:var(--ink);font-weight:600}
+  .convo-empty{font-size:13px;color:var(--ink-faint);padding:8px 10px}
+
+  .scrim{display:none}
+
+  /* ---------- Main ---------- */
+  .main{flex:1;min-width:0;display:flex;flex-direction:column;min-height:0;background:var(--bg)}
+  .topbar{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--line);min-height:56px}
+  .hamburger{display:none;flex:none;width:38px;height:38px;border-radius:10px;border:1px solid var(--line);
+    background:var(--bg);cursor:pointer;align-items:center;justify-content:center;color:var(--ink-soft)}
+  .hamburger:hover{background:var(--surface)}
+  .hamburger svg{width:20px;height:20px}
+  .top-title{font-weight:600;font-size:15px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+  /* ---------- Chat log ---------- */
+  .log{flex:1;overflow-y:auto;min-height:0;padding:22px 16px 12px;scroll-behavior:smooth}
+  .log-col{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
   .row{display:flex;gap:9px;align-items:flex-end;max-width:100%}
   .row.user{flex-direction:row-reverse}
   .row .av{flex:none;width:30px;height:30px;border-radius:9px;background:var(--grad);box-shadow:var(--sh-sm);
@@ -90,95 +85,107 @@
   .row .av svg{width:18px;height:13px;display:block}
   .stack{display:flex;flex-direction:column;gap:5px;max-width:82%}
   .row.user .stack{align-items:flex-end}
-  .bubble{
-    padding:11px 14px;border-radius:16px;font-size:14.5px;line-height:1.55;
-    background:var(--surface);border:1px solid var(--line);
-    border-bottom-left-radius:5px;color:var(--ink);
-    animation:rise .32s cubic-bezier(.2,.7,.3,1) both;
-  }
-  .row.user .bubble{
-    background:var(--grad);color:#fff;border-color:transparent;
+  .bubble{padding:11px 14px;border-radius:16px;font-size:14.5px;line-height:1.55;
+    background:var(--surface);border:1px solid var(--line);border-bottom-left-radius:5px;color:var(--ink);
+    animation:rise .3s cubic-bezier(.2,.7,.3,1) both}
+  .row.user .bubble{background:var(--grad);color:#fff;border-color:transparent;
     border-bottom-left-radius:16px;border-bottom-right-radius:5px}
   .bubble :lang(hi),.bubble :lang(ta),.bubble :lang(mr),.bubble :lang(bn){font-family:var(--indic)}
-  .bubble.q{font-weight:500}
   .bubble strong{font-weight:700}
-  /* Meta / process note (hidden unless "How it works" is on) */
-  .meta{font-size:10.5px;color:var(--ink-soft);padding:0 4px;display:none;flex-wrap:wrap;gap:6px;align-items:center}
-  .meta .tag{display:inline-flex;align-items:center;gap:4px;background:var(--surface-2);border:1px solid var(--line);
-    padding:2px 7px;border-radius:var(--r-pill);font-weight:600}
-  .meta .tag.agent{color:var(--indigo-deep)}
-  .meta .tag svg{width:10px;height:10px}
+
   /* Source chip */
   .src{display:inline-flex;align-items:center;gap:5px;background:var(--verified-tint);color:var(--verified);
-    border:1px solid var(--verified-line);
-    font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:var(--r-pill);width:fit-content;margin-top:2px}
+    border:1px solid var(--verified-line);font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:var(--r-pill);
+    width:fit-content;margin-top:2px}
   .src svg{width:12px;height:12px}
-  /* Escalation card (emergency color) */
-  .card-emerg{
-    background:var(--emergency-tint);border:1px solid var(--emergency-line);border-left:4px solid var(--emergency);
-    border-radius:var(--r-md);padding:13px 14px;animation:rise .32s cubic-bezier(.2,.7,.3,1) both}
+  /* Emergency card */
+  .card-emerg{background:var(--emergency-tint);border:1px solid var(--emergency-line);border-left:4px solid var(--emergency);
+    border-radius:var(--r-md);padding:13px 14px;animation:rise .3s cubic-bezier(.2,.7,.3,1) both}
   .card-emerg .head{display:flex;align-items:center;gap:8px;color:var(--emergency);font-weight:800;font-size:13px;
     text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
   .card-emerg .head svg{width:18px;height:18px}
   .card-emerg p{font-size:14px;line-height:1.55;color:var(--ink)}
   .call-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:11px;
-    background:var(--emergency);color:#fff;font-family:var(--sans);font-weight:800;font-size:15px;
-    text-decoration:none;padding:12px 18px;border-radius:12px;width:100%;transition:transform .1s,filter .15s}
+    background:var(--emergency);color:#fff;font-weight:800;font-size:15px;text-decoration:none;
+    padding:12px 18px;border-radius:12px;width:100%;transition:transform .1s,filter .15s}
   .call-btn:hover{filter:brightness(.96)}
   .call-btn:active{transform:scale(.985)}
   .call-btn svg{width:18px;height:18px}
   /* Misinformation verdict (three-way, semantic colors) */
-  .verdict{border-radius:var(--r-md);padding:12px 14px;border:1px solid;animation:rise .32s cubic-bezier(.2,.7,.3,1) both}
-  .verdict .v{display:flex;align-items:center;gap:6px;font-weight:800;font-size:12px;
-    text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
+  .verdict{border-radius:var(--r-md);padding:12px 14px;border:1px solid;animation:rise .3s cubic-bezier(.2,.7,.3,1) both}
+  .verdict .v{display:flex;align-items:center;gap:6px;font-weight:800;font-size:12px;text-transform:uppercase;
+    letter-spacing:.06em;margin-bottom:5px}
   .verdict .v svg{width:14px;height:14px}
   .verdict p{font-size:14px;line-height:1.55;color:var(--ink)}
   .v-true{background:var(--verified-tint);border-color:var(--verified-line)} .v-true .v{color:var(--verified)}
   .v-mis{background:var(--caution-tint);border-color:var(--caution-line)} .v-mis .v{color:var(--caution)}
   .v-false{background:var(--emergency-tint);border-color:var(--emergency-line)} .v-false .v{color:var(--emergency)}
-  /* Typing */
-  .typing{display:flex;gap:4px;padding:13px 15px;background:var(--surface);border:1px solid var(--line);
-    border-radius:16px;border-bottom-left-radius:5px;width:fit-content}
-  .typing span{width:7px;height:7px;border-radius:50%;background:var(--violet-light);animation:blink 1.2s infinite}
-  .typing span:nth-child(2){animation-delay:.18s}
-  .typing span:nth-child(3){animation-delay:.36s}
-  /* Composer */
-  .composer{padding:10px 12px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:var(--bg)}
+
+  /* Brand loader: voice-waveform bars animating in the brand gradient */
+  .loader{display:flex;align-items:flex-end;gap:3px;height:26px;padding:6px 4px}
+  .loader span{width:4px;height:30%;border-radius:var(--r-pill);background:var(--grad);animation:eq 1s ease-in-out infinite}
+  .loader span:nth-child(2){animation-delay:.12s}
+  .loader span:nth-child(3){animation-delay:.24s}
+  .loader span:nth-child(4){animation-delay:.36s}
+  .loader span:nth-child(5){animation-delay:.48s}
+  @keyframes eq{0%,100%{height:25%}50%{height:100%}}
+
+  /* ---------- Composer ---------- */
+  .composer{border-top:1px solid var(--line);padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:var(--bg)}
+  .composer-col{max-width:720px;margin:0 auto}
   .inbar{display:flex;align-items:flex-end;gap:8px;background:var(--surface);border:1.5px solid var(--line-strong);
-    border-radius:22px;padding:5px 5px 5px 14px;transition:border-color .15s,box-shadow .15s}
+    border-radius:24px;padding:5px 5px 5px 16px;transition:border-color .15s,box-shadow .15s}
   .inbar:focus-within{border-color:var(--violet);box-shadow:0 0 0 3px rgba(124,58,237,.15)}
   .inbar textarea{flex:1;border:none;background:transparent;font-family:var(--sans);font-size:15px;color:var(--ink);
-    resize:none;outline:none;line-height:1.4;max-height:96px;padding:7px 0}
+    resize:none;outline:none;line-height:1.4;max-height:120px;padding:8px 0}
   .inbar textarea::placeholder{color:var(--ink-faint)}
   .iconbtn{flex:none;width:38px;height:38px;border-radius:50%;border:none;cursor:pointer;
     display:inline-flex;align-items:center;justify-content:center;transition:filter .15s,transform .1s,background .15s}
   .iconbtn svg{width:19px;height:19px}
   .iconbtn.mic{background:var(--surface-2);color:var(--violet)}
-  .iconbtn.mic:hover{background:#E9E7F4}
+  .iconbtn.mic:hover{background:var(--line)}
+  .iconbtn.mic.on{background:var(--grad);color:#fff}
   .iconbtn.send{background:var(--grad);color:#fff;box-shadow:var(--sh-sm)}
   .iconbtn.send:hover{filter:brightness(1.05)}
   .iconbtn.send:active{transform:scale(.94)}
   .iconbtn:disabled{opacity:.4;cursor:not-allowed}
-  /* Toast */
-  .toast{position:absolute;left:50%;bottom:84px;transform:translateX(-50%) translateY(12px);
+  .composer .hint{max-width:720px;margin:7px auto 0;font-size:11px;color:var(--ink-faint);text-align:center}
+
+  /* ---------- Toast ---------- */
+  .toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(12px);
     background:var(--ink);color:#fff;font-size:12.5px;font-weight:600;padding:9px 14px;border-radius:10px;
-    opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;max-width:88%;text-align:center}
+    opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;max-width:88%;text-align:center;z-index:60}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
   /* Focus visibility: 3px violet ring */
   :focus-visible{outline:3px solid var(--violet);outline-offset:2px;border-radius:8px}
+
   @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-  @keyframes blink{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+
+  /* ---------- Responsive: sidebar becomes a drawer ---------- */
+  @media (max-width:860px){
+    .sidebar{position:fixed;top:0;left:0;height:100dvh;z-index:50;transform:translateX(-100%);
+      transition:transform .25s ease;box-shadow:var(--sh-lg)}
+    .sidebar.open{transform:translateX(0)}
+    .hamburger{display:inline-flex}
+    .scrim{display:block;position:fixed;inset:0;background:rgba(22,18,31,.42);opacity:0;pointer-events:none;
+      transition:opacity .25s;z-index:40}
+    .scrim.show{opacity:1;pointer-events:auto}
+  }
   @media (prefers-reduced-motion:reduce){
     *{animation:none!important;scroll-behavior:auto!important;transition:none!important}
+    .loader span{height:60%}
   }
-  .log::-webkit-scrollbar{width:7px}
-  .log::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px}
+  .log::-webkit-scrollbar,.convo-list::-webkit-scrollbar{width:8px}
+  .log::-webkit-scrollbar-thumb,.convo-list::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px}
 </style>
 </head>
 <body>
-<main class="app" aria-label="MedAI chat">
-  <header class="hdr">
-    <div class="hdr-top">
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar" aria-label="Conversations">
+    <div class="side-head">
       <svg class="logo" viewBox="84 164 348 188" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MedAI">
         <defs><linearGradient id="mg" x1="96" y1="176" x2="416" y2="336" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4F46E5"/><stop offset=".58" stop-color="#7C3AED"/><stop offset="1" stop-color="#9D4EDD"/></linearGradient></defs>
         <g fill="url(#mg)">
@@ -191,173 +198,292 @@
           <path d="M384 320V288C384 279.163 391.163 272 400 272C408.837 272 416 279.163 416 288V320C416 328.837 408.837 336 400 336C391.163 336 384 328.837 384 320Z"/>
         </g>
       </svg>
-      <div class="brand">
-        <h1>Med<i>AI</i></h1>
-        <span>Verified health guidance for every voice</span>
+      <span class="wm">Med<i>AI</i></span>
+    </div>
+    <button class="newchat" id="newChat" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+      New chat
+    </button>
+    <div class="side-lbl">Conversations</div>
+    <nav class="convo-list" id="convoList" aria-label="Saved conversations"></nav>
+  </aside>
+
+  <div class="scrim" id="scrim"></div>
+
+  <!-- MAIN CHAT -->
+  <main class="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburger" type="button" aria-label="Open conversations" aria-controls="sidebar" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <div class="top-title" id="topTitle">New chat</div>
+    </div>
+
+    <div class="log" id="log" role="log" aria-live="polite" aria-relevant="additions" aria-label="Conversation">
+      <div class="log-col" id="logCol"></div>
+    </div>
+
+    <div class="composer">
+      <div class="composer-col">
+        <div class="inbar">
+          <label for="input" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Type your message</label>
+          <textarea id="input" rows="1" placeholder="Tell me what is happening..." autocomplete="off"></textarea>
+          <button class="iconbtn mic" id="mic" type="button" aria-label="Voice input" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+          </button>
+          <button class="iconbtn send" id="send" type="button" aria-label="Send message" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
       </div>
     </div>
-    <div class="hdr-tools">
-      <button class="toolbtn" id="procToggle" aria-pressed="false" aria-label="Toggle process explanations">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 5v2M12 17v2M5 12h2M17 12h2"/></svg>
-        How it works
-      </button>
-      <button class="toolbtn ghost" id="restart" aria-label="Restart conversation">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
-        Restart
-      </button>
-    </div>
-  </header>
-
-  <div class="disclose" role="note">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
-    You are talking to AI, not a doctor. Information from verified sources only.
-  </div>
-
-  <div class="log" id="log" role="log" aria-live="polite" aria-label="Conversation"></div>
-
-  <div class="composer">
-    <div class="inbar">
-      <label for="input" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Type your message</label>
-      <textarea id="input" rows="1" placeholder="Tell me what is happening..." autocomplete="off"></textarea>
-      <button class="iconbtn mic" id="mic" aria-label="Voice input">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
-      </button>
-      <button class="iconbtn send" id="send" aria-label="Send message" disabled>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </button>
-    </div>
-  </div>
-  <div class="toast" id="toast" role="status"></div>
-</main>
+  </main>
+</div>
+<div class="toast" id="toast" role="status"></div>
 
 <script>
 (function(){
   "use strict";
   var log=document.getElementById('log'),
+      logCol=document.getElementById('logCol'),
       input=document.getElementById('input'),
       send=document.getElementById('send'),
       mic=document.getElementById('mic'),
-      procToggle=document.getElementById('procToggle'),
-      restart=document.getElementById('restart'),
+      newChatBtn=document.getElementById('newChat'),
+      convoList=document.getElementById('convoList'),
+      hamburger=document.getElementById('hamburger'),
+      sidebar=document.getElementById('sidebar'),
+      scrim=document.getElementById('scrim'),
+      topTitle=document.getElementById('topTitle'),
       toast=document.getElementById('toast');
-  var processOn=false, state={history:[]};
+
+  var LS_KEY='medai.conversations.v1';
+  var current=null;
 
   var ic={
     wave:'<svg viewBox="0 0 24 18" fill="#fff" aria-hidden="true"><rect x="1" y="6" width="2.4" height="6" rx="1.2"/><rect x="5.6" y="3" width="2.4" height="12" rx="1.2"/><rect x="10.2" y="1" width="2.4" height="16" rx="1.2"/><rect x="14.8" y="4" width="2.4" height="10" rx="1.2"/><rect x="19.4" y="6.5" width="2.4" height="5" rx="1.2"/></svg>',
     alert:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>',
     phone:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.8 2z"/></svg>',
-    check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
-    cpu:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 9h6v6H9zM9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg>'
+    check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'
   };
 
+  // ---------- helpers ----------
   function scrollDown(){log.scrollTop=log.scrollHeight;}
-  function showToast(m){toast.textContent=m;toast.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(function(){toast.classList.remove('show');},2400);}
+  function showToast(m){toast.textContent=m;toast.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(function(){toast.classList.remove('show');},2600);}
   function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
   function fmt(s){return esc(s).replace(/\n/g,'<br>');}
+  function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,8);}
+  function makeTitle(t){t=(t||'').replace(/\s+/g,' ').trim();if(!t)return 'New conversation';return t.length>42?t.slice(0,42).trim()+'…':t;}
 
+  // ---------- storage ----------
+  function loadAll(){try{return JSON.parse(localStorage.getItem(LS_KEY))||[];}catch(e){return [];}}
+  function saveAll(list){try{localStorage.setItem(LS_KEY,JSON.stringify(list));}catch(e){}}
+  function persist(convo){
+    var list=loadAll(),idx=-1;
+    for(var i=0;i<list.length;i++){if(list[i].id===convo.id){idx=i;break;}}
+    if(idx>=0)list[idx]=convo;else list.push(convo);
+    saveAll(list);renderSidebar();
+  }
+
+  // ---------- rendering ----------
   function avatar(){var av=document.createElement('div');av.className='av';av.setAttribute('aria-hidden','true');av.innerHTML=ic.wave;return av;}
-
   function addUser(text){
     var row=document.createElement('div');row.className='row user';
     var st=document.createElement('div');st.className='stack';
     var b=document.createElement('div');b.className='bubble';b.textContent=text;
-    st.appendChild(b);row.appendChild(st);log.appendChild(row);scrollDown();
+    st.appendChild(b);row.appendChild(st);logCol.appendChild(row);scrollDown();
   }
   function addBot(opts){
     var row=document.createElement('div');row.className='row bot';
     row.appendChild(avatar());
     var st=document.createElement('div');st.className='stack';
     if(opts.node){st.appendChild(opts.node);}
-    else{var b=document.createElement('div');b.className='bubble'+(opts.isQuestion?' q':'');b.innerHTML=opts.html;st.appendChild(b);}
+    else{var b=document.createElement('div');b.className='bubble';b.innerHTML=opts.html;st.appendChild(b);}
     if(opts.source){var s=document.createElement('div');s.className='src';s.innerHTML=ic.check+'<span>Source: '+esc(opts.source)+'</span>';st.appendChild(s);}
-    if(opts.meta&&opts.meta.agent){
-      var m=document.createElement('div');m.className='meta';m.style.display=processOn?'flex':'none';
-      m.innerHTML='<span class="tag agent">'+ic.cpu+esc(opts.meta.agent)+'</span>';
-      st.appendChild(m);
-    }
-    row.appendChild(st);log.appendChild(row);scrollDown();
+    row.appendChild(st);logCol.appendChild(row);scrollDown();
   }
   function addEmergency(body,agent){
     var c=document.createElement('div');c.className='card-emerg';
     c.innerHTML='<div class="head">'+ic.alert+'This may be an emergency</div><p>'+fmt(body)+'</p>'+
       '<a class="call-btn" href="tel:108">'+ic.phone+'Call 108 now</a>';
-    addBot({node:c,meta:{agent:agent||'Emergency Escalation'}});
+    addBot({node:c});
   }
-  function addVerdict(text,source,agent){
-    var cls='v-mis',label='Misleading',body=text||'';
-    var m=body.match(/^\s*(true|misleading|false)\b[\s.:,—-]*/i);
-    if(m){
-      var w=m[1].toLowerCase();
+  function addVerdict(text,source){
+    var cls='v-mis',label='Misleading',bodyTxt=text||'';
+    var m=bodyTxt.match(/^\s*(true|misleading|false)\b[\s.:,—-]*/i);
+    if(m){var w=m[1].toLowerCase();
       if(w==='true'){cls='v-true';label='True';}
       else if(w==='false'){cls='v-false';label='False';}
       else{cls='v-mis';label='Misleading';}
-      body=body.slice(m[0].length);
+      bodyTxt=bodyTxt.slice(m[0].length);
     }
     var icon=cls==='v-true'?ic.check:ic.alert;
     var c=document.createElement('div');c.className='verdict '+cls;
-    c.innerHTML='<div class="v">'+icon+esc(label)+'</div><p>'+fmt(body)+'</p>';
-    addBot({node:c,source:source,meta:{agent:agent||'Misinformation Detection'}});
+    c.innerHTML='<div class="v">'+icon+esc(label)+'</div><p>'+fmt(bodyTxt)+'</p>';
+    addBot({node:c,source:source});
   }
-  function typingRow(){
+  // render a stored message object
+  function renderMessage(m){
+    if(m.role==='user'){addUser(m.content);return;}
+    if(m.type==='emergency'){addEmergency(m.content,m.agent);}
+    else if(m.type==='myth'){addVerdict(m.content,m.source);}
+    else{addBot({html:fmt(m.content),source:m.source||''});}
+  }
+  function renderConversation(convo){
+    logCol.innerHTML='';
+    convo.messages.forEach(renderMessage);
+    scrollDown();
+  }
+
+  // brand waveform loader row, returned so it can be removed
+  function loaderRow(){
     var row=document.createElement('div');row.className='row bot';
-    var av=avatar();var t=document.createElement('div');t.className='typing';t.setAttribute('aria-label','MedAI is typing');
-    t.innerHTML='<span></span><span></span><span></span>';
-    row.appendChild(av);row.appendChild(t);log.appendChild(row);scrollDown();return row;
-  }
-  function botThen(fn,delay){var row=typingRow();setTimeout(function(){if(row.parentNode)log.removeChild(row);fn();},delay||700);}
-
-  // ----- onboarding: one warm conversational opener, no buttons, no steps -----
-  function opener(){
-    state={history:[]};
-    log.innerHTML='';
-    send.disabled=input.value.trim()==='';
-    botThen(function(){
-      addBot({html:'Namaste. I am MedAI, your health helper.',meta:{agent:'Welcome'}});
-      botThen(function(){
-        addBot({html:'I am an AI assistant, not a doctor. I share verified health information from WHO and Indian government sources, and I can guide you to care. I cannot diagnose or prescribe.',meta:{agent:'AI disclosure'}});
-        botThen(function(){
-          addBot({html:'Tell me what is happening, in your own words.',isQuestion:true,meta:{agent:'Listening'}});
-        },850);
-      },1050);
-    },450);
+    row.appendChild(avatar());
+    var l=document.createElement('div');l.className='loader';l.setAttribute('role','status');l.setAttribute('aria-label','MedAI is thinking');
+    l.innerHTML='<span></span><span></span><span></span><span></span><span></span>';
+    row.appendChild(l);logCol.appendChild(row);scrollDown();return row;
   }
 
-  // ----- active: every message goes to the model, which detects language and replies -----
-  function onUser(text){
-    if(!text)return;
+  // ---------- sidebar ----------
+  function renderSidebar(){
+    var list=loadAll().slice().sort(function(a,b){return b.created-a.created;});
+    convoList.innerHTML='';
+    if(!list.length){
+      var e=document.createElement('div');e.className='convo-empty';e.textContent='No conversations yet.';
+      convoList.appendChild(e);return;
+    }
+    list.forEach(function(c){
+      var b=document.createElement('button');b.type='button';
+      b.className='convo-item'+(current&&c.id===current.id?' active':'');
+      if(current&&c.id===current.id)b.setAttribute('aria-current','true');
+      b.textContent=c.title||'Conversation';
+      b.addEventListener('click',function(){openConversation(c.id);});
+      convoList.appendChild(b);
+    });
+  }
+  function setTopTitle(t){topTitle.textContent=t||'MedAI';}
+
+  // ---------- conversation lifecycle ----------
+  function introMessages(){
+    return [
+      {role:'assistant',content:'Namaste. I am MedAI, your health helper.',type:'normal',agent:'Welcome',intro:true},
+      {role:'assistant',content:'I am an AI assistant, not a doctor. I share verified health information from WHO and Indian government sources, and I can guide you to care. I cannot diagnose or prescribe.',type:'normal',agent:'AI disclosure',intro:true},
+      {role:'assistant',content:'Tell me what is happening, in your own words.',type:'normal',agent:'Listening',intro:true}
+    ];
+  }
+  function startNewChat(){
+    current={id:uid(),title:'',created:Date.now(),messages:introMessages()};
+    closeDrawer();
+    setTopTitle('New chat');
+    renderSidebar();
+    logCol.innerHTML='';
+    input.value='';autosize();send.disabled=true;
+    animateIntro(current.messages.slice());
+    input.focus();
+  }
+  function animateIntro(items){
+    if(!items.length){return;}
+    var first=items.shift();
+    var row=loaderRow();
+    setTimeout(function(){
+      if(row.parentNode)logCol.removeChild(row);
+      renderMessage(first);
+      animateIntro(items);
+    },first.intro?600:700);
+  }
+  function openConversation(id){
+    var convo=loadAll().filter(function(c){return c.id===id;})[0];
+    if(!convo)return;
+    current=convo;
+    closeDrawer();
+    setTopTitle(convo.title||'Conversation');
+    renderSidebar();
+    renderConversation(convo);
+    input.value='';autosize();send.disabled=true;
+  }
+
+  // model history: start at the first user message, drop the scripted intro,
+  // send only {role, content} so the array starts with a user turn.
+  function modelHistory(messages){
+    var out=[],started=false;
+    for(var i=0;i<messages.length;i++){
+      var m=messages[i];
+      if(!started){if(m.role==='user'){started=true;}else{continue;}}
+      out.push({role:m.role,content:m.content});
+    }
+    return out;
+  }
+
+  function onSend(text){
+    if(!text||!current)return;
+    var userMsg={role:'user',content:text};
+    current.messages.push(userMsg);
     addUser(text);
-    sendToModel(text);
-  }
-  function render(reply){
-    var agent=reply.agent||'';
-    if(reply.type==='emergency'){addEmergency(reply.text,agent);}
-    else if(reply.type==='myth'){addVerdict(reply.text,reply.source,agent);}
-    else{addBot({html:fmt(reply.text),source:reply.source||'',meta:{agent:agent}});}
-    state.history.push({role:'assistant',content:reply.text});
-  }
-  function sendToModel(text){
-    state.history.push({role:'user',content:text});
-    var row=typingRow();
-    fetch('/api/chat',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({messages:state.history})})
+    if(!current.title){current.title=makeTitle(text);setTopTitle(current.title);}
+    persist(current);
+
+    var row=loaderRow();
+    fetch('/api/chat',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({messages:modelHistory(current.messages)})})
       .then(function(r){return r.json();})
-      .then(function(reply){if(row.parentNode)log.removeChild(row);render(reply);})
-      .catch(function(){if(row.parentNode)log.removeChild(row);addBot({html:'I could not reach the server. Please try again.',meta:{agent:'network error'}});});
+      .then(function(reply){
+        if(row.parentNode)logCol.removeChild(row);
+        var msg={role:'assistant',content:reply.text||'',type:reply.type||'normal',source:reply.source||'',agent:reply.agent||''};
+        current.messages.push(msg);renderMessage(msg);persist(current);
+      })
+      .catch(function(){
+        if(row.parentNode)logCol.removeChild(row);
+        var msg={role:'assistant',content:'I could not reach the server. Please try again.',type:'normal',source:'',agent:'network error'};
+        current.messages.push(msg);renderMessage(msg);persist(current);
+      });
   }
 
-  // ----- input -----
-  function autosize(){input.style.height='auto';input.style.height=Math.min(input.scrollHeight,96)+'px';}
-  function trySend(){var v=input.value.trim();if(!v)return;input.value='';autosize();send.disabled=true;onUser(v);}
+  // ---------- input ----------
+  function autosize(){input.style.height='auto';input.style.height=Math.min(input.scrollHeight,120)+'px';}
+  function trySend(){var v=input.value.trim();if(!v)return;input.value='';autosize();send.disabled=true;onSend(v);}
   input.addEventListener('input',function(){autosize();send.disabled=input.value.trim()==='';});
   input.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();trySend();}});
   send.addEventListener('click',trySend);
-  mic.addEventListener('click',function(){showToast('Voice input is part of the real build. Please type for now.');input.focus();});
-  procToggle.addEventListener('click',function(){
-    processOn=!processOn;procToggle.setAttribute('aria-pressed',processOn?'true':'false');
-    document.querySelectorAll('.meta').forEach(function(m){m.style.display=processOn?'flex':'none';});
-    showToast(processOn?'Showing how each reply is handled':'Process view hidden');
-  });
-  restart.addEventListener('click',opener);
-  opener();
+  newChatBtn.addEventListener('click',startNewChat);
+
+  // ---------- mobile drawer ----------
+  function openDrawer(){sidebar.classList.add('open');scrim.classList.add('show');hamburger.setAttribute('aria-expanded','true');}
+  function closeDrawer(){sidebar.classList.remove('open');scrim.classList.remove('show');hamburger.setAttribute('aria-expanded','false');}
+  hamburger.addEventListener('click',function(){sidebar.classList.contains('open')?closeDrawer():openDrawer();});
+  scrim.addEventListener('click',closeDrawer);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDrawer();});
+
+  // ---------- voice to text (Web Speech API, demo stand-in for ASR) ----------
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(SR){
+    var recognition=new SR();
+    recognition.lang='en-IN';
+    recognition.interimResults=false;
+    recognition.maxAlternatives=1;
+    recognition.continuous=false;
+    var listening=false;
+    recognition.onstart=function(){listening=true;mic.classList.add('on');mic.setAttribute('aria-pressed','true');};
+    recognition.onend=function(){listening=false;mic.classList.remove('on');mic.setAttribute('aria-pressed','false');};
+    recognition.onerror=function(ev){listening=false;mic.classList.remove('on');mic.setAttribute('aria-pressed','false');
+      if(ev&&ev.error==='not-allowed'){showToast('Microphone permission is blocked. Allow it to use voice.');}};
+    recognition.onresult=function(ev){
+      var t='';for(var i=0;i<ev.results.length;i++){t+=ev.results[i][0].transcript;}
+      t=t.trim();
+      if(t){input.value=input.value?(input.value.replace(/\s+$/,'')+' '+t):t;autosize();send.disabled=input.value.trim()==='';}
+      input.focus(); // fill the field for review, do not auto-send
+    };
+    mic.addEventListener('click',function(){
+      if(listening){try{recognition.stop();}catch(e){}return;}
+      try{recognition.start();showToast('Listening. Speak now.');}catch(e){}
+    });
+  }else{
+    mic.disabled=true;
+    mic.setAttribute('aria-disabled','true');
+    mic.title='Voice input needs a supported browser, like Chrome.';
+  }
+
+  // ---------- init ----------
+  renderSidebar();
+  startNewChat();
 })();
 </script>
 </body>
