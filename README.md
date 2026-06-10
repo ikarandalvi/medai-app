@@ -42,3 +42,5 @@ Anthropic console. Redeploy by pushing the change to GitHub.
 - Onboarding is scripted in index.html. Everything after, the active stage, is
   handled by the model through the system prompt.
 - No database. Conversation lives in the browser for the session only.
+
+deploy check
