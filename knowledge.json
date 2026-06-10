@@ -9,7 +9,7 @@
   },
   "diarrhea": {
     "summary": "For diarrhea, the main risk is dehydration, not the loose stool itself. Replace lost fluid and keep feeding.",
-    "home_care": ["Give ORS after every loose stool.", "Keep giving normal food and fluids. Do not stop feeding.", "For young children, a health worker commonly advises zinc for 14 days. This is a health-worker decision."],
+    "home_care": ["Give ORS after every loose stool.", "Keep giving normal food and fluids. Do not stop feeding.", "For young children, a health worker may advise extra care. Follow what the health worker says."],
     "see_doctor": ["Blood in the stool", "No urine for 8 hours or more", "Constant vomiting", "Lasts more than 2 days or person is weaker"],
     "age_notes": "Infants dehydrate fast. Lower the threshold to seek care.",
     "source": "WHO fact sheet, NHP Health A-Z"
