@@ -3,192 +3,2086 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MedAI</title>
+<title>MedAI - Site Preview (single file)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://api.fontshare.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Noto+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link href="https://api.fontshare.com/v2/css?f=satoshi@400,500,700,900&display=swap" rel="stylesheet">
 <style>
-  :root{
-    /* Brand */
-    --indigo:#4F46E5; --indigo-deep:#4338CA; --violet:#7C3AED; --violet-light:#9D4EDD;
-    --grad:linear-gradient(135deg,#4F46E5 0%,#7C3AED 58%,#9D4EDD 100%);
-    --grad-soft:linear-gradient(135deg,rgba(79,70,229,.10),rgba(157,78,221,.10));
-    /* Accent */
-    --canary:#E4F94D; --canary-deep:#C7E62E;
-    /* Ink + surface */
-    --ink:#16121F; --ink-soft:#56516B; --ink-faint:#8A85A0;
-    --bg:#FFFFFF; --surface:#FAFAFF; --surface-2:#F4F3FB; --line:#E9E7F4; --line-strong:#D8D5EC;
-    /* Semantic, clinical surfaces only */
-    --emergency:#D93A40; --emergency-tint:#FDECEC; --emergency-line:#F4C9CB;
-    --caution:#D98209; --caution-tint:#FCF1DD; --caution-line:#F1DAA6;
-    --verified:#1A9F5A; --verified-tint:#E5F6EC; --verified-line:#B4E4C7;
-    /* Radius + elevation */
-    --r-sm:8px; --r-md:14px; --r-lg:20px; --r-xl:28px; --r-pill:999px;
-    --sh-sm:0 1px 2px rgba(22,18,31,.06);
-    --sh-md:0 8px 28px -10px rgba(79,70,229,.20),0 2px 8px rgba(22,18,31,.05);
-    --sh-lg:0 26px 60px -20px rgba(79,70,229,.30);
-    /* Type */
-    --serif:'Lora',Georgia,'Times New Roman',serif;
-    --sans:'Satoshi','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-    --indic:'Noto Sans',var(--sans);
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%}
-  body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;font-size:16px}
-  button{font-family:inherit}
+/* ============================================================
+   MedAI marketing site - shared styles
+   Built on the locked MedAI Design System v1.0 (indigo to violet,
+   Lora + Satoshi, voice-waveform mark). Tokens copied verbatim.
+   ============================================================ */
 
-  /* ---------- Layout ---------- */
-  .layout{display:flex;height:100dvh;width:100%;overflow:hidden}
+:root{
+  /* Brand */
+  --indigo:#4F46E5; --indigo-deep:#4338CA; --violet:#7C3AED; --violet-light:#9D4EDD;
+  --grad:linear-gradient(135deg,#4F46E5 0%,#7C3AED 58%,#9D4EDD 100%);
+  --grad-soft:linear-gradient(135deg,rgba(79,70,229,.10),rgba(157,78,221,.10));
 
-  /* ---------- Sidebar ---------- */
-  .sidebar{width:280px;flex:none;background:var(--surface);border-right:1px solid var(--line);
-    display:flex;flex-direction:column;min-height:0}
-  .side-head{display:flex;align-items:center;gap:10px;padding:16px 16px 12px}
-  .side-head .logo{height:26px;width:auto;display:block;flex:none}
-  .side-head .wm{font-family:var(--serif);font-weight:600;font-size:20px;letter-spacing:-.01em}
-  .side-head .wm i{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .newchat{margin:2px 12px 8px;display:flex;align-items:center;justify-content:center;gap:8px;
-    font-weight:700;font-size:14px;color:#fff;background:var(--grad);border:none;border-radius:var(--r-pill);
-    padding:11px 14px;cursor:pointer;box-shadow:var(--sh-sm);transition:box-shadow .15s,transform .1s}
-  .newchat:hover{box-shadow:var(--sh-md)}
-  .newchat:active{transform:translateY(1px)}
-  .newchat svg{width:16px;height:16px}
-  .side-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-faint);font-weight:700;padding:10px 18px 4px}
-  .convo-list{flex:1;overflow-y:auto;min-height:0;padding:0 8px 16px;display:flex;flex-direction:column;gap:2px}
-  .convo-item{display:block;width:100%;text-align:left;font-size:13.5px;font-weight:500;color:var(--ink-soft);
-    background:transparent;border:none;border-radius:var(--r-sm);padding:9px 10px;cursor:pointer;
-    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .convo-item:hover{background:var(--surface-2);color:var(--ink)}
-  .convo-item.active{background:var(--grad-soft);color:var(--ink);font-weight:600}
-  .convo-empty{font-size:13px;color:var(--ink-faint);padding:8px 10px}
+  /* Accent */
+  --canary:#E4F94D; --canary-deep:#C7E62E;
 
-  .scrim{display:none}
+  /* Ink + surface */
+  --ink:#16121F; --ink-soft:#56516B; --ink-faint:#8A85A0;
+  --bg:#FFFFFF; --surface:#FAFAFF; --surface-2:#F4F3FB; --line:#E9E7F4; --line-strong:#D8D5EC;
 
-  /* ---------- Main ---------- */
-  .main{flex:1;min-width:0;display:flex;flex-direction:column;min-height:0;background:var(--bg)}
-  .topbar{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--line);min-height:56px}
-  .hamburger{display:none;flex:none;width:38px;height:38px;border-radius:10px;border:1px solid var(--line);
-    background:var(--bg);cursor:pointer;align-items:center;justify-content:center;color:var(--ink-soft)}
-  .hamburger:hover{background:var(--surface)}
-  .hamburger svg{width:20px;height:20px}
-  .top-title{font-weight:600;font-size:15px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  /* Semantic */
+  --emergency:#D93A40; --emergency-tint:#FDECEC; --emergency-line:#F4C9CB;
+  --caution:#D98209;   --caution-tint:#FCF1DD;   --caution-line:#F1DAA6;
+  --verified:#1A9F5A;  --verified-tint:#E5F6EC;  --verified-line:#B4E4C7;
 
-  /* ---------- Chat log ---------- */
-  .log{flex:1;overflow-y:auto;min-height:0;padding:22px 16px 12px;scroll-behavior:smooth}
-  .log-col{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
-  .row{display:flex;gap:9px;align-items:flex-end;max-width:100%}
-  .row.user{flex-direction:row-reverse}
-  .row .av{flex:none;width:30px;height:30px;border-radius:9px;background:var(--grad);box-shadow:var(--sh-sm);
-    display:flex;align-items:center;justify-content:center}
-  .row .av svg{width:18px;height:13px;display:block}
-  .stack{display:flex;flex-direction:column;gap:5px;max-width:82%}
-  .row.user .stack{align-items:flex-end}
-  .bubble{padding:11px 14px;border-radius:16px;font-size:14.5px;line-height:1.55;
-    background:var(--surface);border:1px solid var(--line);border-bottom-left-radius:5px;color:var(--ink);
-    animation:rise .3s cubic-bezier(.2,.7,.3,1) both}
-  .row.user .bubble{background:var(--grad);color:#fff;border-color:transparent;
-    border-bottom-left-radius:16px;border-bottom-right-radius:5px}
-  .bubble :lang(hi),.bubble :lang(ta),.bubble :lang(mr),.bubble :lang(bn){font-family:var(--indic)}
-  .bubble strong{font-weight:700}
+  /* Radius */
+  --r-sm:8px; --r-md:14px; --r-lg:20px; --r-xl:28px; --r-pill:999px;
 
-  /* Source chip */
-  .src{display:inline-flex;align-items:center;gap:5px;background:var(--verified-tint);color:var(--verified);
-    border:1px solid var(--verified-line);font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:var(--r-pill);
-    width:fit-content;margin-top:2px}
-  .src svg{width:12px;height:12px}
-  /* Emergency card */
-  .card-emerg{background:var(--emergency-tint);border:1px solid var(--emergency-line);border-left:4px solid var(--emergency);
-    border-radius:var(--r-md);padding:13px 14px;animation:rise .3s cubic-bezier(.2,.7,.3,1) both}
-  .card-emerg .head{display:flex;align-items:center;gap:8px;color:var(--emergency);font-weight:800;font-size:13px;
-    text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
-  .card-emerg .head svg{width:18px;height:18px}
-  .card-emerg p{font-size:14px;line-height:1.55;color:var(--ink)}
-  .call-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:11px;
-    background:var(--emergency);color:#fff;font-weight:800;font-size:15px;text-decoration:none;
-    padding:12px 18px;border-radius:12px;width:100%;transition:transform .1s,filter .15s}
-  .call-btn:hover{filter:brightness(.96)}
-  .call-btn:active{transform:scale(.985)}
-  .call-btn svg{width:18px;height:18px}
-  /* Misinformation verdict (three-way, semantic colors) */
-  .verdict{border-radius:var(--r-md);padding:12px 14px;border:1px solid;animation:rise .3s cubic-bezier(.2,.7,.3,1) both}
-  .verdict .v{display:flex;align-items:center;gap:6px;font-weight:800;font-size:12px;text-transform:uppercase;
-    letter-spacing:.06em;margin-bottom:5px}
-  .verdict .v svg{width:14px;height:14px}
-  .verdict p{font-size:14px;line-height:1.55;color:var(--ink)}
-  .v-true{background:var(--verified-tint);border-color:var(--verified-line)} .v-true .v{color:var(--verified)}
-  .v-mis{background:var(--caution-tint);border-color:var(--caution-line)} .v-mis .v{color:var(--caution)}
-  .v-false{background:var(--emergency-tint);border-color:var(--emergency-line)} .v-false .v{color:var(--emergency)}
+  /* Spacing */
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-6:24px; --space-8:32px; --space-12:48px;
 
-  /* Brand loader: voice-waveform bars animating in the brand gradient */
-  .loader{display:flex;align-items:flex-end;gap:3px;height:26px;padding:6px 4px}
-  .loader span{width:4px;height:30%;border-radius:var(--r-pill);background:var(--grad);animation:eq 1s ease-in-out infinite}
-  .loader span:nth-child(2){animation-delay:.12s}
-  .loader span:nth-child(3){animation-delay:.24s}
-  .loader span:nth-child(4){animation-delay:.36s}
-  .loader span:nth-child(5){animation-delay:.48s}
-  @keyframes eq{0%,100%{height:25%}50%{height:100%}}
+  /* Elevation */
+  --sh-sm:0 1px 2px rgba(22,18,31,.06);
+  --sh-md:0 8px 28px -10px rgba(79,70,229,.20),0 2px 8px rgba(22,18,31,.05);
+  --sh-lg:0 26px 60px -20px rgba(79,70,229,.30);
 
-  /* ---------- Composer ---------- */
-  .composer{border-top:1px solid var(--line);padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:var(--bg)}
-  .composer-col{max-width:720px;margin:0 auto}
-  .inbar{display:flex;align-items:flex-end;gap:8px;background:var(--surface);border:1.5px solid var(--line-strong);
-    border-radius:24px;padding:5px 5px 5px 16px;transition:border-color .15s,box-shadow .15s}
-  .inbar:focus-within{border-color:var(--violet);box-shadow:0 0 0 3px rgba(124,58,237,.15)}
-  .inbar textarea{flex:1;border:none;background:transparent;font-family:var(--sans);font-size:15px;color:var(--ink);
-    resize:none;outline:none;line-height:1.4;max-height:120px;padding:8px 0}
-  .inbar textarea::placeholder{color:var(--ink-faint)}
-  .iconbtn{flex:none;width:38px;height:38px;border-radius:50%;border:none;cursor:pointer;
-    display:inline-flex;align-items:center;justify-content:center;transition:filter .15s,transform .1s,background .15s}
-  .iconbtn svg{width:19px;height:19px}
-  .iconbtn.mic{background:var(--surface-2);color:var(--violet)}
-  .iconbtn.mic:hover{background:var(--line)}
-  .iconbtn.mic.on{background:var(--grad);color:#fff}
-  .iconbtn.send{background:var(--grad);color:#fff;box-shadow:var(--sh-sm)}
-  .iconbtn.send:hover{filter:brightness(1.05)}
-  .iconbtn.send:active{transform:scale(.94)}
-  .iconbtn:disabled{opacity:.4;cursor:not-allowed}
-  .composer .disclaimer{max-width:720px;margin:8px auto 0;font-size:12px;color:var(--ink-soft);text-align:center;line-height:1.45}
+  --serif:'Lora',Georgia,'Times New Roman',serif;
+  --sans:'Satoshi','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --indic:'Noto Sans',var(--sans);
+  --mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
 
-  /* ---------- Toast ---------- */
-  .toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(12px);
-    background:var(--ink);color:#fff;font-size:12.5px;font-weight:600;padding:9px 14px;border-radius:10px;
-    opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;max-width:88%;text-align:center;z-index:60}
-  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  --maxw:1180px;
+}
 
-  /* Focus visibility: 3px violet ring */
-  :focus-visible{outline:3px solid var(--violet);outline-offset:2px;border-radius:8px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;font-size:16px}
+a{color:var(--indigo);text-decoration:none}
+img{max-width:100%;display:block}
+::selection{background:rgba(124,58,237,.18)}
+:focus-visible{outline:3px solid rgba(124,58,237,.45);outline-offset:2px;border-radius:6px}
 
-  @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+/* ---------- Wrap ---------- */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
 
-  /* ---------- Responsive: sidebar becomes a drawer ---------- */
-  @media (max-width:860px){
-    .sidebar{position:fixed;top:0;left:0;height:100dvh;z-index:50;transform:translateX(-100%);
-      transition:transform .25s ease;box-shadow:var(--sh-lg)}
-    .sidebar.open{transform:translateX(0)}
-    .hamburger{display:inline-flex}
-    .scrim{display:block;position:fixed;inset:0;background:rgba(22,18,31,.42);opacity:0;pointer-events:none;
-      transition:opacity .25s;z-index:40}
-    .scrim.show{opacity:1;pointer-events:auto}
-  }
-  @media (prefers-reduced-motion:reduce){
-    *{animation:none!important;scroll-behavior:auto!important;transition:none!important}
-    .loader span{height:60%}
-  }
-  .log::-webkit-scrollbar,.convo-list::-webkit-scrollbar{width:8px}
-  .log::-webkit-scrollbar-thumb,.convo-list::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px}
+/* ---------- Wordmark ---------- */
+.wordmark{display:inline-flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:600;letter-spacing:-.02em}
+.wordmark .mk{height:26px;width:auto;display:block}
+.wordmark .tx{font-size:21px}
+.wordmark .tx i{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.wordmark.on-grad .tx{color:#fff}
+.wordmark.on-grad .tx i{background:none;-webkit-text-fill-color:rgba(255,255,255,.8);color:rgba(255,255,255,.8)}
+
+/* ---------- Top nav ---------- */
+.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.86);backdrop-filter:saturate(160%) blur(12px);border-bottom:1px solid var(--line)}
+.nav .row{display:flex;align-items:center;gap:18px;height:64px}
+.nav .links{display:flex;align-items:center;gap:4px;margin-left:auto}
+.nav .links a{color:var(--ink-soft);font-size:14px;font-weight:600;padding:9px 12px;border-radius:var(--r-pill)}
+.nav .links a:hover{background:var(--surface-2);color:var(--ink)}
+.nav .links a.active{color:var(--ink)}
+.nav .links a.active::after{content:"";display:block;height:2px;border-radius:2px;background:var(--grad);margin-top:3px}
+.nav-toggle{display:none;margin-left:auto;background:#fff;border:1.5px solid var(--line-strong);border-radius:var(--r-md);width:44px;height:44px;cursor:pointer;align-items:center;justify-content:center}
+.nav-toggle span,.nav-toggle span::before,.nav-toggle span::after{content:"";display:block;width:18px;height:2px;background:var(--ink);position:relative}
+.nav-toggle span::before{position:absolute;top:-6px}
+.nav-toggle span::after{position:absolute;top:6px}
+
+/* ---------- Buttons ---------- */
+.btn{font-family:var(--sans);font-weight:700;font-size:15px;border:none;border-radius:var(--r-pill);padding:12px 22px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease,background .12s ease;min-height:44px;text-align:center}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--grad);color:#fff;box-shadow:var(--sh-md)}
+.btn-primary:hover{box-shadow:var(--sh-lg)}
+.btn-secondary{background:#fff;color:var(--indigo-deep);border:1.5px solid var(--line-strong)}
+.btn-secondary:hover{border-color:var(--violet)}
+.btn-accent{background:var(--canary);color:var(--ink)}
+.btn-accent:hover{background:var(--canary-deep)}
+.btn-danger{background:var(--emergency);color:#fff}
+.btn-ghost{background:transparent;color:var(--indigo);padding-left:8px;padding-right:8px}
+.btn-sm{padding:9px 16px;font-size:14px;min-height:40px}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.btn-block{width:100%}
+
+/* ---------- Generic layout ---------- */
+.section{padding:88px 0;border-bottom:1px solid var(--line)}
+.section.tight{padding:64px 0}
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.16em;font-weight:700;color:var(--violet);margin-bottom:14px}
+.s-title{font-family:var(--serif);font-weight:500;font-size:clamp(28px,3.6vw,40px);line-height:1.1;letter-spacing:-.02em;margin-bottom:12px;max-width:20ch}
+.s-intro{color:var(--ink-soft);max-width:62ch;font-size:17px;margin-bottom:36px}
+.lead{max-width:62ch;color:var(--ink-soft);margin-bottom:16px}
+
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+
+.card{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px}
+.card.soft{background:var(--surface)}
+.card h3{font-family:var(--serif);font-weight:600;font-size:19px;margin-bottom:8px;letter-spacing:-.01em}
+.card p{font-size:14.5px;color:var(--ink-soft)}
+
+.note{border-left:3px solid var(--violet);background:var(--grad-soft);padding:14px 18px;border-radius:0 var(--r-md) var(--r-md) 0;font-size:14.5px;color:var(--ink-soft);margin:18px 0}
+.note b{color:var(--ink)}
+
+/* ---------- Badges + health components ---------- */
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;padding:5px 11px;border-radius:var(--r-pill)}
+.b-verified{background:var(--verified-tint);color:var(--verified);border:1px solid var(--verified-line)}
+.b-caution{background:var(--caution-tint);color:var(--caution);border:1px solid var(--caution-line)}
+.b-emergency{background:var(--emergency-tint);color:var(--emergency);border:1px solid var(--emergency-line)}
+.b-ai{background:var(--surface-2);color:var(--ink-soft);border:1px solid var(--line-strong)}
+
+.disclose{display:flex;gap:12px;align-items:flex-start;background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--r-md);padding:14px 16px;font-size:13.5px;color:var(--ink-soft)}
+.disclose .ai{flex:none;width:30px;height:30px;border-radius:9px;background:var(--grad);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:11px}
+.source{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-soft);background:#F2F2F5;border:1px solid #E6E6EB;padding:6px 12px;border-radius:var(--r-pill);font-weight:600}
+.source .vd{color:var(--ink-faint)}
+.escalate{border:1.5px solid var(--emergency-line);background:var(--emergency-tint);border-radius:var(--r-lg);padding:18px 20px}
+.escalate .top{display:flex;align-items:center;gap:9px;color:var(--emergency);font-weight:800;font-size:15px;margin-bottom:8px}
+.escalate p{font-size:14.5px;color:var(--ink);margin-bottom:8px}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero::before{content:"";position:absolute;top:-220px;right:-180px;width:620px;height:620px;border-radius:50%;background:var(--grad);filter:blur(12px);opacity:.10;pointer-events:none}
+.hero .inner{padding:84px 0 72px;position:relative}
+.hero .kick{font-size:12px;text-transform:uppercase;letter-spacing:.18em;font-weight:700;color:var(--violet);margin-bottom:20px}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(38px,6vw,68px);line-height:1.02;letter-spacing:-.03em;max-width:17ch}
+.hero h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .tag{font-size:19px;color:var(--ink-soft);margin-top:22px;max-width:50ch}
+.hero .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.wave{display:flex;align-items:flex-end;gap:5px;height:72px;margin-top:42px;max-width:460px}
+.wave span{flex:1;border-radius:var(--r-pill);background:var(--grad);opacity:.9;height:22%;animation:eq 1.5s ease-in-out infinite}
+@keyframes eq{0%,100%{height:18%}50%{height:100%}}
+.meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:40px}
+.meta-row .pill{font-size:12.5px;font-weight:600;color:var(--ink-soft);background:var(--surface);border:1px solid var(--line);padding:7px 13px;border-radius:var(--r-pill)}
+.meta-row .pill b{color:var(--ink)}
+
+/* ---------- KPI ---------- */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.kpi{border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;background:var(--surface)}
+.kpi .num{font-family:var(--serif);font-weight:600;font-size:38px;line-height:1;letter-spacing:-.02em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.kpi .lbl{font-weight:700;font-size:14px;margin-top:10px}
+.kpi .sub{font-size:12.5px;color:var(--ink-faint);margin-top:3px}
+
+/* ---------- Channel demo (phone) ---------- */
+.phone-demo{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-xl);padding:18px;display:flex;flex-direction:column;gap:9px}
+.wahead{display:flex;align-items:center;gap:10px;padding:0 2px 8px;border-bottom:1px solid var(--line)}
+.wahead .av{width:34px;height:34px;border-radius:50%;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:600;font-size:15px}
+.wahead .nm{font-weight:700;font-size:14px;line-height:1.1}
+.wahead .st{font-size:11px;color:var(--ink-faint)}
+.bub{max-width:86%;padding:9px 13px;border-radius:14px;font-size:14px;box-shadow:var(--sh-sm)}
+.bub.in{background:#fff;align-self:flex-start;border-top-left-radius:4px}
+.bub.out{background:#EDE9FE;align-self:flex-end;border-top-right-radius:4px}
+.bub .agent{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;font-weight:800;color:var(--violet);margin-bottom:4px}
+.bub .native{font-family:var(--indic);font-weight:500;display:block}
+.bub .gloss{font-size:12px;color:var(--ink-faint);font-style:italic;margin-top:3px;display:block}
+
+/* ---------- Personas ---------- */
+.persona{border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;background:#fff}
+.persona .ph{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.persona .pa{width:42px;height:42px;border-radius:50%;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:600;font-size:18px;flex:none}
+.persona .pn{font-weight:700;font-size:15px}
+.persona .pm{font-size:12.5px;color:var(--ink-faint)}
+.persona .pq{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--ink);margin:10px 0;line-height:1.45}
+.persona .pl{font-size:13px;color:var(--ink-soft)}
+
+/* ---------- Agent / value cards ---------- */
+.feature{border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;background:#fff;position:relative}
+.feature .ic{width:40px;height:40px;border-radius:11px;background:var(--grad-soft);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px}
+.feature h3{font-family:var(--serif);font-weight:600;font-size:18px;margin-bottom:7px;letter-spacing:-.01em}
+.feature p{font-size:14px;color:var(--ink-soft)}
+.feature .tag{position:absolute;top:18px;right:18px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint)}
+.feature.core .tag{color:var(--violet)}
+
+/* ---------- Subbrand row ---------- */
+.subgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.subbrand{border:1px solid var(--line);border-radius:var(--r-md);padding:16px;background:#fff;text-align:center}
+.subbrand .ic{width:38px;height:38px;border-radius:11px;color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:14px}
+.subbrand b{font-size:14px;display:block}
+.subbrand span{font-size:12px;color:var(--ink-faint)}
+
+/* ---------- Steps / launch ---------- */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;counter-reset:step}
+.step{border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;background:var(--surface)}
+.step .n{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--violet);margin-bottom:10px}
+.step h4{font-size:15px;margin-bottom:6px}
+.step p{font-size:13px;color:var(--ink-soft)}
+
+/* ---------- Partner band ---------- */
+.band{background:var(--grad);color:#fff;border-radius:var(--r-xl);padding:44px;position:relative;overflow:hidden}
+.band h2{font-family:var(--serif);font-weight:500;font-size:clamp(26px,3.4vw,36px);line-height:1.12;letter-spacing:-.02em;max-width:22ch}
+.band p{color:rgba(255,255,255,.86);max-width:54ch;margin-top:14px;font-size:16px}
+.band .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+
+/* ---------- Articles ---------- */
+.filterbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
+.chip{font-size:13px;font-weight:600;color:var(--ink-soft);background:#fff;border:1.5px solid var(--line-strong);border-radius:var(--r-pill);padding:8px 15px;cursor:pointer;min-height:40px}
+.chip:hover{border-color:var(--violet)}
+.chip.on{background:var(--grad);color:#fff;border-color:transparent}
+.art-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.art{border:1px solid var(--line);border-radius:var(--r-lg);background:#fff;overflow:hidden;display:flex;flex-direction:column;cursor:pointer;transition:box-shadow .15s ease,transform .15s ease;text-align:left}
+.art:hover{box-shadow:var(--sh-md);transform:translateY(-2px)}
+.art .top{height:108px;background:var(--grad-soft);border-bottom:1px solid var(--line);display:flex;align-items:flex-end;padding:14px}
+.art .body{padding:18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.art h3{font-family:var(--serif);font-weight:600;font-size:18px;letter-spacing:-.01em;line-height:1.22}
+.art .ex{font-size:13.5px;color:var(--ink-soft);flex:1}
+.art .foot{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-faint);margin-top:4px}
+
+/* ---------- Modal (article reader) ---------- */
+.modal{position:fixed;inset:0;z-index:120;display:none;align-items:flex-start;justify-content:center;padding:40px 16px;background:rgba(22,18,31,.45);overflow-y:auto}
+.modal.open{display:flex}
+.modal .sheet{background:#fff;border-radius:var(--r-xl);max-width:720px;width:100%;padding:36px;box-shadow:var(--sh-lg);position:relative}
+.modal .x{position:absolute;top:18px;right:18px;width:40px;height:40px;border-radius:var(--r-pill);border:1.5px solid var(--line-strong);background:#fff;cursor:pointer;font-size:18px;line-height:1;display:flex;align-items:center;justify-content:center}
+.modal .sheet h2{font-family:var(--serif);font-weight:600;font-size:27px;letter-spacing:-.02em;margin:14px 0 6px;line-height:1.14}
+.modal .sheet .meta{font-size:12.5px;color:var(--ink-faint);margin-bottom:18px}
+.modal .sheet h4{font-family:var(--serif);font-weight:600;font-size:17px;margin:22px 0 6px}
+.modal .sheet p{font-size:15.5px;color:var(--ink);margin-bottom:12px;line-height:1.6}
+.modal .sheet ul{margin:0 0 12px 20px}
+.modal .sheet li{font-size:15.5px;margin-bottom:6px}
+
+/* ---------- Forms ---------- */
+.form-wrap{max-width:460px;margin:0 auto}
+.field-label{font-size:13px;font-weight:700;margin-bottom:7px;display:block}
+.field{display:block;width:100%;font-family:var(--sans);font-size:16px;padding:13px 15px;border:1.5px solid var(--line-strong);border-radius:var(--r-md);background:#fff;color:var(--ink)}
+.field:focus{outline:none;border-color:var(--violet);box-shadow:0 0 0 3px rgba(124,58,237,.15)}
+textarea.field{min-height:130px;resize:vertical}
+.help{font-size:12.5px;color:var(--ink-faint);margin-top:6px}
+.err{font-size:13px;color:var(--emergency);margin-top:7px;display:none}
+.err.show{display:block}
+.phone-field{display:flex;align-items:stretch;border:1.5px solid var(--line-strong);border-radius:var(--r-md);overflow:hidden;background:#fff}
+.phone-field:focus-within{border-color:var(--violet);box-shadow:0 0 0 3px rgba(124,58,237,.15)}
+.phone-field .cc{display:flex;align-items:center;padding:0 14px;background:var(--surface-2);border-right:1.5px solid var(--line-strong);font-weight:700;font-size:15px;color:var(--ink-soft)}
+.phone-field input{flex:1;border:none;outline:none;font-family:var(--sans);font-size:16px;padding:13px 15px;letter-spacing:.04em}
+
+/* OTP boxes */
+.otp-row{display:flex;gap:10px;justify-content:space-between}
+.otp-row input{width:100%;aspect-ratio:1/1;max-width:56px;text-align:center;font-family:var(--serif);font-weight:600;font-size:24px;border:1.5px solid var(--line-strong);border-radius:var(--r-md);background:#fff;color:var(--ink)}
+.otp-row input:focus{outline:none;border-color:var(--violet);box-shadow:0 0 0 3px rgba(124,58,237,.15)}
+.otp-row input.filled{border-color:var(--violet)}
+.otp-row.bad input{border-color:var(--emergency)}
+
+.demo-banner{display:flex;gap:10px;align-items:flex-start;background:var(--caution-tint);border:1px solid var(--caution-line);border-radius:var(--r-md);padding:12px 14px;font-size:13px;color:#7a4a06;margin-bottom:20px}
+.demo-banner b{color:#5d3804}
+
+.resend{font-size:13px;color:var(--ink-soft);margin-top:16px;text-align:center}
+.resend button{background:none;border:none;color:var(--indigo);font-weight:700;cursor:pointer;font-size:13px;padding:0}
+.resend button[disabled]{color:var(--ink-faint);cursor:not-allowed}
+
+.success-card{text-align:center}
+.success-card .tick{width:64px;height:64px;border-radius:50%;background:var(--verified-tint);border:2px solid var(--verified-line);color:var(--verified);display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 18px}
+
+/* ---------- FAQ accordion ---------- */
+.faq{border:1px solid var(--line);border-radius:var(--r-md);background:#fff;margin-bottom:12px;overflow:hidden}
+.faq button{width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:18px 20px;font-family:var(--sans);font-weight:700;font-size:16px;color:var(--ink);display:flex;align-items:center;gap:14px}
+.faq button .q{flex:1}
+.faq button .pm{flex:none;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--line-strong);position:relative;transition:transform .2s ease}
+.faq button .pm::before,.faq button .pm::after{content:"";position:absolute;background:var(--violet);border-radius:2px}
+.faq button .pm::before{width:11px;height:2px;top:10px;left:5.5px}
+.faq button .pm::after{width:2px;height:11px;top:5.5px;left:10px;transition:opacity .2s ease}
+.faq.open button .pm::after{opacity:0}
+.faq .a{max-height:0;overflow:hidden;transition:max-height .25s ease;padding:0 20px}
+.faq.open .a{max-height:600px;padding-bottom:18px}
+.faq .a p{font-size:15px;color:var(--ink-soft);margin-bottom:10px}
+.faq .a p:last-child{margin-bottom:0}
+
+/* ---------- Legal / prose ---------- */
+.prose{max-width:760px}
+.prose h2{font-family:var(--serif);font-weight:600;font-size:23px;letter-spacing:-.01em;margin:34px 0 10px}
+.prose h2:first-child{margin-top:0}
+.prose p{font-size:16px;color:var(--ink);margin-bottom:14px}
+.prose ul{margin:0 0 16px 22px}
+.prose li{font-size:16px;margin-bottom:8px;color:var(--ink)}
+.prose .upd{font-size:13px;color:var(--ink-faint);margin-bottom:24px}
+
+/* ---------- Footer ---------- */
+.foot{background:var(--surface);border-top:1px solid var(--line);padding:56px 0 36px}
+.foot .cols{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:32px}
+.foot h5{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-faint);font-weight:700;margin-bottom:14px}
+.foot a{display:block;color:var(--ink-soft);font-size:14px;padding:5px 0;font-weight:500}
+.foot a:hover{color:var(--ink)}
+.foot .blurb{font-size:13.5px;color:var(--ink-soft);max-width:34ch;margin-top:14px}
+.foot .legal{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;border-top:1px solid var(--line);margin-top:40px;padding-top:22px;font-size:12.5px;color:var(--ink-faint)}
+.foot .legal .lines{display:flex;flex-wrap:wrap;gap:8px}
+.foot .legal .src{display:inline-flex;gap:8px;align-items:center}
+
+/* ---------- Responsive ---------- */
+@media (max-width:900px){
+  .g4,.kpi-grid,.subgrid,.steps,.art-grid{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(2,1fr)}
+  .foot .cols{grid-template-columns:1fr 1fr}
+}
+@media (max-width:680px){
+  .nav .links{position:absolute;top:64px;left:0;right:0;flex-direction:column;align-items:stretch;gap:2px;background:#fff;border-bottom:1px solid var(--line);padding:12px 16px;box-shadow:var(--sh-md);display:none}
+  .nav .links.open{display:flex}
+  .nav .links a{padding:13px 12px;border-radius:var(--r-md)}
+  .nav .links a.active::after{display:none}
+  .nav .links .btn{margin-top:6px}
+  .nav-toggle{display:flex}
+  .g2,.g3,.g4,.kpi-grid,.subgrid,.steps,.art-grid{grid-template-columns:1fr}
+  .section{padding:60px 0}
+  .band{padding:30px}
+  .modal .sheet{padding:24px}
+  .foot .cols{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+
+/* ============ HERO CHANNEL PREVIEW ============ */
+.hero-preview{max-width:430px;margin:38px auto 0;text-align:left}
+.chtabs{display:flex;gap:4px;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-pill);padding:4px;margin:0 auto 14px;max-width:340px}
+.chtabs button{flex:1;border:0;background:transparent;color:var(--ink-soft);font-family:var(--sans);font-weight:600;font-size:13px;padding:8px 6px;border-radius:var(--r-pill);cursor:pointer}
+.chtabs button.on{background:#fff;color:var(--ink);box-shadow:var(--sh-sm)}
+.chpanels{position:relative}
+.chpanel{display:none}
+.chpanel.show{display:block;animation:chfade .35s ease}
+@keyframes chfade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.chdots{display:flex;justify-content:center;gap:7px;margin-top:14px}
+.chdots span{width:7px;height:7px;border-radius:50%;background:var(--line-strong);cursor:pointer;transition:all .2s}
+.chdots span.on{background:var(--grad);width:20px;border-radius:var(--r-pill)}
+
+/* voice note bubble */
+.voice-note{display:flex;align-items:center;gap:9px;min-width:140px}
+.voice-note .pl{width:24px;height:24px;border-radius:50%;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;flex:none}
+.voice-note .vw{flex:1;display:flex;align-items:center;gap:2px;height:18px}
+.voice-note .vw i{flex:1;background:var(--violet-light);opacity:.6;border-radius:2px}
+.voice-note .du{font-size:11px;color:var(--ink-faint)}
+
+/* IVR */
+.ivr{background:#1c1730;border-radius:var(--r-lg);padding:18px;color:#fff;display:flex;flex-direction:column;gap:12px}
+.ivr-top{display:flex;align-items:center;gap:11px}
+.ivr-top .av{width:38px;height:38px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+.ivr-top .nm{font-weight:700;font-size:14px}
+.ivr-top .st{font-size:11px;color:#b6b0cf}
+.ivr-top .timer{margin-left:auto;font-family:var(--mono);font-size:12px;color:#cfc9e6}
+.ivr-line{font-size:13px;line-height:1.5;padding-left:14px;border-left:2px solid var(--violet-light)}
+.ivr-line .lbl{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#a79fc8;font-weight:700;display:block;margin-bottom:3px}
+.ivr-line.user{border-color:var(--canary)}
+.ivr-line.user .lbl{color:var(--canary)}
+.ivr-line .native{font-family:var(--indic)}
+.ivr-line .gloss{color:#b6b0cf;font-style:italic;font-size:11.5px;margin-top:2px;display:block}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;max-width:170px;margin-top:2px}
+.keypad span{background:#2a2342;border:1px solid #3a3358;border-radius:9px;text-align:center;padding:9px 0;font-size:13px;font-weight:600}
+.keypad span.lit{background:var(--grad);border-color:transparent}
+
+/* SMS */
+.sms{background:#eceaf3;border-radius:var(--r-lg);padding:16px;display:flex;flex-direction:column;gap:7px}
+.sms .smsbub{max-width:88%;padding:8px 12px;border-radius:16px;font-size:13px;line-height:1.45}
+.sms .smsbub.in{background:#fff;align-self:flex-start;border:1px solid var(--line)}
+.sms .smsbub.out{background:#34c759;color:#fff;align-self:flex-end}
+.sms .meta{font-size:10.5px;color:var(--ink-faint);font-family:var(--mono);align-self:center}
+
+/* ============ AGENT VOICE DEMO CARDS ============ */
+.agent-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px}
+.agent-demo{border:1px solid var(--line);border-radius:var(--r-xl);background:#fff;padding:22px;display:flex;flex-direction:column;gap:12px;box-shadow:var(--sh-sm)}
+.agent-demo.playing{border-color:var(--violet-light);box-shadow:0 10px 34px -16px rgba(124,58,237,.5)}
+.ad-top{display:flex;align-items:center;gap:9px}
+.ad-top h3{font-size:17px;margin:0}
+.ad-top .tag{font-size:11px;font-weight:700;padding:3px 9px;border-radius:var(--r-pill);background:var(--surface-2);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em}
+.ad-top .tag.core{background:var(--grad);color:#fff}
+.ad-desc{font-size:13.5px;line-height:1.55;color:var(--ink-soft);margin:0}
+.ad-stage{display:flex;align-items:center;gap:12px;padding:12px;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--line)}
+.ad-wave{display:flex;align-items:flex-end;gap:3px;height:30px;width:54px;flex:none}
+.ad-wave i{flex:1;border-radius:var(--r-pill);background:var(--grad);height:22%}
+.agent-demo.playing .ad-wave i{animation:eq 1.2s ease-in-out infinite}
+.agent-demo.playing .ad-wave i:nth-child(1){animation-delay:0s}
+.agent-demo.playing .ad-wave i:nth-child(2){animation-delay:.1s}
+.agent-demo.playing .ad-wave i:nth-child(3){animation-delay:.2s}
+.agent-demo.playing .ad-wave i:nth-child(4){animation-delay:.3s}
+.agent-demo.playing .ad-wave i:nth-child(5){animation-delay:.2s}
+.agent-demo.playing .ad-wave i:nth-child(6){animation-delay:.1s}
+.agent-demo.playing .ad-wave i:nth-child(7){animation-delay:0s}
+.ad-play{display:inline-flex;align-items:center;gap:8px;border:0;background:var(--ink);color:#fff;font-family:var(--sans);font-weight:700;font-size:13px;padding:9px 16px;border-radius:var(--r-pill);cursor:pointer;min-height:40px}
+.ad-play:hover{background:var(--indigo-deep)}
+.ad-play .pi{width:0;height:0;border-style:solid;border-width:6px 0 6px 10px;border-color:transparent transparent transparent #fff}
+.agent-demo.playing .ad-play .pi{width:10px;height:10px;border:0;background:#fff;border-radius:1px}
+.ad-lang{font-size:12px;font-weight:600;color:var(--violet);margin-left:auto}
+.ad-script{font-size:13px;line-height:1.5;color:var(--ink-soft);min-height:20px;display:flex;flex-direction:column;gap:8px}
+.ad-script .ln{opacity:.35;transition:opacity .25s}
+.ad-script .ln.on{opacity:1;color:var(--ink)}
+.ad-script .ln .native{font-family:var(--indic);display:block}
+.ad-script .ln .gloss{font-style:italic;font-size:12px;color:var(--ink-faint);display:block;margin-top:2px}
+.ad-script .ln .lc{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:var(--violet);display:block;margin-bottom:3px}
+.agent-note{border:1px dashed var(--line-strong);border-radius:var(--r-xl);background:var(--surface);padding:22px;display:flex;flex-direction:column;justify-content:center;gap:8px}
+.agent-note h3{font-size:17px;margin:0}
+.agent-note p{font-size:13.5px;line-height:1.55;color:var(--ink-soft);margin:0}
+.agent-note .tiny{font-size:12px;color:var(--ink-faint)}
+
+@media(max-width:900px){.agent-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:680px){.agent-grid{grid-template-columns:1fr}.hero-preview{max-width:100%}}
+
+/* ============ HERO v2: two-column + device ============ */
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:50px;align-items:center;padding:74px 0 66px}
+.hero-copy .kick{margin-bottom:14px}
+.connect{margin-top:26px}
+.connect-lbl{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-faint);margin-bottom:10px}
+.hero-copy .cta-row{margin:0}
+.hero-copy .meta-row{margin-top:30px}
+
+.hero-stage{display:flex;justify-content:center}
+.device{width:300px;max-width:100%;background:#0d0a16;border-radius:44px;padding:11px;position:relative;box-shadow:0 40px 90px -30px rgba(40,24,90,.55),0 0 0 1px rgba(255,255,255,.04) inset;border:1px solid #221b35}
+.device-cam{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:54px;height:7px;background:#000;border-radius:6px;z-index:10}
+.device-screen{position:relative;border-radius:34px;overflow:hidden;height:572px;background:#fff}
+.scene{position:absolute;inset:0;opacity:0;transition:opacity .45s ease;display:flex;flex-direction:column;pointer-events:none}
+.scene.show{opacity:1;z-index:2;pointer-events:auto}
+.scene .anim{opacity:0;transform:translateY(9px)}
+.scene.play .anim{animation:msgin .42s cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes msgin{to{opacity:1;transform:none}}
+.scene.play .anim:nth-child(2){animation-delay:.15s}
+.scene.play .anim:nth-child(3){animation-delay:.55s}
+.scene.play .anim:nth-child(4){animation-delay:1.0s}
+.scene.play .anim:nth-child(5){animation-delay:1.5s}
+
+/* intro */
+.intro{align-items:center;justify-content:center;gap:24px;background:radial-gradient(120% 80% at 50% 18%,#f3efff 0%,#ffffff 70%)}
+.intro-wave{display:flex;align-items:flex-end;gap:6px;height:74px}
+.intro-wave i{width:9px;border-radius:7px;background:var(--grad);height:30%}
+.scene.show .intro-wave i{animation:eq 1.05s ease-in-out infinite}
+.intro-wave i:nth-child(1){animation-delay:0s}.intro-wave i:nth-child(2){animation-delay:.1s}.intro-wave i:nth-child(3){animation-delay:.2s}.intro-wave i:nth-child(4){animation-delay:.3s}.intro-wave i:nth-child(5){animation-delay:.2s}.intro-wave i:nth-child(6){animation-delay:.1s}.intro-wave i:nth-child(7){animation-delay:0s}
+.intro-cap{font-family:var(--serif);font-weight:600;font-size:19px;color:var(--ink);text-align:center;padding:0 24px}
+
+/* WhatsApp */
+.scr-wa{background:#efe7de}
+.wa-bar{display:flex;align-items:center;gap:9px;background:#008069;color:#fff;padding:13px 12px}
+.wa-back{font-size:20px;line-height:1}
+.wa-av{width:31px;height:31px;border-radius:50%;background:#fff;color:#008069;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+.wa-id b{display:block;font-size:14px;line-height:1.1}
+.wa-id span{font-size:11px;opacity:.85}
+.wa-act{margin-left:auto;font-size:13px;letter-spacing:3px;opacity:.92}
+.wa-body{flex:1;padding:14px 11px;display:flex;flex-direction:column;gap:8px;overflow:hidden}
+.wa-day{align-self:center;background:#fff;color:var(--ink-soft);font-size:9.5px;font-weight:600;padding:3px 11px;border-radius:8px;box-shadow:0 1px 1px rgba(0,0,0,.06)}
+.wmsg{max-width:82%;font-size:12px;line-height:1.4;padding:7px 10px 15px;border-radius:9px;position:relative;box-shadow:0 1px 1px rgba(0,0,0,.09)}
+.wmsg.in{background:#fff;align-self:flex-start;border-top-left-radius:2px}
+.wmsg.out{background:#d9fdd3;align-self:flex-end;border-top-right-radius:2px}
+.wmsg .ag{display:block;font-size:9.5px;font-weight:800;color:var(--violet);margin-bottom:2px}
+.wmsg .nat{display:block;font-family:var(--indic)}
+.wmsg .gl{display:block;font-style:italic;color:var(--ink-faint);font-size:10.5px}
+.wmsg .tm{position:absolute;right:9px;bottom:4px;font-size:8.5px;color:var(--ink-faint)}
+.wmsg.disc{background:#fff7da}
+.wmsg .ai{display:inline-flex;align-items:center;justify-content:center;background:var(--grad);color:#fff;font-size:8px;font-weight:800;padding:1px 5px;border-radius:6px;margin-right:5px;vertical-align:middle}
+.wmsg .src-in{display:block;color:var(--verified);font-size:9.5px;font-weight:700;margin-top:4px}
+.vn{display:flex;align-items:center;gap:7px}
+.vn .vp{width:22px;height:22px;border-radius:50%;background:#008069;color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px}
+.vn .vw{display:flex;align-items:center;gap:2px;height:16px}
+.vn .vw i{width:2.5px;background:#9aa6a0;border-radius:2px}
+.vn .vw i:nth-child(1){height:40%}.vn .vw i:nth-child(2){height:80%}.vn .vw i:nth-child(3){height:55%}.vn .vw i:nth-child(4){height:100%}.vn .vw i:nth-child(5){height:60%}.vn .vw i:nth-child(6){height:35%}
+.vn .vt{font-size:10px;color:var(--ink-faint)}
+.wa-input{display:flex;align-items:center;gap:8px;padding:8px 10px;background:#efe7de}
+.wa-plus{color:var(--ink-soft);font-size:17px}
+.wa-field{flex:1;background:#fff;border-radius:18px;padding:8px 13px;color:var(--ink-faint);font-size:12px}
+.wa-mic{width:33px;height:33px;border-radius:50%;background:#008069;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px}
+
+/* Call / IVR */
+.scr-call{background:linear-gradient(168deg,#2a2046 0%,#15101f 100%);color:#fff;align-items:center;padding:30px 18px 22px;gap:13px}
+.call-net{font-size:11px;color:#bdb5da;letter-spacing:.04em}
+.call-av{width:104px;height:104px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;margin-top:8px;box-shadow:0 0 0 8px rgba(255,255,255,.04)}
+.call-av .cw{display:flex;align-items:flex-end;gap:4px;height:44px}
+.call-av .cw i{width:6px;border-radius:5px;background:var(--violet-light);height:30%}
+.scene.show .call-av .cw i{animation:eq 1s ease-in-out infinite}
+.call-av .cw i:nth-child(odd){animation-delay:.12s}
+.call-name{font-family:var(--serif);font-weight:600;font-size:22px}
+.call-status{font-family:var(--mono);font-size:12px;color:#cfc9e6}
+.call-cap{align-self:stretch;display:flex;flex-direction:column;gap:9px;margin-top:8px;flex:1;overflow:hidden}
+.cl{font-size:11.5px;line-height:1.4;padding-left:11px;border-left:2px solid var(--violet-light)}
+.cl .who{display:block;font-size:8.5px;text-transform:uppercase;letter-spacing:.1em;color:#a79fc8;font-weight:800;margin-bottom:2px}
+.cl .nat{display:block;font-family:var(--indic)}
+.cl .gl{display:block;color:#b6b0cf;font-style:italic;font-size:10.5px;margin-top:1px}
+.cl.user{border-color:var(--canary)}
+.cl.user .who{color:var(--canary)}
+.call-ctrls{display:flex;gap:13px;justify-content:center;margin-top:auto}
+.cc{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.13);display:flex;align-items:center;justify-content:center;font-size:15px}
+.cc.end{background:#e5484d}
+
+/* SMS (iOS style) */
+.scr-sms{background:#fff}
+.sms-bar{display:flex;align-items:center;gap:6px;padding:11px 12px;border-bottom:1px solid #e6e6ea}
+.sms-back{color:#007aff;font-size:12px;flex:none}
+.sms-id{flex:1;display:flex;flex-direction:column;align-items:center}
+.sms-av{width:30px;height:30px;border-radius:50%;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px}
+.sms-id b{font-size:10.5px;font-weight:600;margin-top:2px;color:var(--ink)}
+.sms-i{color:#007aff;flex:none}
+.sms-body{flex:1;padding:14px 12px;display:flex;flex-direction:column;gap:7px;overflow:hidden}
+.sbub{max-width:80%;font-size:12px;line-height:1.38;padding:8px 12px;border-radius:18px}
+.sbub.in{background:#e9e9eb;color:#000;align-self:flex-start;border-bottom-left-radius:5px}
+.sbub.out{background:#0b93f6;color:#fff;align-self:flex-end;border-bottom-right-radius:5px}
+.sms-input{display:flex;align-items:center;gap:8px;padding:8px 10px;border-top:1px solid #e6e6ea}
+.sms-field{flex:1;border:1px solid var(--line-strong);border-radius:16px;padding:7px 12px;color:var(--ink-faint);font-size:12px}
+.sms-send{width:29px;height:29px;border-radius:50%;background:#0b93f6;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;flex:none}
+
+/* ============ AGENT CARDS v2 (full-card button) ============ */
+.agent-card{display:flex;flex-direction:column;align-items:center;text-align:center;gap:11px;border:1px solid var(--line);border-radius:var(--r-xl);background:#fff;padding:28px 20px 24px;cursor:pointer;font-family:inherit;color:var(--ink);position:relative;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;min-height:312px;width:100%}
+.agent-card:hover{transform:translateY(-4px);box-shadow:0 18px 44px -22px rgba(79,70,229,.45);border-color:var(--line-strong)}
+.agent-card:active{transform:translateY(-1px)}
+.agent-card:focus-visible{outline:2px solid var(--violet);outline-offset:3px}
+.agent-card.playing{border-color:transparent;box-shadow:0 0 0 2px var(--tone-solid),0 20px 46px -22px rgba(79,70,229,.5)}
+.ac-tag{position:absolute;top:15px;right:16px;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-faint)}
+.ac-tag.core{color:var(--tone-solid)}
+.ac-stage{width:98px;height:98px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;background:var(--tone-soft);margin-top:4px}
+.ac-wave{display:flex;align-items:flex-end;gap:4px;height:36px}
+.ac-wave i{width:5px;border-radius:4px;background:var(--tone);height:26%}
+.agent-card.playing .ac-wave i{animation:eq 1s ease-in-out infinite}
+.ac-wave i:nth-child(1){animation-delay:0s}.ac-wave i:nth-child(2){animation-delay:.1s}.ac-wave i:nth-child(3){animation-delay:.2s}.ac-wave i:nth-child(4){animation-delay:.3s}.ac-wave i:nth-child(5){animation-delay:.2s}.ac-wave i:nth-child(6){animation-delay:.1s}.ac-wave i:nth-child(7){animation-delay:0s}
+.ac-ico{position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);width:30px;height:30px;border-radius:50%;background:var(--tone-solid);display:flex;align-items:center;justify-content:center;box-shadow:0 5px 12px rgba(0,0,0,.2);transition:transform .15s ease}
+.ac-ico::before{content:"";border-style:solid;border-width:5px 0 5px 9px;border-color:transparent transparent transparent #fff;margin-left:2px}
+.agent-card:hover .ac-ico{transform:translateX(-50%) scale(1.08)}
+.agent-card.playing .ac-ico::before{border:0;width:9px;height:11px;margin:0;background:linear-gradient(90deg,#fff 0 3px,transparent 3px 6px,#fff 6px 9px)}
+.ac-title{font-weight:700;font-size:16.5px;margin-top:8px}
+.ac-desc{font-size:12.5px;color:var(--ink-soft);line-height:1.5;max-width:32ch}
+.ac-script{min-height:40px;font-size:12.5px;line-height:1.45;color:var(--ink);opacity:0;transition:opacity .3s ease;display:flex;flex-direction:column;gap:2px;margin-top:2px}
+.ac-script.vis{opacity:1}
+.ac-script .lc{font-size:9.5px;text-transform:uppercase;letter-spacing:.08em;font-weight:800;color:var(--tone-solid)}
+.ac-script .nat{font-family:var(--indic);display:block}
+.ac-script .gl{font-style:italic;color:var(--ink-faint);font-size:11.5px;display:block}
+.t-symptom{--tone:var(--grad);--tone-soft:#efeaff;--tone-solid:var(--indigo)}
+.t-knowledge{--tone:linear-gradient(135deg,#1A9F5A,#3ad07a);--tone-soft:#e3f6ec;--tone-solid:var(--verified)}
+.t-emergency{--tone:linear-gradient(135deg,#D93A40,#ff7a7e);--tone-soft:#fdeaeb;--tone-solid:var(--emergency)}
+.t-misinfo{--tone:linear-gradient(135deg,#D98209,#f6ab3c);--tone-soft:#fdf0db;--tone-solid:var(--caution)}
+.t-followup{--tone:linear-gradient(135deg,#7C3AED,#9D4EDD);--tone-soft:#f1e9ff;--tone-solid:var(--violet)}
+.agent-disclaimer{margin:24px auto 0;max-width:660px;text-align:center;font-size:12.5px;color:var(--ink-faint);line-height:1.55}
+
+/* ============ PARTNERS PAGE ============ */
+.page-hero{padding:62px 0 6px;border-bottom:1px solid var(--line)}
+.ph-title{font-family:var(--serif);font-weight:600;font-size:clamp(30px,5vw,46px);letter-spacing:-.02em;line-height:1.08;margin:10px 0 14px}
+.ph-lead{font-size:17px;color:var(--ink-soft);max-width:700px;line-height:1.6;margin-bottom:24px}
+
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:38px;padding:54px 0 48px}
+  .hero-stage{order:-1}
+}
+
+/* ============ HERO v3 (centered + ask box) ============ */
+.hero-center{text-align:center;max-width:760px;margin:0 auto;padding:78px 0 64px;display:flex;flex-direction:column;align-items:center}
+.hero-center .kick{margin-bottom:16px}
+.hero-center h1{font-size:clamp(34px,6vw,60px)}
+.askbox{display:flex;align-items:center;gap:8px;width:100%;max-width:640px;margin:30px auto 0;background:#fff;border:1.5px solid var(--line-strong);border-radius:var(--r-pill);padding:8px 8px 8px 20px;box-shadow:0 12px 34px -18px rgba(79,70,229,.4);transition:border-color .2s,box-shadow .2s}
+.askbox:focus-within{border-color:var(--violet);box-shadow:0 14px 40px -16px rgba(124,58,237,.5)}
+.askbox-input{flex:1;border:0;outline:0;font-family:var(--sans);font-size:16px;color:var(--ink);background:transparent;padding:8px 0}
+.askbox-input::placeholder{color:var(--ink-faint)}
+.askbox-mic{flex:none;width:42px;height:42px;border-radius:50%;border:0;background:var(--surface-2);color:var(--violet);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s}
+.askbox-mic:hover{background:#ece8fb}
+.askbox-send{flex:none;width:46px;height:46px;border-radius:50%;border:0;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 6px 16px -6px rgba(124,58,237,.7);transition:transform .15s}
+.askbox-send:hover{transform:scale(1.06)}
+.askbox-note{font-size:12.5px;color:var(--ink-faint);margin:14px auto 0;max-width:520px;line-height:1.5}
+.hero-pills{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:24px}
+.hero-pills .pill{background:var(--surface-2);border:1px solid var(--line)}
+
+/* ============ CHANNELS SECTION ============ */
+.ch-tabs{display:flex;gap:8px;justify-content:center;margin:28px 0 30px;flex-wrap:wrap}
+.ch-tab{font-family:var(--sans);font-size:14px;font-weight:700;color:var(--ink-soft);background:#fff;border:1px solid var(--line-strong);border-radius:var(--r-pill);padding:10px 20px;cursor:pointer;transition:.18s}
+.ch-tab:hover{border-color:var(--violet);color:var(--violet)}
+.ch-tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.ch-layout{display:grid;grid-template-columns:330px 1fr;gap:46px;align-items:center;max-width:920px;margin:0 auto}
+.ch-stage{display:flex;justify-content:center}
+.ch-side{display:flex;flex-direction:column;gap:20px}
+.ch-info h3{font-size:23px;font-family:var(--serif);font-weight:600;margin-bottom:8px}
+.ch-info p{font-size:15px;color:var(--ink-soft);line-height:1.6;margin-bottom:14px}
+.ch-points{list-style:none;padding:0;margin:0 0 18px;display:flex;flex-direction:column;gap:8px}
+.ch-points li{font-size:13.5px;color:var(--ink);padding-left:24px;position:relative;line-height:1.45}
+.ch-points li::before{content:"";position:absolute;left:0;top:5px;width:14px;height:14px;border-radius:50%;background:var(--tone-soft,#efeaff)}
+.ch-points li::after{content:"";position:absolute;left:4px;top:8px;width:6px;height:6px;border-radius:50%;background:var(--tone-solid,var(--violet))}
+.ch-demo-ctrl{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.ch-play{display:inline-flex;align-items:center;gap:9px;border:0;background:var(--ink);color:#fff;font-family:var(--sans);font-weight:700;font-size:14px;padding:11px 20px;border-radius:var(--r-pill);cursor:pointer;min-height:44px}
+.ch-play:hover{background:var(--indigo-deep)}
+.ch-play .pi{width:0;height:0;border-style:solid;border-width:6px 0 6px 11px;border-color:transparent transparent transparent #fff}
+.ch-play.playing .pi{border:0;width:10px;height:11px;background:linear-gradient(90deg,#fff 0 3px,transparent 3px 7px,#fff 7px 10px)}
+.ch-scenarios{display:flex;gap:7px;flex-wrap:wrap}
+.ch-chip{font-size:12.5px;font-weight:600;color:var(--ink-soft);background:#fff;border:1px solid var(--line-strong);border-radius:var(--r-pill);padding:7px 13px;cursor:pointer;transition:.15s}
+.ch-chip:hover{border-color:var(--violet);color:var(--violet)}
+.ch-chip.active{background:var(--tone-soft,#efeaff);border-color:var(--tone-solid,var(--violet));color:var(--tone-solid,var(--violet))}
+.ch-voicenote{font-size:11.5px;color:var(--ink-faint);line-height:1.5}
+.ch-tab[data-ch="wa"]{--tone-soft:#e3f6ec;--tone-solid:#0B6B5E}
+.ch-layout{--tone-soft:#e3f6ec;--tone-solid:#0B6B5E}
+.ch-layout.t-ivr{--tone-soft:#f1e9ff;--tone-solid:var(--violet)}
+.ch-layout.t-sms{--tone-soft:#e6f0ff;--tone-solid:#0b76d6}
+
+/* ---- channel screens (rendered by JS) ---- */
+.cscreen{height:100%;display:flex;flex-direction:column;background:#fff}
+/* WhatsApp */
+.cscreen.wa{background:#E7E0D4}
+.wa-status{height:26px;background:#0B6B5E;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 16px;font-size:11px;font-weight:600;flex:none}
+.wa-status .ic{letter-spacing:2px}
+.wa-top{background:#0B6B5E;color:#fff;display:flex;align-items:center;gap:10px;padding:8px 12px;flex:none}
+.wa-bk{font-size:19px}
+.wa-av{width:34px;height:34px;border-radius:50%;background:#fff;color:#0B6B5E;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:700;font-size:16px}
+.wa-meta b{display:block;font-size:14px;line-height:1.1}
+.wa-meta span{font-size:11px;opacity:.85}
+.wa-vbadge{margin-left:auto;font-size:9.5px;font-weight:700;background:rgba(255,255,255,.2);padding:3px 7px;border-radius:6px}
+.wa-thread{flex:1;overflow-y:auto;padding:14px 11px;display:flex;flex-direction:column;gap:8px}
+.wb{max-width:84%;font-size:12px;line-height:1.4;padding:7px 10px 16px;border-radius:9px;position:relative;box-shadow:0 1px 1px rgba(0,0,0,.09);transition:box-shadow .2s}
+.wb.in{background:#fff;align-self:flex-start;border-top-left-radius:2px}
+.wb.out{background:#D6F3C9;align-self:flex-end;border-top-right-radius:2px}
+.wb.sys{align-self:center;background:#fdf6e3;border:1px solid #efe3c4;color:#7a6a3a;font-size:10.5px;text-align:center;max-width:90%;padding:7px 11px;border-radius:9px;box-shadow:none}
+.wb.speaking{box-shadow:0 0 0 2px var(--violet-light),0 1px 1px rgba(0,0,0,.09)}
+.wb .wag{display:block;font-size:9.5px;font-weight:800;color:#0B6B5E;margin-bottom:2px}
+.wb.tone-emergency .wag{color:var(--emergency)}
+.wb.tone-caution .wag{color:var(--caution)}
+.wb.tone-emergency{background:#fdecec}
+.wb.tone-caution{background:#fdf4e6}
+.wb .wnat{display:block;font-family:var(--indic)}
+.wb .wgl{display:block;font-style:italic;color:var(--ink-faint);font-size:10.5px;margin-top:2px}
+.wb .wt{position:absolute;right:8px;bottom:4px;font-size:8.5px;color:#8a8a8a}
+.wb .fwd{display:block;font-size:9.5px;color:var(--ink-faint);font-style:italic;margin-bottom:3px}
+.vnote{display:flex;align-items:center;gap:8px;min-width:150px}
+.vnote .vp{width:24px;height:24px;border-radius:50%;background:#0B6B5E;color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;flex:none}
+.vnote .vbars{flex:1;display:flex;align-items:center;gap:2px;height:16px}
+.vnote .vbars i{flex:1;background:#9aa6a0;border-radius:2px}
+.vnote .vbars i:nth-child(odd){height:55%}.vnote .vbars i:nth-child(even){height:90%}
+.vnote .vdur{font-size:10px;color:#7a7a7a}
+.wa-bar2{flex:none;background:#E7E0D4;padding:8px 11px;display:flex;align-items:center;gap:8px}
+.wa-plus{color:var(--ink-soft);font-size:17px}
+.wa-fld{flex:1;background:#fff;border-radius:100px;padding:8px 13px;font-size:12px;color:#9a9a9a}
+.wa-mic2{width:33px;height:33px;border-radius:50%;background:#0B6B5E;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px}
+/* Call */
+.cscreen.call{background:linear-gradient(168deg,#2a2046,#15101f);color:#fff;align-items:center;padding:24px 16px 18px;gap:10px}
+.cl-net{font-size:11px;color:#bdb5da}
+.cl-av{width:84px;height:84px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 7px rgba(255,255,255,.04);margin-top:4px}
+.cl-av .cw{display:flex;align-items:flex-end;gap:3px;height:36px}
+.cl-av .cw i{width:5px;border-radius:4px;background:var(--violet-light);height:30%;animation:eq 1s ease-in-out infinite}
+.cl-av .cw i:nth-child(odd){animation-delay:.12s}
+.cl-name{font-family:var(--serif);font-weight:600;font-size:19px}
+.cl-timer{font-family:var(--mono);font-size:12px;color:#cfc9e6}
+.cl-caps{align-self:stretch;flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:8px;margin-top:6px}
+.capln{font-size:11px;line-height:1.4;padding-left:10px;border-left:2px solid var(--violet-light);opacity:.5;transition:opacity .25s}
+.capln.speaking{opacity:1}
+.capln.user{border-color:var(--canary)}
+.capln .capwho{display:block;font-size:8.5px;text-transform:uppercase;letter-spacing:.1em;color:#a79fc8;font-weight:800}
+.capln.user .capwho{color:var(--canary)}
+.capln .capnat{display:block;font-family:var(--indic)}
+.capln .capgl{display:block;color:#b6b0cf;font-style:italic;font-size:10px}
+.cl-ctrls{display:flex;gap:11px;justify-content:center;margin-top:auto}
+.cl-ctrls .cc{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.13);display:flex;align-items:center;justify-content:center;font-size:14px}
+.cl-ctrls .cc.end{background:#e5484d}
+/* SMS */
+.cscreen.sms{background:#fff}
+.sm-status{height:26px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;font-size:11px;font-weight:600;color:var(--ink);flex:none}
+.sm-top{display:flex;align-items:center;gap:6px;padding:9px 12px;border-bottom:1px solid #e6e6ea;flex:none}
+.sm-bk{color:#007aff;font-size:12px}
+.sm-id{flex:1;display:flex;flex-direction:column;align-items:center}
+.sm-av{width:28px;height:28px;border-radius:50%;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px}
+.sm-id b{font-size:10.5px;font-weight:600;margin-top:2px}
+.sm-i{color:#007aff}
+.sm-body{flex:1;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:6px}
+.sb{max-width:80%;font-size:12px;line-height:1.38;padding:8px 12px;border-radius:18px;position:relative;transition:box-shadow .2s}
+.sb.in{background:#e9e9eb;color:#000;align-self:flex-start;border-bottom-left-radius:5px}
+.sb.out{background:#0b93f6;color:#fff;align-self:flex-end;border-bottom-right-radius:5px}
+.sb.speaking{box-shadow:0 0 0 2px var(--violet-light)}
+.sm-bar{flex:none;display:flex;align-items:center;gap:8px;padding:8px 10px;border-top:1px solid #e6e6ea}
+.sm-fld{flex:1;border:1px solid var(--line-strong);border-radius:16px;padding:7px 12px;color:var(--ink-faint);font-size:12px}
+.sm-send{width:28px;height:28px;border-radius:50%;background:#0b93f6;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px}
+
+/* ============ NEWSLETTER ============ */
+.sub-form{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.sub-prefix{color:#fff;font-weight:700;font-size:15px;opacity:.9}
+.sub-input{border:0;border-radius:var(--r-pill);padding:13px 18px;font-size:15px;font-family:var(--sans);min-width:230px;color:var(--ink)}
+.sub-input:focus{outline:2px solid var(--canary);outline-offset:1px}
+.sub-msg{margin-top:14px;color:#fff;font-size:14px;font-weight:600}
+
+@media(max-width:900px){
+  .ch-layout{grid-template-columns:1fr;gap:30px}
+  .ch-stage{order:-1}
+}
+
+/* hero animated voicewave (above ask box) */
+.hero-wave{display:flex;align-items:flex-end;justify-content:center;gap:5px;height:46px;margin:26px auto 4px}
+.hero-wave i{width:7px;border-radius:6px;background:var(--grad);height:28%;animation:eq 1.1s ease-in-out infinite}
+.hero-wave i:nth-child(1){animation-delay:0s}.hero-wave i:nth-child(2){animation-delay:.09s}.hero-wave i:nth-child(3){animation-delay:.18s}.hero-wave i:nth-child(4){animation-delay:.27s}.hero-wave i:nth-child(5){animation-delay:.36s}.hero-wave i:nth-child(6){animation-delay:.27s}.hero-wave i:nth-child(7){animation-delay:.18s}.hero-wave i:nth-child(8){animation-delay:.09s}.hero-wave i:nth-child(9){animation-delay:0s}
+.hero-center .askbox{margin-top:14px}
+@media(prefers-reduced-motion: reduce){.hero-wave i{animation:none;height:46%}}
+
+/* ===== HERO refinements ===== */
+.hero-center{max-width:660px;padding-left:24px;padding-right:24px}
+.hero-center h1{max-width:500px;margin-left:auto;margin-right:auto}
+.hero-wave{height:92px;gap:9px;margin:32px auto 8px}
+.hero-wave i{width:13px;border-radius:8px}
+.hero-pills{gap:12px;margin-top:28px}
+.hero-pills .pill{background:var(--surface);border:1px solid var(--line);color:var(--ink-soft);padding:10px 16px;border-radius:var(--r-pill);font-size:13px;box-shadow:var(--sh-sm);display:inline-flex;align-items:center;gap:9px;font-weight:500}
+.hero-pills .pill::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--grad);flex:none}
+.hero-pills .pill b{color:var(--ink);font-weight:700}
+
+/* ===== CHANNELS: text left, phone right ===== */
+.ch-layout{grid-template-columns:1fr 330px;align-items:center}
+.ch-side{gap:16px}
+.ch-scenarios{margin:2px 0}
+.ch-more{display:flex;flex-direction:column;gap:0;align-items:flex-start}
+.ch-more .ch-points{margin-bottom:16px}
+.ch-info h3{margin-bottom:10px}
+
+/* on-device play/pause + hint */
+.ch-stage .device{position:relative}
+.ch-hint{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);z-index:5;font-size:12.5px;font-weight:600;color:var(--ink-soft);background:rgba(255,255,255,.9);padding:8px 14px;border-radius:var(--r-pill);box-shadow:var(--sh-sm);pointer-events:none;white-space:nowrap}
+.ch-fab{position:absolute;left:50%;bottom:60px;transform:translateX(-50%);z-index:6;width:58px;height:58px;border-radius:50%;border:0;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 12px 26px -8px rgba(124,58,237,.75);transition:transform .15s}
+.ch-fab:hover{transform:translateX(-50%) scale(1.07)}
+.ch-fab:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.ch-fab .pi{width:0;height:0;border-style:solid;border-width:8px 0 8px 14px;border-color:transparent transparent transparent #fff;margin-left:3px}
+.ch-fab.playing .pi{border:0;width:12px;height:15px;margin:0;background:linear-gradient(90deg,#fff 0 4px,transparent 4px 8px,#fff 8px 12px)}
+
+/* no scroll inside the phone, newest message stays visible */
+.wa-thread{overflow:hidden;justify-content:flex-end}
+.sm-body{overflow:hidden;justify-content:flex-end}
+.cl-caps{overflow:hidden}
+
+/* appear-on-play */
+@keyframes popin{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+.wb.appear,.sb.appear,.capln.appear{animation:popin .32s ease both}
+.capln.appear{opacity:1}
+
+/* logo-mark avatars (consistent voicewave) */
+.mini-wave{display:flex;align-items:flex-end;gap:2px;height:17px}
+.mini-wave i{width:3px;border-radius:2px;background:var(--grad)}
+.mini-wave i:nth-child(1){height:45%}.mini-wave i:nth-child(2){height:80%}.mini-wave i:nth-child(3){height:100%}.mini-wave i:nth-child(4){height:65%}.mini-wave i:nth-child(5){height:40%}
+.wa-av{background:#fff;display:flex;align-items:center;justify-content:center}
+.sm-av{background:#fff;display:flex;align-items:center;justify-content:center}
+
+@media(max-width:900px){
+  .ch-layout{grid-template-columns:1fr;gap:28px}
+  .ch-stage{order:-1}
+  .ch-side{align-items:center;text-align:center}
+  .ch-more{align-items:center}
+  .ch-scenarios{justify-content:center}
+}
+
+/* ===== FINAL PASS ===== */
+/* hero: title on two lines, pills one row on desktop */
+.hero-center{max-width:820px}
+.hero-center h1{max-width:560px}
+.hero-pills{flex-wrap:nowrap;max-width:none}
+@media(max-width:680px){.hero-pills{flex-wrap:wrap}}
+
+/* channels: one soft card */
+.ch-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-xl);padding:34px 38px;max-width:1000px;margin:30px auto 0;box-shadow:var(--sh-sm)}
+.ch-card .ch-tabs{margin:0 0 30px}
+.ch-card .ch-layout{max-width:none}
+@media(max-width:680px){.ch-card{padding:22px 16px;border-radius:var(--r-lg)}}
+
+/* avatar: 7 bars in logo proportions */
+.mini-wave{gap:1.5px;height:18px}
+.mini-wave i{width:2.5px}
+.mini-wave i:nth-child(1){height:36%}
+.mini-wave i:nth-child(2){height:62%}
+.mini-wave i:nth-child(3){height:88%}
+.mini-wave i:nth-child(4){height:46%}
+.mini-wave i:nth-child(5){height:100%}
+.mini-wave i:nth-child(6){height:68%}
+.mini-wave i:nth-child(7){height:36%}
+
+/* gloss-only main text in WA bubbles */
+.wb .wmain{display:block}
+
+/* play control: bottom-right, above the input bar, off the bubbles */
+.ch-fab{left:auto;right:14px;bottom:70px;transform:none;width:52px;height:52px}
+.ch-fab:hover{transform:scale(1.07)}
+.ch-hint{top:auto;bottom:132px;left:50%;transform:translateX(-50%)}
+
+/* voice-note play glyph alignment */
+.vnote .vp{font-size:8px;padding-left:2px}
+
+/* ===== POLISH PASS 2 ===== */
+/* play/pause centered on the phone; fades while playing so chat stays readable */
+.ch-fab{left:50%;top:50%;right:auto;bottom:auto;transform:translate(-50%,-50%)}
+.ch-fab:hover{transform:translate(-50%,-50%) scale(1.07)}
+.ch-fab.playing{opacity:.32}
+.ch-fab.playing:hover,.ch-fab.playing:focus-visible{opacity:1}
+.ch-hint{top:calc(50% + 52px);bottom:auto}
+
+/* tabs as one segmented control */
+.ch-tabs{display:inline-flex;gap:4px;background:#fff;border:1px solid var(--line-strong);border-radius:var(--r-pill);padding:5px;margin:0 auto 30px;box-shadow:var(--sh-sm)}
+.ch-card .ch-tabs{display:flex;max-width:480px}
+.ch-tab{flex:1;border:0;background:transparent;padding:10px 14px;white-space:nowrap}
+.ch-tab:hover{color:var(--violet);border:0}
+.ch-tab.active{background:var(--ink);color:#fff}
+
+/* newsletter: left-aligned, joined field with country code inside */
+.band{text-align:left}
+.band h2,.band p{margin-left:0;margin-right:0}
+.sub-form{justify-content:flex-start}
+.sub-field{display:flex;align-items:center;background:#fff;border-radius:var(--r-pill);overflow:hidden}
+.sub-code{border:0;outline:0;background:transparent;font-family:var(--sans);font-size:15px;font-weight:700;color:var(--ink);padding:13px 8px 13px 16px;cursor:pointer;appearance:auto}
+.sub-field .sub-input{border-radius:0;min-width:200px;padding-left:8px}
+.sub-field:focus-within{outline:2px solid var(--canary);outline-offset:1px}
+.sub-field .sub-input:focus{outline:none}
+.sub-msg{text-align:left}
+@media(max-width:680px){
+  .ch-card .ch-tabs{max-width:none}
+  .ch-tab{padding:10px 8px;font-size:12.5px}
+  .sub-form{justify-content:flex-start}
+  .sub-field{flex:1;min-width:0}
+  .sub-field .sub-input{min-width:0;flex:1}
+}
+
+/* ===== POLISH PASS 3 ===== */
+/* hero title: exactly two lines on desktop */
+.hero-center h1{max-width:none}
+@media(max-width:680px){.h1br{display:none}}
+
+/* channel card aligns with the section title edge */
+.ch-card{max-width:none;margin-left:0;margin-right:0}
+.ch-card .ch-tabs{margin-left:0}
+
+/* info title aligns with the top of the mockup */
+.ch-layout{align-items:start}
+.ch-info h3{margin-top:0}
+
+/* phone + scenario chips stacked, chips under the mockup */
+.ch-stage{flex-direction:column;align-items:center;gap:18px}
+.ch-stage .ch-scenarios{justify-content:center;margin:0}
+@media(max-width:900px){
+  .ch-side{align-items:flex-start;text-align:left}
+  .ch-more{align-items:flex-start}
+}
+
+.page[hidden]{display:none !important;}
 </style>
 </head>
 <body>
-<div class="layout">
+<header class="nav">
+  <div class="wrap row">
+    <a href="#" data-nav="index" class="wordmark" aria-label="MedAI home">
+      <svg class="mk" viewBox="84 164 348 188" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MedAI voice mark"><defs><linearGradient id="mgNav" x1="96" y1="176" x2="416" y2="336" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4F46E5"/><stop offset=".58" stop-color="#7C3AED"/><stop offset="1" stop-color="#9D4EDD"/></linearGradient></defs><g fill="url(#mgNav)"><path d="M96 320V288C96 279.163 103.163 272 112 272C120.837 272 128 279.163 128 288V320C128 328.837 120.837 336 112 336C103.163 336 96 328.837 96 320Z"/><path d="M144 320L144 240C144 231.163 151.163 224 160 224C168.837 224 176 231.163 176 240V320C176 328.837 168.837 336 160 336C151.163 336 144 328.837 144 320Z"/><path d="M192 320L192 192C192 183.163 199.163 176 208 176C216.837 176 224 183.163 224 192V320C224 328.837 216.837 336 208 336C199.163 336 192 328.837 192 320Z"/><path d="M240 288V240C240 231.163 247.163 224 256 224C264.837 224 272 231.163 272 240V288C272 296.837 264.837 304 256 304C247.163 304 240 296.837 240 288Z"/><path d="M288.002 319.75L290.002 191.75C290.14 182.915 297.414 175.864 306.25 176.002C315.085 176.14 322.136 183.415 321.998 192.25L319.998 320.25C319.86 329.085 312.585 336.136 303.75 335.998C294.915 335.86 287.864 328.586 288.002 319.75Z"/><path d="M336.005 319.601L338.005 239.6C338.226 230.766 345.566 223.784 354.4 224.005C363.234 224.226 370.216 231.566 369.995 240.4L367.995 320.4C367.774 329.234 360.434 336.216 351.6 335.995C342.766 335.775 335.784 328.434 336.005 319.601Z"/><path d="M384 320V288C384 279.163 391.163 272 400 272C408.837 272 416 279.163 416 288V320C416 328.837 408.837 336 400 336C391.163 336 384 328.837 384 320Z"/></g></svg>
+      <span class="tx">Med<i>AI</i></span>
+    </a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span></button>
+    <nav class="links" aria-label="Primary">
+      <a href="#" data-nav="index" class="active">Home</a>
+      <a href="#" data-nav="articles">Articles</a>
+      <a href="#" data-nav="partners">For partners</a>
+      <a href="#" data-nav="faqs">FAQs</a>
+      <a href="#" data-nav="contact">Contact</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<div class="page" id="page-index" data-page="index">
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-center">
+    <div class="kick">Har Awaaz, Swasth Bharat, every voice, a healthier India</div>
+    <h1>Trusted health guidance<br class="h1br"> for <span class="g">every voice</span>.</h1>
+    <div class="hero-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <form class="askbox" id="askBox" autocomplete="off">
+      <input class="askbox-input" id="askInput" type="text" placeholder="Tell me what is happening..." aria-label="Ask MedAI">
+      <button type="button" class="askbox-mic" id="askMic" aria-label="Voice input"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
+      <button type="submit" class="askbox-send" aria-label="Send"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </form>
+    <p class="askbox-note" id="askNote">MedAI is an AI health assistant, not a doctor. It shares verified information and can guide you to care.</p>
+    <div class="hero-pills">
+      <span class="pill"><b>Available</b> on WhatsApp, Call and SMS</span>
+      <span class="pill"><b>100%</b> cited sources</span>
+      <span class="pill"><b>Voice-first</b> in your language</span>
+    </div>
+  </div>
+</section>
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar" id="sidebar" aria-label="Conversations">
-    <div class="side-head">
-      <svg class="logo" viewBox="84 164 348 188" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MedAI">
-        <defs><linearGradient id="mg" x1="96" y1="176" x2="416" y2="336" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4F46E5"/><stop offset=".58" stop-color="#7C3AED"/><stop offset="1" stop-color="#9D4EDD"/></linearGradient></defs>
-        <g fill="url(#mg)">
+<!-- CHANNELS -->
+<section class="section" id="channels">
+  <div class="wrap">
+    <div class="eyebrow">How you connect</div>
+    <h2 class="s-title">Three ways in. The same verified guidance.</h2>
+    <p class="s-intro">No app and no data plan. Use the channel you already have. Press play to watch a real conversation, with voice.</p>
+    <div class="ch-card">
+    <div class="ch-tabs" role="tablist" id="chTabs">
+      <button class="ch-tab active" data-ch="wa" role="tab" aria-selected="true">Chat on WhatsApp</button>
+      <button class="ch-tab" data-ch="ivr" role="tab" aria-selected="false">Call on number</button>
+      <button class="ch-tab" data-ch="sms" role="tab" aria-selected="false">Text on SMS</button>
+    </div>
+    <div class="ch-layout">
+      <div class="ch-side">
+        <div class="ch-info" id="chInfo"></div>
+        <div class="ch-more" id="chMore"></div>
+        <p class="ch-voicenote">Voices use your device speech engine. Quality varies by the languages installed.</p>
+      </div>
+      <div class="ch-stage">
+        <div class="device">
+          <span class="device-cam"></span>
+          <div class="device-screen" id="chScreen"></div>
+          <div class="ch-hint" id="chHint">Press play to see it live</div>
+          <button class="ch-fab" id="chFab" type="button" aria-label="Play demo"><span class="pi"></span></button>
+        </div>
+        <div class="ch-scenarios" id="chScenarios" role="tablist" aria-label="Scenarios"></div>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO IT IS FOR -->
+<section class="section" style="background:var(--surface)">
+  <div class="wrap">
+    <div class="eyebrow">Who it is for</div>
+    <h2 class="s-title">Built for the people the internet usually skips.</h2>
+    <p class="s-intro">Low literacy, low bandwidth, and a shared phone are the starting conditions, not edge cases. The product is designed around four real people.</p>
+    <div class="grid g4">
+      <div class="persona"><div class="ph"><span class="pa">L</span><div><div class="pn">Lakshmi Devi</div><div class="pm">34 / Rural Tamil Nadu</div></div></div><div class="pm">Homemaker &middot; Tamil &middot; shared smartphone &middot; basic literacy</div><div class="pq">"I need simple and trustworthy health advice in my own language."</div><div class="pl">Wants to know home care versus a clinic visit, in Tamil.</div></div>
+      <div class="persona"><div class="ph"><span class="pa">R</span><div><div class="pn">Ramesh Yadav</div><div class="pm">67 / Rural Uttar Pradesh</div></div></div><div class="pm">Retired farmer &middot; Hindi &middot; basic phone &middot; low literacy</div><div class="pq">"Talking is easier than reading health information."</div><div class="pl">Manages diabetes and BP by voice, cannot use complex apps.</div></div>
+      <div class="persona"><div class="ph"><span class="pa">S</span><div><div class="pn">Sunita Kumari</div><div class="pm">40 / Bihar</div></div></div><div class="pm">ASHA worker &middot; Hindi and Maithili &middot; smartphone</div><div class="pq">"I need a trusted tool that helps me guide my community."</div><div class="pl">Verifies claims and cuts misinformation for her village.</div></div>
+      <div class="persona"><div class="ph"><span class="pa">P</span><div><div class="pn">Priya Sharma</div><div class="pm">31 / Maharashtra</div></div></div><div class="pm">Private employee &middot; Marathi &middot; smartphone</div><div class="pq">"I need quick and reliable health guidance for my family."</div><div class="pl">Supports parents remotely and checks claims in family groups.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SUB-BRANDS -->
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow">The MedAI family</div>
+    <h2 class="s-title">One brand, five jobs.</h2>
+    <p class="s-intro">Each sub-brand shares the wordmark and the rules. Each takes one tint from the palette, never a new colour.</p>
+    <div class="subgrid">
+      <div class="subbrand"><div class="ic" style="background:var(--grad)">V</div><b>MedAI Voice</b><span>Voice symptom guidance</span></div>
+      <div class="subbrand"><div class="ic" style="background:var(--caution)">Vf</div><b>MedAI Verify</b><span>Misinformation checks</span></div>
+      <div class="subbrand"><div class="ic" style="background:var(--verified)">C</div><b>MedAI Care</b><span>Chronic disease support</span></div>
+      <div class="subbrand"><div class="ic" style="background:var(--indigo-deep)">Cn</div><b>MedAI Connect</b><span>Facility discovery</span></div>
+      <div class="subbrand"><div class="ic" style="background:var(--violet)">Cm</div><b>MedAI Community</b><span>ASHA and ANM support</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SAFETY -->
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow">The rules we never break</div>
+    <h2 class="s-title">Three lines MedAI always says.</h2>
+    <p class="s-intro">These are commitments, not copy. They show up as fixed parts of the conversation, every time they apply.</p>
+    <div class="grid g3">
+      <div class="card"><span class="badge b-ai">AI</span><p style="margin-top:12px">"I am an AI assistant, not a doctor. I share verified health information and can guide you to care."</p></div>
+      <div class="card"><span class="badge b-verified"><span aria-hidden="true">&#10003;</span> Source</span><p style="margin-top:12px">"Source: WHO and MOHFW." Answers are cited only from WHO, MOHFW, or the National Health Portal.</p></div>
+      <div class="card"><span class="badge b-emergency"><span aria-hidden="true">&#9888;</span> Escalate</span><p style="margin-top:12px">"This may be an emergency. Call 108 now." Red-flag symptoms skip everything else.</p></div>
+    </div>
+    <div class="note" style="margin-top:24px"><b>On distress.</b> If someone is in crisis, MedAI routes to a human, not a chatbot. Tele-MANAS 14416 and KIRAN 1800-599-0019 are spoken and sent, every time.</div>
+  </div>
+</section>
+
+
+<!-- NEWSLETTER -->
+<section class="section" id="subscribe">
+  <div class="wrap">
+    <div class="band">
+      <h2>Get one verified health tip a week on WhatsApp.</h2>
+      <p>Seasonal alerts, myth-busts, and simple care reminders in plain language. No spam, no charges. Reply STOP anytime to leave.</p>
+      <form class="sub-form" id="subForm" autocomplete="off">
+        <div class="sub-field">
+          <select class="sub-code" id="subCode" aria-label="Country code">
+            <option value="+91" selected>+91</option>
+            <option value="+880">+880</option>
+            <option value="+977">+977</option>
+            <option value="+94">+94</option>
+          </select>
+          <input class="sub-input" id="subPhone" type="tel" inputmode="numeric" placeholder="WhatsApp number" aria-label="WhatsApp number">
+        </div>
+        <button class="btn btn-accent" type="submit">Subscribe</button>
+      </form>
+      <p class="sub-msg" id="subMsg" hidden></p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+</div>
+<div class="page" id="page-articles" hidden data-page="articles">
+<section class="section tight">
+  <div class="wrap">
+    <div class="eyebrow">Health library</div>
+    <h2 class="s-title">Simple answers you can read aloud.</h2>
+    <p class="s-intro">Every article here is written in plain language and grounded in WHO, the Ministry of Health and Family Welfare, or the National Health Portal. MedAI is an AI, not a doctor. These pages inform a decision, they do not replace a clinic visit.</p>
+
+    <div class="filterbar" role="tablist" aria-label="Filter articles">
+      <button class="chip on" data-filter="all">All</button>
+      <button class="chip" data-filter="symptoms">Symptoms and care</button>
+      <button class="chip" data-filter="chronic">Diabetes and BP</button>
+      <button class="chip" data-filter="maternal">Mother and child</button>
+      <button class="chip" data-filter="seasonal">Seasonal</button>
+      <button class="chip" data-filter="verify">Myth check</button>
+    </div>
+
+    <div class="art-grid" id="artGrid">
+      <button class="art" data-art="fever" data-cat="symptoms"><div class="top"><span class="badge b-verified">Symptoms</span></div><div class="body"><h3>Fever in a child: when home care is enough</h3><p class="ex">Most childhood fevers settle at home. Here is what helps, and the three signs that mean go now.</p><div class="foot"><span class="source"><span aria-hidden="true">&#10003;</span> WHO + MOHFW</span></div></div></button>
+      <button class="art" data-art="ors" data-cat="symptoms"><div class="top"><span class="badge b-verified">Symptoms</span></div><div class="body"><h3>Loose motions and ORS: stop dehydration early</h3><p class="ex">Diarrhoea is dangerous mainly because of water loss. ORS after every stool is the simple fix.</p><div class="foot"><span class="source"><span aria-hidden="true">&#10003;</span> MOHFW + WHO</span></div></div></button>
+      <button class="art" data-art="cough" data-cat="symptoms"><div class="top"><span class="badge b-verified">Symptoms</span></div><div class="body"><h3>Cough and cold: simple care and the warning signs</h3><p class="ex">A cold runs its course in a week. Learn the few signs that mean it is more than a cold.</p><div class="foot"><span class="source"><span aria-hidden="true">&#10003;</span> NHP + WHO</span></div></div></button>
+      <button class="art" data-art="bp" data-cat="chronic"><div class="top"><span class="badge b-verified">Diabetes and BP</span></div><div class="body"><h3>Living with high blood pressure</h3><p class="ex">Small daily habits do most of the work. Salt, walking, and taking your medicine on time.</p><div class="foot"><span class="source"><span aria-hidden="true">&#10003;</span> NHP + MOHFW</span></div></div></button>
+      <button class="art" data-art="diabetes" data-cat="chronic"><div class="top"><span class="badge b-verified">Diabetes and BP</span></div><div class="body"><h3>Diabetes basics: food, feet, and check-ups</h3><p class="ex">Three habits keep diabetes steady. Eat in a rhythm, check your feet, and keep your appointments.</p><div class="foot"><span class="source"><span aria-hidden="true">&#10003;</span> NHP</span></div></div></button>
+      <button class="art" data-art="pregnancy" data-cat="maternal"><div class="top"><span class="badge b-caution">Mother and child</span></div><div class="body"><h3>Danger signs in pregnancy: when to go now</h3><p class="ex">Pregnancy is usually safe, but a few signs need a hospital the same hour. Know them.</p><div class="foot"><span class="source"><span aria-hidden="true">&#10003;</span> MOHFW + WHO</span></div></div></button>
+      <button class="art" data-art="dengue" data-cat="seasonal"><div class="top"><span class="badge b-caution">Seasonal</span></div><div class="body"><h3>Dengue and the monsoon</h3><p class="ex">Dengue spreads from clean standing water near the home. Empty it weekly, and watch for warning signs.</p><div class="foot"><span class="source"><span aria-hidden="true">&#10003;</span> MOHFW + NHP</span></div></div></button>
+      <button class="art" data-art="myth" data-cat="verify"><div class="top"><span class="badge b-emergency">Myth check</span></div><div class="body"><h3>"Lemon and hot water cures everything"</h3><p class="ex">A look at common WhatsApp health forwards, and how MedAI marks them true, misleading, or false.</p><div class="foot"><span class="source"><span aria-hidden="true">&#10003;</span> WHO</span></div></div></button>
+    </div>
+  </div>
+</section>
+
+<!-- Reader modal -->
+<div class="modal" id="artModal" role="dialog" aria-modal="true" aria-label="Article">
+  <div class="sheet">
+    <button class="x" aria-label="Close article">&times;</button>
+    <div class="sheet-body"></div>
+  </div>
+</div>
+</div>
+<div class="page" id="page-partners" hidden data-page="partners">
+<section class="page-hero">
+  <div class="wrap">
+    <div class="eyebrow">For partners</div>
+    <h1 class="ph-title">Bring verified health guidance to your district.</h1>
+    <p class="ph-lead">MedAI runs the platform, the AI, and the verified knowledge base. You bring the reach through ASHA networks, primary health centres, and telecom rails. Together we put trustworthy, non-diagnostic health guidance in the hands of families who are usually skipped by digital health.</p>
+    <div class="cta-row">
+      <a href="#" data-nav="contact" class="btn btn-primary">Talk to the team</a>
+      <a href="#" data-nav="faqs" class="btn btn-secondary">Read the FAQs</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow">Who we work with</div>
+    <h2 class="s-title">Four kinds of partner, one shared goal.</h2>
+    <p class="s-intro">The end user never pays for core guidance. Funding comes from the institutions whose mandate is public health, so the family on a shared phone gets verified answers for free.</p>
+    <div class="grid g4">
+      <div class="feature"><div class="ic" aria-hidden="true">&#127963;</div><h3>State health departments</h3><p>Extend a state health helpline into WhatsApp, IVR, and SMS without building an AI stack. MedAI cites only WHO, MOHFW, and the National Health Portal, so it sits inside government guidance, not outside it.</p></div>
+      <div class="feature"><div class="ic" aria-hidden="true">&#129309;</div><h3>NGOs and foundations</h3><p>Run health-literacy and maternal-care programs at scale. Track reach by district and language, and plug MedAI into existing field teams.</p></div>
+      <div class="feature"><div class="ic" aria-hidden="true">&#128176;</div><h3>CSR programs</h3><p>Fund a measurable rural-health deployment with clear adoption and query metrics, reported per cohort, rather than untracked grants.</p></div>
+      <div class="feature"><div class="ic" aria-hidden="true">&#128241;</div><h3>Telecom partners</h3><p>Carry MedAI on toll-free IVR and SMS so the lowest-end phone, with no app and no data plan, still reaches verified guidance.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:var(--surface)">
+  <div class="wrap">
+    <div class="eyebrow">Commercial model</div>
+    <h2 class="s-title">Subscriptions fund access. Families do not pay for core care.</h2>
+    <p class="s-intro">Revenue comes from B2G and NGO subscriptions and CSR-funded deployments. A light freemium layer adds optional family features on top, never gating safety guidance or emergency escalation.</p>
+    <div class="grid g3">
+      <div class="feature core"><span class="tag">B2G and NGO</span><h3>Annual subscription</h3><p>Priced per district or per population covered. Includes the three core agents, all three channels, the verified knowledge base, and a reporting dashboard.</p></div>
+      <div class="feature core"><span class="tag">CSR</span><h3>Funded deployment</h3><p>A sponsor funds a defined cohort, for example 100 households in a block, with adoption and query metrics reported back per cohort.</p></div>
+      <div class="feature"><span class="tag">Freemium</span><h3>Family add-ons</h3><p>Optional extras such as saved family profiles and reminders. Core symptom guidance, emergency escalation, and cited answers stay free.</p></div>
+    </div>
+    <p class="lead" style="margin-top:18px">What we run: the platform, the agents, the AI reasoning, and the verified content pipeline. What you bring: trusted local reach through ASHA workers, PHCs, and community channels. The split is deliberate, because trust in rural health travels through known people first and phones second.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow">How we reach people</div>
+    <h2 class="s-title">Go-to-market is 60% digital, 40% on the ground.</h2>
+    <p class="s-intro">A banner ad does not earn trust in a village. A known ASHA worker does. The launch mix leads with people.</p>
+    <div class="steps">
+      <div class="step"><div class="n">01</div><h4>ASHA Ambassadors</h4><p>Train community health workers as MedAI guides. Local trust, low acquisition cost.</p></div>
+      <div class="step"><div class="n">02</div><h4>Missed-call onboarding</h4><p>Give a missed call, get a callback, start in your language. No app, no data plan.</p></div>
+      <div class="step"><div class="n">03</div><h4>Forward Before You Believe</h4><p>Forward a health claim on WhatsApp and MedAI marks it true, misleading, or false.</p></div>
+      <div class="step"><div class="n">04</div><h4>Mobile health vans</h4><p>Live demos in villages, with on-the-spot onboarding.</p></div>
+      <div class="step"><div class="n">05</div><h4>Community radio</h4><p>Localised broadcasts in regional languages where phones reach last.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:var(--surface)">
+  <div class="wrap">
+    <div class="eyebrow">What we measure together</div>
+    <h2 class="s-title">Targets, stated honestly.</h2>
+    <p class="s-intro">These are Phase 1 goals for the pilot and early rollout, not results. Each one gives a partnership a number to move.</p>
+    <div class="kpi-grid">
+      <div class="kpi"><div class="num">5-7%</div><div class="lbl">Target household adoption</div><div class="sub">Phase 1 demand forecast</div></div>
+      <div class="kpi"><div class="num">2-4</div><div class="lbl">Queries per family / month</div><div class="sub">Rises during outbreaks</div></div>
+      <div class="kpi"><div class="num">100</div><div class="lbl">Pilot households</div><div class="sub">Across multiple language groups</div></div>
+      <div class="kpi"><div class="num">100%</div><div class="lbl">Answers with a cited source</div><div class="sub">WHO, MOHFW, National Health Portal</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT IT DOES -->
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow">How the technology works</div>
+    <h2 class="s-title">Five agents. Three carry the weight.</h2>
+    <p class="s-intro">Under the hood, MedAI runs as five cooperating agents. Three are load-bearing for every conversation. Two add depth as the deployment grows. Tap any card to hear how it sounds.</p>
+            <div class="agent-grid" id="agentGrid">
+      <button class="agent-card t-symptom" data-agent="symptom" type="button" aria-label="Play Symptom Assessment voice demo">
+        <span class="ac-tag core">Core</span>
+        <span class="ac-stage">
+          <span class="ac-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+          <span class="ac-ico" aria-hidden="true"></span>
+        </span>
+        <span class="ac-title">Symptom Assessment</span>
+        <span class="ac-desc">Reads the symptom, asks one short follow-up, and sorts it into home care, a clinic visit, or urgent care.</span>
+        <span class="ac-script" aria-live="polite"></span>
+      </button>
+
+      <button class="agent-card t-knowledge" data-agent="knowledge" type="button" aria-label="Play Knowledge Verification voice demo">
+        <span class="ac-tag core">Core</span>
+        <span class="ac-stage">
+          <span class="ac-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+          <span class="ac-ico" aria-hidden="true"></span>
+        </span>
+        <span class="ac-title">Knowledge Verification</span>
+        <span class="ac-desc">Every answer is grounded in WHO, MOHFW, or the National Health Portal, with the source shown in plain words.</span>
+        <span class="ac-script" aria-live="polite"></span>
+      </button>
+
+      <button class="agent-card t-emergency" data-agent="emergency" type="button" aria-label="Play Emergency Escalation voice demo">
+        <span class="ac-tag core">Core</span>
+        <span class="ac-stage">
+          <span class="ac-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+          <span class="ac-ico" aria-hidden="true"></span>
+        </span>
+        <span class="ac-title">Emergency Escalation</span>
+        <span class="ac-desc">Red-flag symptoms interrupt everything. It says call 108, sends the nearest facility, and gives calm first steps.</span>
+        <span class="ac-script" aria-live="polite"></span>
+      </button>
+
+      <button class="agent-card t-misinfo" data-agent="misinfo" type="button" aria-label="Play Misinformation Detection voice demo">
+        <span class="ac-tag opt">Optional</span>
+        <span class="ac-stage">
+          <span class="ac-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+          <span class="ac-ico" aria-hidden="true"></span>
+        </span>
+        <span class="ac-title">Misinformation Detection</span>
+        <span class="ac-desc">Marks a forwarded claim True, Misleading, or False, and explains why in one or two plain lines.</span>
+        <span class="ac-script" aria-live="polite"></span>
+      </button>
+
+      <button class="agent-card t-followup" data-agent="followup" type="button" aria-label="Play Follow-up voice demo">
+        <span class="ac-tag opt">Optional</span>
+        <span class="ac-stage">
+          <span class="ac-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+          <span class="ac-ico" aria-hidden="true"></span>
+        </span>
+        <span class="ac-title">Follow-up</span>
+        <span class="ac-desc">Checks back the next day to see if things improved, or if it is time to see someone in person.</span>
+        <span class="ac-script" aria-live="polite"></span>
+      </button>
+    </div>
+    <p class="agent-disclaimer">MedAI is an AI assistant, not a doctor. It shares verified health information and guides you to care. It never diagnoses or prescribes. In an emergency, call 108.</p>
+  </div>
+</section>
+
+<section class="section" id="partners">
+  <div class="wrap">
+    <div class="band">
+      <h2>Start a pilot in one district.</h2>
+      <p>Tell us the population you serve and the languages you need. We will scope a pilot, set the metrics, and show you the dashboard before anything goes live.</p>
+      <div class="cta-row">
+        <a href="#" data-nav="contact" class="btn btn-accent">Talk to the team</a>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+<div class="page" id="page-faqs" hidden data-page="faqs">
+<section class="section">
+  <div class="wrap" style="max-width:820px">
+    <div class="eyebrow">Questions</div>
+    <h2 class="s-title">Frequently asked questions</h2>
+    <p class="s-intro">Short, plain answers. If something is missing, the team is one message away on the contact page.</p>
+
+    <div class="faq">
+      <button aria-expanded="false"><span class="q">Is MedAI a doctor? Will it tell me what is wrong?</span><span class="pm" aria-hidden="true"></span></button>
+      <div class="a"><p>No. MedAI is an AI assistant, and it says so at the start of every conversation. It does not diagnose a disease, name a condition, or prescribe medicine. It helps you understand a symptom, judge whether home care is enough, and find care when you need it.</p></div>
+    </div>
+
+    <div class="faq">
+      <button aria-expanded="false"><span class="q">Which languages does it understand?</span><span class="pm" aria-hidden="true"></span></button>
+      <div class="a"><p>You speak or type in your language and MedAI replies in the same one. There is no language menu. Hindi and Bengali are the strongest today. Tamil, Telugu, Marathi, and several dialects work and are being tested before wider launch.</p><p>If you use a language MedAI cannot fully handle yet, it offers the nearest one it supports, as a question, and keeps your conversation going.</p></div>
+    </div>
+
+    <div class="faq">
+      <button aria-expanded="false"><span class="q">I do not have a smartphone or the internet. Can I still use it?</span><span class="pm" aria-hidden="true"></span></button>
+      <div class="a"><p>Yes. MedAI works three ways: WhatsApp for smartphones, plain SMS for any phone, and a phone call through IVR where you speak and listen. A missed call gets you a callback, so you do not spend on the call. No app to install.</p></div>
+    </div>
+
+    <div class="faq">
+      <button aria-expanded="false"><span class="q">Where do the answers come from?</span><span class="pm" aria-hidden="true"></span></button>
+      <div class="a"><p>Only from verified public-health sources: the World Health Organization, India's Ministry of Health and Family Welfare, and the National Health Portal. Every answer shows its source in plain text, so you can see where it came from.</p></div>
+    </div>
+
+    <div class="faq">
+      <button aria-expanded="false"><span class="q">What happens if it is an emergency?</span><span class="pm" aria-hidden="true"></span></button>
+      <div class="a"><p>If MedAI hears a red-flag symptom, like fainting, a fit, heavy bleeding, or trouble breathing, it stops everything else and tells you to call 108 right away. It sends the number and the nearest facility, and gives calm first steps while help is on the way.</p><p>If someone is in emotional crisis, MedAI points to a human helpline: Tele-MANAS 14416 or KIRAN 1800-599-0019.</p></div>
+    </div>
+
+    <div class="faq">
+      <button aria-expanded="false"><span class="q">Can it check a health message I got on WhatsApp?</span><span class="pm" aria-hidden="true"></span></button>
+      <div class="a"><p>Yes. Forward the claim and MedAI marks it True, Misleading, or False, with a short reason grounded in a verified source. The idea is simple: forward before you believe.</p></div>
+    </div>
+
+    <div class="faq">
+      <button aria-expanded="false"><span class="q">What does it cost?</span><span class="pm" aria-hidden="true"></span></button>
+      <div class="a"><p>For families, the core guidance is free, with optional paid add-ons. The platform is funded mainly by state health programs, NGOs, and CSR partners who bring it to a district. So the people who need it most are not the ones paying for it.</p></div>
+    </div>
+
+    <div class="faq">
+      <button aria-expanded="false"><span class="q">Is my information private?</span><span class="pm" aria-hidden="true"></span></button>
+      <div class="a"><p>Your chats are used to give you guidance and a follow-up, not sold to advertisers. On the website we verify your number with a one-time code so we can save your conversation and send you a summary. You can read the full detail in the privacy notice.</p></div>
+    </div>
+
+    <div class="faq">
+      <button aria-expanded="false"><span class="q">Does it replace my ASHA worker or my clinic?</span><span class="pm" aria-hidden="true"></span></button>
+      <div class="a"><p>No, and it is not meant to. MedAI is a first stop for everyday questions and a way to know when to seek care. ASHA workers and clinics are part of how it reaches you, and MedAI sends you to them when a real person needs to take over.</p></div>
+    </div>
+
+    <div class="faq">
+      <button aria-expanded="false"><span class="q">We run a health program. Can we partner?</span><span class="pm" aria-hidden="true"></span></button>
+      <div class="a"><p>Yes. MedAI works with governments, NGOs, and CSR initiatives. We run the AI, the verified knowledge base, and the analytics. You bring reach through ASHA networks, primary health centres, and telecom partners. Start on the contact page.</p></div>
+    </div>
+
+    <div class="note" style="margin-top:30px"><b>Still stuck?</b> Reach the team on the <a href="#" data-nav="contact">contact page</a>. For a medical emergency, do not wait for a message, call <a href="tel:108">108</a>.</div>
+  </div>
+</section>
+</div>
+<div class="page" id="page-contact" hidden data-page="contact">
+<section class="section">
+  <div class="wrap">
+    <div class="grid g2" style="gap:48px;align-items:start">
+      <div>
+        <div class="eyebrow">Contact</div>
+        <h2 class="s-title">Tell us what you need.</h2>
+        <p class="lead">Running a state health program, an NGO, or a CSR initiative and want MedAI in your district? Press or research? A problem with an answer you got? Send a note. The team reads every message.</p>
+
+        <div class="card soft" style="margin-top:24px">
+          <h3>For partners</h3>
+          <p>We provide the AI engine, the verified knowledge base, and analytics. You bring reach through ASHA networks, primary health centres, and telecom partners. Pricing is subscription for governments and NGOs.</p>
+        </div>
+
+        <div class="card" style="margin-top:16px">
+          <h3>For families</h3>
+          <p>The fastest help is the assistant itself. Start on WhatsApp, give a missed call to <b>1800 12XX</b> for an IVR callback, or text the same number by SMS.</p>
+        </div>
+
+        <div class="escalate" style="margin-top:16px">
+          <div class="top"><span aria-hidden="true">&#9888;</span> This form is not for emergencies</div>
+          <p>If someone needs care right now, call <a href="tel:108"><b>108</b></a> for an ambulance. For emotional distress, Tele-MANAS is <a href="tel:14416">14416</a> and KIRAN is <a href="tel:18005990019">1800-599-0019</a>.</p>
+        </div>
+      </div>
+
+      <div>
+        <form id="contactForm" class="card" novalidate>
+          <h3 style="margin-bottom:16px">Send a message</h3>
+
+          <div style="margin-bottom:16px">
+            <label class="field-label" for="cName">Name</label>
+            <input class="field" id="cName" name="name" type="text" autocomplete="name">
+            <p class="err" data-for="cName">Please add your name.</p>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <label class="field-label" for="cOrg">Organisation <span style="color:var(--ink-faint);font-weight:500">(optional)</span></label>
+            <input class="field" id="cOrg" name="org" type="text" autocomplete="organization">
+          </div>
+
+          <div style="margin-bottom:16px">
+            <label class="field-label" for="cEmail">Email</label>
+            <input class="field" id="cEmail" name="email" type="email" autocomplete="email">
+            <p class="err" data-for="cEmail">Please add a valid email so we can reply.</p>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <label class="field-label" for="cReason">Reason</label>
+            <select class="field" id="cReason" name="reason">
+              <option value="partnership">Partnership (government, NGO, CSR)</option>
+              <option value="general">General question</option>
+              <option value="press">Press or research</option>
+              <option value="problem">Report a problem with an answer</option>
+            </select>
+          </div>
+
+          <div style="margin-bottom:4px">
+            <label class="field-label" for="cMsg">Message</label>
+            <textarea class="field" id="cMsg" name="message"></textarea>
+            <p class="err" data-for="cMsg">Add a short message so we know how to help.</p>
+          </div>
+
+          <button class="btn btn-primary btn-block" id="contactSend" type="submit" style="margin-top:18px">Send message</button>
+          <p class="help" style="margin-top:12px">We reply within two working days. By sending, you agree to the <a href="#" data-nav="terms" data-anchor="privacy">privacy notice</a>.</p>
+
+          <div id="contactDone" class="success-card" style="display:none;margin-top:8px">
+            <div class="tick" aria-hidden="true">&#10003;</div>
+            <h3 style="font-family:var(--serif);font-weight:600;font-size:20px">Message sent</h3>
+            <p class="help">Thanks. The team will get back to you within two working days.</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+<div class="page" id="page-terms" hidden data-page="terms">
+<section class="section">
+  <div class="wrap prose">
+    <div class="eyebrow">Legal</div>
+    <h2 class="s-title" style="margin-bottom:8px">Terms and conditions</h2>
+    <p class="upd">Last updated 10 June 2026. Please read these terms before using MedAI.</p>
+
+    <div class="escalate" style="margin-bottom:28px">
+      <div class="top"><span aria-hidden="true">&#9888;</span> MedAI is not a medical service</div>
+      <p>MedAI gives general health information only. It does not diagnose, prescribe, or replace a doctor. In an emergency, call 108. Nothing here is medical advice for your specific case.</p>
+    </div>
+
+    <h2>1. What MedAI is</h2>
+    <p>MedAI is a multilingual, voice-first health information assistant available over WhatsApp, SMS, an automated phone line, and this website. It shares general, verified health information and helps you decide when to seek care. It is run by an AI system, and it tells you so at the start of each conversation.</p>
+
+    <h2>2. No doctor and no diagnosis</h2>
+    <p>Using MedAI does not create a doctor-patient relationship. MedAI does not diagnose conditions, prescribe medicine, or interpret medical reports. Always confirm anything important with a qualified clinician. If MedAI and a clinician disagree, follow the clinician.</p>
+
+    <h2>3. Emergencies</h2>
+    <p>MedAI is not built for emergencies and cannot send help. If someone faints, has a fit, bleeds heavily, has chest pain, or struggles to breathe, call 108 at once. For emotional distress, Tele-MANAS is 14416 and KIRAN is 1800-599-0019.</p>
+
+    <h2>4. Where the information comes from</h2>
+    <p>MedAI draws its answers from public-health sources: the World Health Organization, the Ministry of Health and Family Welfare, and the National Health Portal. These sources update over time, and MedAI may not always reflect the very latest change. We show the source on each answer so you can check it.</p>
+
+    <h2>5. Who can use it</h2>
+    <p>MedAI is meant for adults aged 18 and over. If you ask about a child or an elderly person, MedAI frames its guidance for you as the caregiver. It does not coach a child directly, and it raises its caution for minors.</p>
+
+    <h2>6. Using it responsibly</h2>
+    <p>Please use MedAI for genuine health questions. Do not use it to harm others, to spread false health claims, or to seek help with anything illegal. MedAI declines off-topic requests and anything outside health guidance.</p>
+
+    <h2>7. Accounts and verification</h2>
+    <p>On the website, MedAI verifies your mobile number with a one-time code sent by SMS. You are responsible for the number you provide and for the messages sent from your verified session. Do not verify a number that is not yours.</p>
+
+    <h2>8. Availability and limits</h2>
+    <p>MedAI may be unavailable at times for maintenance or due to network conditions. Language coverage varies. Hindi and Bengali are the strongest today, and other languages are still being tested. We do not promise that every answer is complete or error-free, which is why every answer is general and points you to care when needed.</p>
+
+    <h2>9. Liability</h2>
+    <p>To the extent the law allows, MedAI and its partners are not liable for decisions made on the basis of general information from the service. You remain responsible for your own health decisions and for seeking professional care.</p>
+
+    <h2>10. Changes to these terms</h2>
+    <p>We may update these terms as the product grows. When we make a material change, we will update the date at the top of this page. Continuing to use MedAI after a change means you accept the updated terms.</p>
+
+    <h2 id="privacy" style="scroll-margin-top:90px">Privacy notice</h2>
+    <p>This notice explains what MedAI collects and how it is used. We aim to collect as little as possible.</p>
+
+    <h2>What we collect</h2>
+    <ul>
+      <li>Your mobile number, when you verify it on the website or use WhatsApp, SMS, or the phone line.</li>
+      <li>The content of your health questions and MedAI's replies, so we can answer you and send a follow-up.</li>
+      <li>Basic technical information needed to deliver the service across channels.</li>
+    </ul>
+
+    <h2>How we use it</h2>
+    <ul>
+      <li>To answer your question and, where useful, send a summary or facility details by SMS.</li>
+      <li>To improve the quality, accuracy, and language coverage of the service.</li>
+      <li>To measure how the service is used, in aggregate, for the health programs that fund it.</li>
+    </ul>
+
+    <h2>What we do not do</h2>
+    <p>We do not sell your information to advertisers. We do not use your health questions to target ads. Sharing with a partner program is limited to what is needed to run the service or as the law requires.</p>
+
+    <h2>Keeping it safe and your choices</h2>
+    <p>We hold your information only as long as needed to provide the service and meet legal duties, then remove it. You can ask us what we hold about you, ask us to correct it, or ask us to delete it. To make a request, write to us through the <a href="#" data-nav="contact">contact page</a>.</p>
+
+    <p style="margin-top:24px"><a href="#" data-nav="index" class="btn btn-secondary btn-sm">Back to home</a></p>
+  </div>
+</section>
+</div>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <a href="#" data-nav="index" class="wordmark" aria-label="MedAI home">
+          <svg class="mk" viewBox="84 164 348 188" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MedAI voice mark"><defs><linearGradient id="mgFoot" x1="96" y1="176" x2="416" y2="336" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4F46E5"/><stop offset=".58" stop-color="#7C3AED"/><stop offset="1" stop-color="#9D4EDD"/></linearGradient></defs><g fill="url(#mgFoot)"><path d="M96 320V288C96 279.163 103.163 272 112 272C120.837 272 128 279.163 128 288V320C128 328.837 120.837 336 112 336C103.163 336 96 328.837 96 320Z"/><path d="M144 320L144 240C144 231.163 151.163 224 160 224C168.837 224 176 231.163 176 240V320C176 328.837 168.837 336 160 336C151.163 336 144 328.837 144 320Z"/><path d="M192 320L192 192C192 183.163 199.163 176 208 176C216.837 176 224 183.163 224 192V320C224 328.837 216.837 336 208 336C199.163 336 192 328.837 192 320Z"/><path d="M240 288V240C240 231.163 247.163 224 256 224C264.837 224 272 231.163 272 240V288C272 296.837 264.837 304 256 304C247.163 304 240 296.837 240 288Z"/><path d="M288.002 319.75L290.002 191.75C290.14 182.915 297.414 175.864 306.25 176.002C315.085 176.14 322.136 183.415 321.998 192.25L319.998 320.25C319.86 329.085 312.585 336.136 303.75 335.998C294.915 335.86 287.864 328.586 288.002 319.75Z"/><path d="M336.005 319.601L338.005 239.6C338.226 230.766 345.566 223.784 354.4 224.005C363.234 224.226 370.216 231.566 369.995 240.4L367.995 320.4C367.774 329.234 360.434 336.216 351.6 335.995C342.766 335.775 335.784 328.434 336.005 319.601Z"/><path d="M384 320V288C384 279.163 391.163 272 400 272C408.837 272 416 279.163 416 288V320C416 328.837 408.837 336 400 336C391.163 336 384 328.837 384 320Z"/></g></svg>
+          <span class="tx">Med<i>AI</i></span>
+        </a>
+        <p class="blurb">India's multilingual, voice-first health assistant. Verified guidance over WhatsApp, SMS, and IVR. Not a doctor, by design.</p>
+      </div>
+      <div>
+        <h5>Product</h5>
+        <a href="#" data-nav="articles">Articles</a>
+        <a href="#" data-nav="partners">For partners</a>
+        <a href="#" data-nav="faqs">FAQs</a>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <a href="#" data-nav="contact">Contact</a>
+        <a href="#" data-nav="terms">Terms and conditions</a>
+        <a href="#" data-nav="terms" data-anchor="privacy">Privacy</a>
+      </div>
+      <div>
+        <h5>In an emergency</h5>
+        <a href="tel:108"><b>Call 108</b> &middot; ambulance</a>
+        <a href="tel:14416">Tele-MANAS 14416</a>
+        <a href="tel:18005990019">KIRAN 1800-599-0019</a>
+      </div>
+    </div>
+    <div class="legal">
+      <div class="lines">
+        <span>&copy; 2026 MedAI. A non-diagnostic health information service.</span>
+      </div>
+      <span class="src"><span class="source"><span aria-hidden="true">&#10003;</span> Sources: WHO, MOHFW, National Health Portal</span></span>
+    </div>
+  </div>
+</footer>
+<script>window.MEDAI_CHANNELS = {"wa": {"fever": {"name": "Fever (English)", "steps": [{"t": "out", "voice": "0:06", "time": "18:41"}, {"t": "in", "agent": "Symptom Assessment", "gloss": "Understood: your child has a fever. How old is the child, and is there any difficulty breathing?", "native": "", "time": "18:41", "say": 1, "lang": "en-IN"}, {"t": "out", "gloss": "2 years, no breathing trouble", "native": "", "time": "18:42"}, {"t": "in", "agent": "Knowledge Verification", "gloss": "Home care is fine: fluids, rest, and paracetamol at a doctor-advised dose if fever crosses 102 F.", "native": "", "time": "18:42", "say": 1, "lang": "en-IN"}, {"t": "in", "agent": "Knowledge Verification", "gloss": "If it lasts beyond 3 days, or fits or breathlessness appear, visit the PHC right away.", "native": "", "time": "18:42", "say": 1, "lang": "en-IN"}, {"t": "sys", "text": "Source: WHO + MOHFW. MedAI is informational, not a diagnosis."}]}, "misinfo": {"name": "Myth check (Hindi)", "steps": [{"t": "out", "fwd": 1, "native": "\u092a\u092a\u0940\u0924\u0947 \u0915\u0947 \u092a\u0924\u094d\u0924\u0947 \u0921\u0947\u0902\u0917\u0942 \u0915\u094b \u092a\u0942\u0930\u0940 \u0924\u0930\u0939 \u0920\u0940\u0915 \u0915\u0930 \u0926\u0947\u0924\u0947 \u0939\u0948\u0902", "gloss": "Papaya leaves completely cure dengue", "time": "13:27"}, {"t": "in", "agent": "Misinformation Detection", "tone": "caution", "native": "\u092f\u0939 \u0926\u093e\u0935\u093e \u092d\u094d\u0930\u093e\u092e\u0915 \u0939\u0948 (Misleading).", "gloss": "This claim is MISLEADING.", "time": "13:27", "say": 1, "lang": "hi-IN"}, {"t": "in", "agent": "Misinformation Detection", "native": "\u092a\u092a\u0940\u0924\u0947 \u0915\u0947 \u092a\u0924\u094d\u0924\u0947 \u0921\u0947\u0902\u0917\u0942 \u0915\u093e \u0907\u0932\u093e\u091c \u0928\u0939\u0940\u0902 \u0939\u0948\u0902\u0964 \u0921\u0947\u0902\u0917\u0942 \u092e\u0947\u0902 \u0921\u0949\u0915\u094d\u091f\u0930 \u0915\u0940 \u0928\u093f\u0917\u0930\u093e\u0928\u0940 \u091c\u093c\u0930\u0942\u0930\u0940 \u0939\u0948\u0964", "gloss": "Papaya leaves do not cure dengue. Dengue needs medical supervision.", "time": "13:27", "say": 1, "lang": "hi-IN"}, {"t": "sys", "text": "Source: MOHFW. Forward any claim to check it."}]}, "emergency": {"name": "Emergency (Tamil)", "steps": [{"t": "out", "native": "\u0b8e\u0ba9\u0b95\u0bcd\u0b95\u0bc1 \u0bae\u0bbe\u0bb0\u0bcd\u0baa\u0bc1 \u0bb5\u0bb2\u0bbf, \u0bae\u0bc2\u0b9a\u0bcd\u0b9a\u0bc1 \u0bb5\u0bbf\u0b9f \u0bae\u0bc1\u0b9f\u0bbf\u0baf\u0bb5\u0bbf\u0bb2\u0bcd\u0bb2\u0bc8", "gloss": "I have chest pain and cannot breathe", "time": "21:14"}, {"t": "in", "agent": "Emergency Escalation", "tone": "emergency", "native": "\u0b87\u0ba4\u0bc1 \u0b85\u0bb5\u0b9a\u0bb0\u0ba8\u0bbf\u0bb2\u0bc8\u0baf\u0bbe\u0b95 \u0b87\u0bb0\u0bc1\u0b95\u0bcd\u0b95\u0bb2\u0bbe\u0bae\u0bcd. \u0b89\u0b9f\u0ba9\u0bc7 108 \u0b85\u0bb4\u0bc8\u0b95\u0bcd\u0b95\u0bb5\u0bc1\u0bae\u0bcd.", "gloss": "This may be an emergency. Call 108 now.", "time": "21:14", "say": 1, "lang": "ta-IN"}, {"t": "in", "agent": "Emergency Escalation", "tone": "emergency", "native": "\u0ba8\u0bcb\u0baf\u0bbe\u0bb3\u0bbf\u0baf\u0bc8 \u0b85\u0bae\u0bb0 \u0bb5\u0bc8\u0baf\u0bc1\u0b99\u0bcd\u0b95\u0bb3\u0bcd, \u0b85\u0b9a\u0bc8\u0baf \u0bb5\u0bc7\u0ba3\u0bcd\u0b9f\u0bbe\u0bae\u0bcd.", "gloss": "Keep the patient seated and still.", "time": "21:14", "say": 1, "lang": "ta-IN"}, {"t": "in", "agent": "Emergency Escalation", "tone": "emergency", "gloss": "Nearest centre: PHC Rampur, 3.2 km. Location sent.", "native": "", "time": "21:15", "say": 1, "lang": "en-IN"}, {"t": "sys", "text": "Escalation logged. No diagnosis given. Routed to human care."}]}}, "ivr": {"knee": {"name": "Callback (Hindi)", "steps": [{"who": "MedAI", "sub": "Callback connected", "timer": "00:02", "native": "\u0928\u092e\u0938\u094d\u0924\u0947\u0964 \u0905\u092a\u0928\u0940 \u0938\u092e\u0938\u094d\u092f\u093e \u092c\u0924\u093e\u0907\u090f, \u092f\u093e \u092d\u093e\u0937\u093e \u092c\u0926\u0932\u0928\u0947 \u0915\u0947 \u0932\u093f\u090f 9 \u0926\u092c\u093e\u0907\u090f\u0964", "gloss": "Hello. Tell me your problem, or press 9 to change language.", "say": 1, "lang": "hi-IN"}, {"who": "Caller", "user": 1, "sub": "Speaking", "timer": "00:09", "native": "\u092e\u0947\u0930\u0947 \u0918\u0941\u091f\u0928\u094b\u0902 \u092e\u0947\u0902 \u092c\u0939\u0941\u0924 \u0926\u0930\u094d\u0926 \u0939\u0948", "gloss": "My knees hurt a lot", "say": 1, "lang": "hi-IN"}, {"who": "MedAI", "sub": "Guidance", "timer": "00:21", "native": "\u0906\u0930\u093e\u092e \u0915\u0940\u091c\u093f\u090f, \u0917\u0930\u092e \u0938\u093f\u0915\u093e\u0908 \u0915\u0940\u091c\u093f\u090f\u0964 3 \u0926\u093f\u0928 \u0938\u0947 \u091c\u094d\u092f\u093e\u0926\u093e \u0939\u094b \u0924\u094b PHC \u091c\u093e\u0907\u090f\u0964", "gloss": "Rest and apply a warm compress. If it lasts beyond 3 days, visit the PHC.", "say": 1, "lang": "hi-IN"}, {"who": "MedAI", "sub": "Follow-up", "timer": "00:33", "native": "\u092a\u093e\u0938 \u0915\u0947 \u0915\u0947\u0902\u0926\u094d\u0930 \u0915\u0940 \u091c\u093e\u0928\u0915\u093e\u0930\u0940 SMS \u0938\u0947 \u092d\u0947\u091c \u0930\u0939\u093e \u0939\u0942\u0902\u0964", "gloss": "Sending nearby centre details by SMS now.", "say": 1, "lang": "hi-IN"}]}}, "sms": {"diarrhea": {"name": "Loose motions", "steps": [{"dir": "out", "text": "HEALTH loose motions child 2yr", "time": "09:11"}, {"dir": "in", "text": "MedAI: Give ORS after every loose stool, keep feeding fluids. Reply 1 if blood in stool or no urine for 6 hrs. Reply 2 for nearest clinic.", "time": "09:11"}, {"dir": "out", "text": "2", "time": "09:12"}, {"dir": "in", "text": "Nearest: PHC Rampur, 3.2 km, 9am-8pm. Ph 0581-2xxxxx.", "time": "09:12"}, {"dir": "in", "text": "MedAI is an AI, not a doctor. Source: MOHFW.", "time": "09:12"}]}}, "info": {"wa": {"title": "Chat on WhatsApp", "desc": "Send a voice note or a text in your language. MedAI confirms what it heard, asks one short follow-up, and replies with plain guidance and a cited source. Forward any health claim to have it checked.", "points": ["Voice or text, in your language", "Symptom guidance, myth checks, emergencies", "Every answer carries a source line"], "cta": {"label": "Start on WhatsApp", "href": "https://wa.me/"}}, "ivr": {"title": "Call on 1800 12XX", "desc": "For a basic phone with no internet, MedAI is a phone call. Give a missed call and get a callback. Speak your problem, or press 9 to change language. Guidance is spoken back, and details follow by SMS.", "points": ["No smartphone or data needed", "Speak or use the keypad", "Spoken guidance, SMS follow-up"], "cta": {"label": "Call 1800 12XX", "href": "tel:18001200000"}}, "sms": {"title": "Text on SMS", "desc": "Where there is no data at all, the same guidance arrives as plain SMS. Short, text-only, and the same single source of truth as every other channel.", "points": ["Works on any phone", "Keyword or plain-text questions", "Same advice as WhatsApp and Call"], "cta": {"label": "Text 1800 12XX", "href": "sms:18001200000"}}}};</script>
+<script>
+window.MEDAI_ARTICLES = {
+  fever:{cat:"Symptoms and care",badge:"verified",read:"3 min read",src:"WHO + MOHFW",title:"Fever in a child: when home care is enough",
+    body:[
+      {t:"p",x:"A fever is the body fighting an infection. In most children it is not dangerous on its own, and it settles in two to three days with simple care at home."},
+      {t:"h",x:"What helps at home"},
+      {t:"ul",x:["Offer fluids often. Water, breast milk, ORS, soup. A little, many times.","Let the child rest and dress them lightly. Do not bundle them up.","If the child is uncomfortable, paracetamol at the dose your doctor or chemist advises for the child's weight can help. Never guess the dose."]},
+      {t:"h",x:"Keep watching"},
+      {t:"p",x:"Check the child every few hours. A child who is drinking, passing urine, and playing between fever spikes is usually doing fine."},
+      {t:"escalate",x:"Go to a clinic or call 108 if the fever lasts beyond 3 days, if it crosses 102 F and will not come down, or if there is a fit, fast or hard breathing, a stiff neck, a rash that does not fade when pressed, or the child becomes very drowsy or will not drink."},
+      {t:"p",x:"MedAI does not name a disease or decide what is wrong. It helps you judge home care versus a visit, and points you to the nearest centre when one is needed."}
+    ]},
+  ors:{cat:"Symptoms and care",badge:"verified",read:"3 min read",src:"MOHFW + WHO",title:"Loose motions and ORS: stop dehydration early",
+    body:[
+      {t:"p",x:"With diarrhoea, the real danger is losing too much water and salt, not the loose stool itself. The fix is simple and starts at home: replace the water as fast as it leaves."},
+      {t:"h",x:"What to do"},
+      {t:"ul",x:["Give one cup of ORS after every loose stool. Mix one packet in the amount of clean water printed on the packet.","Keep giving normal food and fluids. Do not starve the person.","For young children, zinc for 14 days helps recovery. Ask your clinic about the dose."]},
+      {t:"escalate",x:"Go now, or call 108, if there is blood in the stool, no urine for 6 hours or more, sunken eyes, constant vomiting, a very dry mouth, or the person is too weak to drink. In a baby, a sunken soft spot on the head is a danger sign."},
+      {t:"p",x:"MedAI will send you the nearest health centre with its distance and phone number if the situation needs a clinician."}
+    ]},
+  cough:{cat:"Symptoms and care",badge:"verified",read:"2 min read",src:"NHP + WHO",title:"Cough and cold: simple care and the warning signs",
+    body:[
+      {t:"p",x:"A common cold is caused by a virus. Antibiotics do not help it, and it clears on its own in about a week. Care is about comfort while the body recovers."},
+      {t:"h",x:"What helps"},
+      {t:"ul",x:["Warm fluids, rest, and steam can ease a blocked nose and throat.","Honey can soothe a cough in anyone over one year old. Never give honey to a baby under one year.","Keep up normal meals and water."]},
+      {t:"escalate",x:"See a clinician if breathing becomes fast or difficult, if there is chest pain, if a fever stays high beyond 3 days, if the cough lasts more than 2 weeks, or if you cough up blood. For a baby, fast breathing or the chest pulling in with each breath needs care the same day."}
+    ]},
+  bp:{cat:"Diabetes and BP",badge:"verified",read:"3 min read",src:"NHP + MOHFW",title:"Living with high blood pressure",
+    body:[
+      {t:"p",x:"High blood pressure usually has no symptoms, which is why it is missed. Left high for years it harms the heart, brain, and kidneys. The good news is that small daily habits control it well."},
+      {t:"h",x:"The daily habits that matter most"},
+      {t:"ul",x:["Take your blood pressure medicine every day, at the same time, even on days you feel fine. Do not stop on your own.","Cut down on salt and packaged or fried food.","Walk for about 30 minutes most days.","Avoid tobacco, and limit alcohol."]},
+      {t:"p",x:"Get your blood pressure checked regularly at a PHC or with a community health worker. Keep a simple note of the readings."},
+      {t:"escalate",x:"Treat it as an emergency and call 108 if there is severe headache with blurred vision, chest pain, weakness or numbness on one side, trouble speaking, or sudden breathlessness."}
+    ]},
+  diabetes:{cat:"Diabetes and BP",badge:"verified",read:"3 min read",src:"NHP",title:"Diabetes basics: food, feet, and check-ups",
+    body:[
+      {t:"p",x:"Diabetes means the sugar in your blood stays too high. It can be managed for life with steady habits, and managing it well prevents most of its harm."},
+      {t:"h",x:"Three habits to build"},
+      {t:"ul",x:["Eat in a rhythm. Regular meals, more vegetables and whole grains, less sugar and fried food.","Check your feet daily for cuts or sores, because diabetes can hide pain. Keep nails trimmed and feet clean.","Keep your check-ups and take medicine as prescribed. Ask your clinic how often to test your sugar."]},
+      {t:"escalate",x:"Get help fast if you feel shaky, sweaty, and confused, which can mean sugar has dropped too low, or if you have a wound that is not healing, severe thirst with confusion, or fruity-smelling breath. Call 108 if the person becomes very drowsy or cannot be woken."},
+      {t:"p",x:"MedAI shares general guidance and reminders. It does not set your dose or change your medicine. That is your doctor's call."}
+    ]},
+  pregnancy:{cat:"Mother and child",badge:"caution",read:"3 min read",src:"MOHFW + WHO",title:"Danger signs in pregnancy: when to go now",
+    body:[
+      {t:"p",x:"Most pregnancies are healthy. A few warning signs, though, mean a hospital the same hour, not the next day. Knowing them saves lives."},
+      {t:"h",x:"Go to a hospital now if you notice"},
+      {t:"ul",x:["Heavy bleeding from the vagina.","Severe headache, blurred vision, or swelling of the face and hands.","Strong belly pain, or fits.","High fever.","The baby moving much less than usual, or not at all.","Water breaking before the due date."]},
+      {t:"escalate",x:"For any of the signs above, call 108 or go to the nearest hospital straight away. Do not wait to see if it passes."},
+      {t:"p",x:"Keep up your regular antenatal check-ups, your iron and folic acid, and your tetanus shots. A community health worker can help you track them."}
+    ]},
+  dengue:{cat:"Seasonal",badge:"caution",read:"3 min read",src:"MOHFW + NHP",title:"Dengue and the monsoon",
+    body:[
+      {t:"p",x:"Dengue spreads through a mosquito that breeds in clean, still water close to homes, and bites during the day. The best protection is removing the water it breeds in."},
+      {t:"h",x:"Stop the breeding"},
+      {t:"ul",x:["Once a week, empty and scrub coolers, pots, buckets, and any container that holds water.","Cover stored water and clear blockages where rain collects.","Use a mosquito net or repellent during the day, especially for children and the elderly."]},
+      {t:"h",x:"If someone gets a high fever"},
+      {t:"p",x:"Give fluids and rest, and use only paracetamol for fever. Avoid aspirin and ibuprofen, which can worsen bleeding in dengue. Get tested if fever stays high."},
+      {t:"escalate",x:"These are warning signs, go to a hospital at once or call 108: severe belly pain, repeated vomiting, bleeding from the gums or nose, blood in vomit or stool, cold or clammy skin, restlessness, or sudden drowsiness, often as the fever drops."}
+    ]},
+  myth:{cat:"Myth check",badge:"emergency",read:"2 min read",src:"WHO",title:"\"Lemon and hot water cures everything\" and other forwards",
+    body:[
+      {t:"p",x:"Health forwards spread fast because they sound caring and certain. MedAI checks a claim against verified sources and marks it True, Misleading, or False, with a short reason. Here are three common ones."},
+      {t:"h",x:"\"Drinking hot water with lemon cures COVID.\""},
+      {t:"p",x:"False. No food or drink cures a viral infection. Fluids help you stay hydrated, which is good care, but they are not a cure. Vaccination and timely care are what protect you."},
+      {t:"h",x:"\"You must finish a 10,000-step target or exercise is useless.\""},
+      {t:"p",x:"Misleading. Any regular activity helps the heart and blood pressure. There is nothing magic about one number, and walking less still counts."},
+      {t:"h",x:"\"ORS is just sugar water, so any soft drink will do.\""},
+      {t:"p",x:"False. ORS has a precise balance of salt and sugar that helps the body absorb water. Soft drinks have too much sugar and can worsen diarrhoea."},
+      {t:"p",x:"The habit MedAI encourages is simple: forward before you believe. Send the claim, get the verdict, then decide."}
+    ]}
+};
+</script>
+<script>
+/* Voice-demo scripts per agent. Each line: lang for TTS, say (spoken), show (display), gloss (English under native). */
+window.MEDAI_AGENTS = {
+  symptom: { label:"Tamil", lines:[
+    { lang:"en-IN", say:"Understood, your child has a fever. How old is the child, and is there any breathing difficulty?", show:"Understood, your child has a fever. How old is the child, and is there any breathing difficulty?" },
+    { lang:"ta-IN", say:"\u0baa\u0bc1\u0bb0\u0bbf\u0ba8\u0bcd\u0ba4\u0ba4\u0bc1. \u0b95\u0bc1\u0bb4\u0ba8\u0bcd\u0ba4\u0bc8\u0baf\u0bbf\u0ba9\u0bcd \u0bb5\u0baf\u0ba4\u0bc1 \u0b8e\u0ba9\u0bcd\u0ba9? \u0bae\u0bc2\u0b9a\u0bcd\u0b9a\u0bc1 \u0bb5\u0bbf\u0b9f \u0b9a\u0bbf\u0bb0\u0bae\u0bae\u0bcd \u0b89\u0bb3\u0bcd\u0bb3\u0ba4\u0bbe?", show:"\u0baa\u0bc1\u0bb0\u0bbf\u0ba8\u0bcd\u0ba4\u0ba4\u0bc1. \u0b95\u0bc1\u0bb4\u0ba8\u0bcd\u0ba4\u0bc8\u0baf\u0bbf\u0ba9\u0bcd \u0bb5\u0baf\u0ba4\u0bc1 \u0b8e\u0ba9\u0bcd\u0ba9?", gloss:"Understood. How old is the child?" }
+  ]},
+  knowledge: { label:"Hindi", lines:[
+    { lang:"en-IN", say:"Home care is fine for now. Give fluids and rest, and use paracetamol at the doctor's dose if the fever crosses one oh two degrees Fahrenheit. Source, WHO and the Ministry of Health.", show:"Home care is fine for now. Give fluids and rest, and use paracetamol at the doctor's dose if the fever crosses 102 F. Source: WHO and MOHFW." },
+    { lang:"hi-IN", say:"\u0918\u0930 \u092a\u0930 \u0926\u0947\u0916\u092d\u093e\u0932 \u0920\u0940\u0915 \u0939\u0948\u0964 \u0924\u0930\u0932 \u092a\u0926\u093e\u0930\u094d\u0925 \u0914\u0930 \u0906\u0930\u093e\u092e \u0926\u0947\u0902\u0964", show:"\u0918\u0930 \u092a\u0930 \u0926\u0947\u0916\u092d\u093e\u0932 \u0920\u0940\u0915 \u0939\u0948\u0964 \u0924\u0930\u0932 \u092a\u0926\u093e\u0930\u094d\u0925 \u0914\u0930 \u0906\u0930\u093e\u092e \u0926\u0947\u0902\u0964", gloss:"Home care is fine. Give fluids and rest." }
+  ]},
+  emergency: { label:"Hindi", lines:[
+    { lang:"en-IN", say:"This may be an emergency. Call one oh eight now for an ambulance. Keep the patient seated and still.", show:"This may be an emergency. Call 108 now for an ambulance. Keep the patient seated and still." },
+    { lang:"hi-IN", say:"\u092f\u0939 \u0906\u092a\u093e\u0924\u0915\u093e\u0932 \u0939\u094b \u0938\u0915\u0924\u093e \u0939\u0948\u0964 \u0924\u0941\u0930\u0902\u0924 \u090f\u0915 \u0936\u0942\u0928\u094d\u092f \u0906\u0920 \u092a\u0930 \u0915\u0949\u0932 \u0915\u0930\u0947\u0902\u0964", show:"\u092f\u0939 \u0906\u092a\u093e\u0924\u0915\u093e\u0932 \u0939\u094b \u0938\u0915\u0924\u093e \u0939\u0948\u0964 \u0924\u0941\u0930\u0902\u0924 108 \u092a\u0930 \u0915\u0949\u0932 \u0915\u0930\u0947\u0902\u0964", gloss:"This may be an emergency. Call 108 now." }
+  ]},
+  misinfo: { label:"Hindi", lines:[
+    { lang:"en-IN", say:"This claim is misleading. Papaya leaves do not cure dengue. Dengue needs medical supervision. Source, the Ministry of Health.", show:"This claim is misleading. Papaya leaves do not cure dengue. Dengue needs medical supervision. Source: MOHFW." },
+    { lang:"hi-IN", say:"\u092f\u0939 \u0926\u093e\u0935\u093e \u092d\u094d\u0930\u093e\u092e\u0915 \u0939\u0948\u0964 \u092a\u092a\u0940\u0924\u0947 \u0915\u0947 \u092a\u0924\u094d\u0924\u0947 \u0921\u0947\u0902\u0917\u0942 \u0915\u093e \u0907\u0932\u093e\u091c \u0928\u0939\u0940\u0902 \u0939\u0948\u0902\u0964", show:"\u092f\u0939 \u0926\u093e\u0935\u093e \u092d\u094d\u0930\u093e\u092e\u0915 \u0939\u0948\u0964 \u092a\u092a\u0940\u0924\u0947 \u0915\u0947 \u092a\u0924\u094d\u0924\u0947 \u0921\u0947\u0902\u0917\u0942 \u0915\u093e \u0907\u0932\u093e\u091c \u0928\u0939\u0940\u0902 \u0939\u0948\u0902\u0964", gloss:"This claim is misleading. Papaya leaves do not cure dengue." }
+  ]},
+  followup: { label:"Marathi", lines:[
+    { lang:"en-IN", say:"It has been three days since we spoke. Is the fever better now, or should I help you find a clinic nearby?", show:"It has been three days since we spoke. Is the fever better now, or should I help you find a clinic nearby?" },
+    { lang:"mr-IN", say:"\u0906\u092a\u0923 \u092c\u094b\u0932\u0942\u0928 \u0924\u0940\u0928 \u0926\u093f\u0935\u0938 \u091d\u093e\u0932\u0947. \u0924\u093e\u092a \u0906\u0924\u093e \u0915\u092e\u0940 \u091d\u093e\u0932\u093e \u0906\u0939\u0947 \u0915\u093e?", show:"\u0906\u092a\u0923 \u092c\u094b\u0932\u0942\u0928 \u0924\u0940\u0928 \u0926\u093f\u0935\u0938 \u091d\u093e\u0932\u0947. \u0924\u093e\u092a \u0906\u0924\u093e \u0915\u092e\u0940 \u091d\u093e\u0932\u093e \u0906\u0939\u0947 \u0915\u093e?", gloss:"It has been three days since we spoke. Is the fever better now?" }
+  ]}
+};
+</script>
+<script>
+(function(){
+  var f=document.getElementById('contactForm');
+  if(!f) return;
+  function showErr(id,on){ var e=f.querySelector('.err[data-for="'+id+'"]'); if(e) e.classList.toggle('show',on); }
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var name=document.getElementById('cName').value.trim();
+    var email=document.getElementById('cEmail').value.trim();
+    var msg=document.getElementById('cMsg').value.trim();
+    var ok=true;
+    showErr('cName', !name); if(!name) ok=false;
+    var validEmail=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    showErr('cEmail', !validEmail); if(!validEmail) ok=false;
+    showErr('cMsg', !msg); if(!msg) ok=false;
+    if(!ok){ var first=f.querySelector('.err.show'); if(first){ var fld=document.getElementById(first.getAttribute('data-for')); if(fld) fld.focus(); } return; }
+    f.querySelectorAll('label,input,select,textarea,.help,h3,#contactSend').forEach(function(el){
+      if(el.id!=='contactDone') el.style.display='none';
+    });
+    document.getElementById('contactDone').style.display='block';
+  });
+})();
+</script>
+<script>
+/* MedAI marketing site - shared behaviour. Guards keep each block
+   inert on pages that do not use it. No backend: the OTP flow is a
+   client-side demo and the code is shown in a labelled banner. */
+
+/* ---------- Mobile nav ---------- */
+(function(){
+  var t=document.querySelector('.nav-toggle'), links=document.querySelector('.nav .links');
+  if(!t||!links) return;
+  t.addEventListener('click',function(){
+    var open=links.classList.toggle('open');
+    t.setAttribute('aria-expanded', open?'true':'false');
+  });
+})();
+
+/* ---------- FAQ accordion ---------- */
+(function(){
+  var items=document.querySelectorAll('.faq');
+  if(!items.length) return;
+  items.forEach(function(f){
+    var btn=f.querySelector('button');
+    btn.addEventListener('click',function(){
+      var isOpen=f.classList.contains('open');
+      f.classList.toggle('open');
+      btn.setAttribute('aria-expanded', isOpen?'false':'true');
+    });
+  });
+})();
+
+/* ---------- Article reader ---------- */
+(function(){
+  var grid=document.getElementById('artGrid');
+  var modal=document.getElementById('artModal');
+  if(!grid||!modal) return;
+
+  var sheet=modal.querySelector('.sheet-body');
+  var chips=document.querySelectorAll('.filterbar .chip');
+
+  function open(id){
+    var a=window.MEDAI_ARTICLES[id]; if(!a) return;
+    var bodyHtml=a.body.map(function(b){
+      if(b.t==='h') return '<h4>'+b.x+'</h4>';
+      if(b.t==='ul') return '<ul>'+b.x.map(function(li){return '<li>'+li+'</li>';}).join('')+'</ul>';
+      if(b.t==='escalate') return '<div class="escalate" style="margin:16px 0"><div class="top"><span aria-hidden="true">&#9888;</span> When to treat it as an emergency</div><p>'+b.x+'</p></div>';
+      return '<p>'+b.x+'</p>';
+    }).join('');
+    sheet.innerHTML =
+      '<span class="badge b-'+a.badge+'">'+a.cat+'</span>'+
+      '<h2>'+a.title+'</h2>'+
+      '<div class="meta">'+a.read+' &middot; Plain language, voice-friendly</div>'+
+      '<div class="disclose" style="margin-bottom:18px"><span class="ai">AI</span>This is general health information from MedAI, an AI assistant, not a doctor. It does not diagnose or prescribe. For your own case, see a clinician.</div>'+
+      bodyHtml+
+      '<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:22px;padding-top:18px;border-top:1px solid var(--line)"><span class="source"><span aria-hidden="true">&#10003;</span> Source: '+a.src+'</span><span class="badge b-ai">Reviewed against verified sources</span></div>';
+    modal.classList.add('open');
+    document.body.style.overflow='hidden';
+    modal.querySelector('.x').focus();
+  }
+  function close(){
+    modal.classList.remove('open');
+    document.body.style.overflow='';
+  }
+  grid.addEventListener('click',function(e){
+    var card=e.target.closest('[data-art]'); if(!card) return;
+    open(card.getAttribute('data-art'));
+  });
+  modal.addEventListener('click',function(e){
+    if(e.target===modal || e.target.classList.contains('x')) close();
+  });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
+
+  if(chips.length){
+    chips.forEach(function(c){
+      c.addEventListener('click',function(){
+        chips.forEach(function(x){x.classList.remove('on')});
+        c.classList.add('on');
+        var f=c.getAttribute('data-filter');
+        grid.querySelectorAll('[data-art]').forEach(function(card){
+          var show = f==='all' || card.getAttribute('data-cat')===f;
+          card.style.display = show ? '' : 'none';
+        });
+      });
+    });
+  }
+})();
+
+/* ---------- Phone + OTP ---------- */
+(function(){
+  var root=document.getElementById('loginFlow');
+  if(!root) return;
+
+  var stepPhone=document.getElementById('stepPhone');
+  var stepOtp=document.getElementById('stepOtp');
+  var stepDone=document.getElementById('stepDone');
+  var phoneInput=document.getElementById('phoneInput');
+  var phoneErr=document.getElementById('phoneErr');
+  var sendBtn=document.getElementById('sendBtn');
+  var otpRow=document.getElementById('otpRow');
+  var otpErr=document.getElementById('otpErr');
+  var verifyBtn=document.getElementById('verifyBtn');
+  var sentTo=document.getElementById('sentTo');
+  var demoCodeEl=document.getElementById('demoCode');
+  var resendBtn=document.getElementById('resendBtn');
+  var resendTimer=document.getElementById('resendTimer');
+  var editNumber=document.getElementById('editNumber');
+  var doneNumber=document.getElementById('doneNumber');
+
+  var currentCode='', countdownId=null;
+
+  phoneInput.addEventListener('input',function(){
+    this.value=this.value.replace(/\D/g,'').slice(0,10);
+    phoneErr.classList.remove('show');
+  });
+
+  function validPhone(v){ return /^[6-9]\d{9}$/.test(v); }
+
+  function genCode(){ return String(Math.floor(100000+Math.random()*900000)); }
+
+  function startCountdown(){
+    var s=30; resendBtn.disabled=true;
+    resendTimer.textContent='Resend code in '+s+'s';
+    clearInterval(countdownId);
+    countdownId=setInterval(function(){
+      s--;
+      if(s<=0){ clearInterval(countdownId); resendBtn.disabled=false; resendTimer.textContent='Did not get it?'; }
+      else { resendTimer.textContent='Resend code in '+s+'s'; }
+    },1000);
+  }
+
+  function sendCode(){
+    var v=phoneInput.value.trim();
+    if(!validPhone(v)){ phoneErr.classList.add('show'); phoneInput.focus(); return; }
+    currentCode=genCode();
+    sentTo.textContent='+91 '+v.slice(0,5)+' '+v.slice(5);
+    demoCodeEl.textContent=currentCode;
+    stepPhone.style.display='none';
+    stepOtp.style.display='block';
+    startCountdown();
+    clearOtp();
+    otpRow.querySelector('input').focus();
+  }
+  sendBtn.addEventListener('click',sendCode);
+  phoneInput.addEventListener('keydown',function(e){ if(e.key==='Enter') sendCode(); });
+
+  /* OTP box behaviour: auto-advance, backspace, paste */
+  var boxes=Array.prototype.slice.call(otpRow.querySelectorAll('input'));
+  function clearOtp(){ boxes.forEach(function(b){b.value='';b.classList.remove('filled')}); otpRow.classList.remove('bad'); otpErr.classList.remove('show'); }
+  boxes.forEach(function(box,i){
+    box.addEventListener('input',function(){
+      this.value=this.value.replace(/\D/g,'').slice(0,1);
+      this.classList.toggle('filled', this.value!=='');
+      otpRow.classList.remove('bad'); otpErr.classList.remove('show');
+      if(this.value && i<boxes.length-1) boxes[i+1].focus();
+    });
+    box.addEventListener('keydown',function(e){
+      if(e.key==='Backspace' && !this.value && i>0) boxes[i-1].focus();
+      if(e.key==='Enter') verify();
+    });
+    box.addEventListener('paste',function(e){
+      e.preventDefault();
+      var d=(e.clipboardData.getData('text')||'').replace(/\D/g,'').slice(0,6);
+      d.split('').forEach(function(ch,k){ if(boxes[k]){ boxes[k].value=ch; boxes[k].classList.add('filled'); }});
+      (boxes[Math.min(d.length,boxes.length-1)]).focus();
+    });
+  });
+
+  function verify(){
+    var entered=boxes.map(function(b){return b.value;}).join('');
+    if(entered.length<6){ otpRow.classList.add('bad'); otpErr.textContent='Enter all 6 digits.'; otpErr.classList.add('show'); return; }
+    if(entered!==currentCode){
+      otpRow.classList.add('bad');
+      otpErr.textContent='That code did not match. Check the SMS and try again.';
+      otpErr.classList.add('show');
+      return;
+    }
+    clearInterval(countdownId);
+    doneNumber.textContent=sentTo.textContent;
+    stepOtp.style.display='none';
+    stepDone.style.display='block';
+  }
+  verifyBtn.addEventListener('click',verify);
+
+  resendBtn.addEventListener('click',function(){
+    if(resendBtn.disabled) return;
+    currentCode=genCode();
+    demoCodeEl.textContent=currentCode;
+    clearOtp();
+    boxes[0].focus();
+    startCountdown();
+  });
+
+  editNumber.addEventListener('click',function(){
+    clearInterval(countdownId);
+    stepOtp.style.display='none';
+    stepPhone.style.display='block';
+    phoneInput.focus();
+  });
+})();
+
+/* ---------- Agent cards: full-card voice demo (Web Speech API) ---------- */
+(function(){
+  var cards=document.querySelectorAll('.agent-card');
+  if(!cards.length || !window.MEDAI_AGENTS) return;
+  var synth=window.speechSynthesis, supported=!!synth, voices=[];
+  function lv(){ voices=supported?synth.getVoices():[]; }
+  lv();
+  if(supported && 'onvoiceschanged' in synth) synth.onvoiceschanged=lv;
+  function esc(s){ var d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+  function pick(lang){
+    if(!voices.length) lv();
+    var b=lang.split('-')[0].toLowerCase();
+    var bl=voices.filter(function(v){ return v.lang && v.lang.toLowerCase().indexOf(b)===0; });
+    var fh=/female|woman|kalpana|swara|aditi|raveena|lekha|priya|veena|google/i;
+    return bl.find(function(v){ return fh.test(v.name); }) || bl[0] || null;
+  }
+  var active=null;
+  function stopAll(){ if(supported) synth.cancel(); cards.forEach(function(c){ c.classList.remove('playing'); }); active=null; }
+
+  cards.forEach(function(card){
+    var agent=card.getAttribute('data-agent');
+    var data=window.MEDAI_AGENTS[agent];
+    var script=card.querySelector('.ac-script');
+    if(!data || !script) return;
+    var label=data.label;
+
+    function showLine(ln){
+      var lc=(ln.lang.split('-')[0]==='en')?'English':label;
+      var html='<span class="lc">'+esc(lc)+'</span>';
+      if(ln.gloss){ html+='<span class="nat">'+esc(ln.show)+'</span><span class="gl">'+esc(ln.gloss)+'</span>'; }
+      else { html+='<span>'+esc(ln.show)+'</span>'; }
+      script.classList.remove('vis');
+      setTimeout(function(){ if(active===card){ script.innerHTML=html; script.classList.add('vis'); } }, 170);
+    }
+    function clearLine(){ script.classList.remove('vis'); setTimeout(function(){ if(active!==card) script.innerHTML=''; }, 260); }
+
+    function play(){
+      stopAll(); active=card; card.classList.add('playing');
+      var idx=0;
+      function next(){
+        if(active!==card) return;
+        if(idx>=data.lines.length){ finish(); return; }
+        var ln=data.lines[idx];
+        showLine(ln);
+        if(!supported){ idx++; setTimeout(next, 1800); return; }
+        var u=new SpeechSynthesisUtterance(ln.say);
+        u.lang=ln.lang; var v=pick(ln.lang); if(v) u.voice=v; u.rate=0.96;
+        u.onend=function(){ idx++; setTimeout(next, 320); };
+        u.onerror=function(){ idx++; setTimeout(next, 320); };
+        synth.speak(u);
+      }
+      next();
+    }
+    function finish(){ card.classList.remove('playing'); clearLine(); active=null; }
+
+    card.addEventListener('click', function(){
+      if(active===card){ stopAll(); finish(); }
+      else { play(); }
+    });
+  });
+  window.addEventListener('beforeunload', function(){ if(supported) synth.cancel(); });
+})();
+
+/* ---------- Channel demos (tabs + phone player) ---------- */
+(function(){
+  var screen=document.getElementById('chScreen');
+  var tabsWrap=document.getElementById('chTabs');
+  if(!screen || !tabsWrap || !window.MEDAI_CHANNELS) return;
+  var DATA=window.MEDAI_CHANNELS;
+  var infoEl=document.getElementById('chInfo');
+  var moreEl=document.getElementById('chMore');
+  var chipWrap=document.getElementById('chScenarios');
+  var layout=document.querySelector('.ch-layout');
+  var fab=document.getElementById('chFab');
+  var hint=document.getElementById('chHint');
+  var synth=window.speechSynthesis, synthOK=!!synth, voices=[];
+  function lv(){ voices=synthOK?synth.getVoices():[]; } lv();
+  if(synthOK && 'onvoiceschanged' in synth) synth.onvoiceschanged=lv;
+  function esc(s){ var d=document.createElement('div'); d.textContent=s==null?'':s; return d.innerHTML; }
+  function pick(lang){ if(!voices.length)lv(); var b=lang.split('-')[0].toLowerCase();
+    var bl=voices.filter(function(v){return v.lang&&v.lang.toLowerCase().indexOf(b)===0;});
+    if(!bl.length) return null;
+    var female=/female|woman|kalpana|swara|heera|aditi|raveena|lekha|priya|veena|ananya|aarohi|neerja|kajal/i;
+    var male=/male|man\b|ravi|hemant|prabhat|madhur|valluvar|pattara/i;
+    var score=function(v){ var s=0, n=v.name||'';
+      if(female.test(n)) s+=4;
+      if(male.test(n)) s-=4;
+      if(/google/i.test(n)) s+=2;
+      if(/natural|neural|online/i.test(n)) s+=1;
+      if(v.lang && v.lang.toLowerCase()===lang.toLowerCase()) s+=1;
+      return s; };
+    bl.sort(function(a,b2){ return score(b2)-score(a); });
+    return bl[0]; }
+
+  var MINIWAVE='<span class="mini-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>';
+  var cur='wa', curScn=firstKey('wa'), playing=false, timers=[], body=null;
+  function firstKey(ch){ var o=DATA[ch]; for(var k in o){ return k; } return null; }
+  function steps(){ return DATA[cur][curScn].steps; }
+  function clearT(){ timers.forEach(clearTimeout); timers=[]; if(synthOK)synth.cancel(); }
+
+  function chrome(ch){
+    if(ch==='wa') return '<div class="cscreen wa"><div class="wa-status"><span>9:41</span><span class="ic">5G</span></div><div class="wa-top"><span class="wa-bk">&#8249;</span><span class="wa-av">'+MINIWAVE+'</span><div class="wa-meta"><b>MedAI</b><span>online</span></div><span class="wa-vbadge">Verified</span></div><div class="wa-thread" id="threadBody"></div><div class="wa-bar2"><span class="wa-plus">+</span><span class="wa-fld">Message</span><span class="wa-mic2">&#127908;</span></div></div>';
+    if(ch==='ivr') return '<div class="cscreen call"><div class="cl-net">IVR callback &middot; 1800 12XX</div><div class="cl-av"><span class="cw"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div><div class="cl-name">MedAI</div><div class="cl-timer" id="callTimer">00:00</div><div class="cl-caps" id="threadBody"></div><div class="cl-ctrls"><span class="cc">&#128263;</span><span class="cc">&#9000;</span><span class="cc">&#128266;</span><span class="cc end">&#128222;</span></div></div>';
+    return '<div class="cscreen sms"><div class="sm-status"><span>9:41</span><span>5G</span></div><div class="sm-top"><span class="sm-bk">&#8249; Messages</span><div class="sm-id"><span class="sm-av">'+MINIWAVE+'</span><b>MedAI</b></div><span class="sm-i">&#9432;</span></div><div class="sm-body" id="threadBody"></div><div class="sm-bar"><span class="sm-fld">Text Message</span><span class="sm-send">&#8593;</span></div></div>';
+  }
+  function nodeWA(s){
+    if(s.t==='sys') return '<div class="wb sys">'+esc(s.text)+'</div>';
+    var cls='wb '+(s.t==='out'?'out':'in')+(s.tone?(' tone-'+s.tone):'');
+    var h='<div class="'+cls+'">';
+    if(s.fwd) h+='<span class="fwd">Forwarded</span>';
+    if(s.agent) h+='<span class="wag">'+esc(s.agent)+'</span>';
+    if(s.voice){ h+='<span class="vnote"><span class="vp">&#9658;</span><span class="vbars"><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="vdur">'+esc(s.voice)+'</span></span>'; }
+    else if(s.native){ h+='<span class="wnat">'+esc(s.native)+'</span>'; if(s.gloss) h+='<span class="wgl">'+esc(s.gloss)+'</span>'; }
+    else if(s.gloss){ h+='<span class="wmain">'+esc(s.gloss)+'</span>'; }
+    if(s.time) h+='<span class="wt">'+esc(s.time)+'</span>';
+    return h+'</div>';
+  }
+  function nodeCall(s){
+    var h='<div class="capln'+(s.user?' user':'')+'"><span class="capwho">'+esc(s.who)+(s.sub?(' &middot; '+esc(s.sub)):'')+'</span>';
+    if(s.native) h+='<span class="capnat">'+esc(s.native)+'</span>';
+    if(s.gloss) h+='<span class="capgl">'+esc(s.gloss)+'</span>';
+    return h+'</div>';
+  }
+  function nodeSMS(s){ return '<div class="sb '+(s.dir==='out'?'out':'in')+'">'+esc(s.text)+'</div>'; }
+  function nodeFor(s){ return cur==='wa'?nodeWA(s):cur==='ivr'?nodeCall(s):nodeSMS(s); }
+
+  function renderInfo(){
+    var info=DATA.info[cur];
+    infoEl.innerHTML='<h3>'+esc(info.title)+'</h3><p>'+esc(info.desc)+'</p>';
+    var pts=info.points.map(function(p){return '<li>'+esc(p)+'</li>';}).join('');
+    moreEl.innerHTML='<ul class="ch-points">'+pts+'</ul><a class="btn btn-primary" href="'+esc(info.cta.href)+'" rel="nofollow">'+esc(info.cta.label)+'</a>';
+  }
+  function renderChips(){
+    var keys=Object.keys(DATA[cur]);
+    if(keys.length<2){ chipWrap.innerHTML=''; return; }
+    chipWrap.innerHTML=keys.map(function(k){ return '<button type="button" class="ch-chip'+(k===curScn?' active':'')+'" data-scn="'+k+'">'+esc(DATA[cur][k].name)+'</button>'; }).join('');
+  }
+  function setPlay(on){ playing=on; if(fab)fab.classList.toggle('playing',on); if(fab)fab.setAttribute('aria-label',on?'Pause demo':'Play demo'); }
+  function showHint(on){ if(hint) hint.style.display=on?'':'none'; }
+
+  function resetThread(){
+    screen.innerHTML=chrome(cur);
+    body=document.getElementById('threadBody');
+    showHint(true);
+  }
+  function stop(){ clearT(); setPlay(false); }
+
+  function spokenOf(s){
+    if(cur==='sms'){ return {native:s.text, gloss:s.text, lang:'en-IN'}; }
+    if(s.say){ return {native:s.native||'', gloss:s.gloss||s.native||'', lang:s.lang||'en-IN'}; }
+    return null;
+  }
+  function speak(o,done){
+    if(!synthOK){ timers.push(setTimeout(done,1300)); return; }
+    var v=pick(o.lang), text, lang, voice;
+    if(v && o.native){ text=o.native; lang=o.lang; voice=v; }
+    else { text=o.gloss||o.native; lang='en-IN'; voice=pick('en-IN'); }
+    var u=new SpeechSynthesisUtterance(text); u.lang=lang; if(voice)u.voice=voice; u.rate=0.94; u.pitch=1.06;
+    u.onend=done; u.onerror=done; synth.speak(u);
+  }
+  function append(s){
+    if(!body) return null;
+    var tmp=document.createElement('div'); tmp.innerHTML=nodeFor(s);
+    var el=tmp.firstChild; el.classList.add('appear'); body.appendChild(el);
+    return el;
+  }
+  function play(){
+    if(playing){ stop(); resetThread(); return; }
+    resetThread(); showHint(false); setPlay(true);
+    var st=steps(), i=0;
+    function go(){
+      if(!playing) return;
+      if(i>=st.length){ setPlay(false); return; }
+      var s=st[i];
+      var el=append(s);
+      if(el) el.classList.add('speaking');
+      var prev=el?el.previousElementSibling:null; if(prev) prev.classList.remove('speaking');
+      if(cur==='ivr' && s.timer){ var tEl=document.getElementById('callTimer'); if(tEl)tEl.textContent=s.timer; }
+      var sp=spokenOf(s);
+      if(sp){ speak(sp,function(){ if(el)el.classList.remove('speaking'); i++; timers.push(setTimeout(go,300)); }); }
+      else { i++; timers.push(setTimeout(go,820)); }
+    }
+    go();
+  }
+
+  function selectChannel(ch){
+    stop(); cur=ch; curScn=firstKey(ch);
+    tabsWrap.querySelectorAll('.ch-tab').forEach(function(b){ var on=b.getAttribute('data-ch')===ch; b.classList.toggle('active',on); b.setAttribute('aria-selected',on?'true':'false'); });
+    layout.classList.remove('t-ivr','t-sms'); if(ch==='ivr')layout.classList.add('t-ivr'); if(ch==='sms')layout.classList.add('t-sms');
+    renderInfo(); renderChips(); resetThread();
+  }
+  function selectScn(k){ stop(); curScn=k; renderChips(); resetThread(); }
+
+  tabsWrap.addEventListener('click',function(e){ var b=e.target.closest('.ch-tab'); if(b) selectChannel(b.getAttribute('data-ch')); });
+  chipWrap.addEventListener('click',function(e){ var c=e.target.closest('.ch-chip'); if(c) selectScn(c.getAttribute('data-scn')); });
+  if(fab) fab.addEventListener('click',play);
+  window.addEventListener('beforeunload',function(){ if(synthOK)synth.cancel(); });
+
+  selectChannel('wa');
+})();
+/* ---------- Hero ask box: opens the MedAI chat overlay (wired at end of file) ---------- */
+
+/* ---------- Newsletter (WhatsApp opt-in, demo) ---------- */
+(function(){
+  var form=document.getElementById('subForm'); if(!form) return;
+  var phone=document.getElementById('subPhone'), msg=document.getElementById('subMsg');
+  var code=document.getElementById('subCode');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var cc=code?code.value:'+91';
+    var v=(phone.value||'').replace(/\D/g,'');
+    var ok = cc==='+91' ? /^[6-9]\d{9}$/.test(v) : /^\d{6,12}$/.test(v);
+    if(!ok){ show(cc==='+91' ? 'Enter a valid 10-digit Indian mobile number.' : 'Enter a valid mobile number for '+cc+'.'); return; }
+    show('Done. We will send a WhatsApp confirmation to '+cc+' '+v+'. Reply STOP anytime.');
+    form.reset();
+  });
+  function show(t){ if(!msg)return; msg.textContent=t; msg.hidden=false; }
+})();
+
+</script>
+
+<script>
+(function(){
+  var pages=document.querySelectorAll('.page');
+  function show(name,anchor){
+    pages.forEach(function(p){ p.hidden=(p.getAttribute('data-page')!==name); });
+    document.querySelectorAll('.links a[data-nav]').forEach(function(a){ a.classList.toggle('active', a.getAttribute('data-nav')===name); });
+    if(anchor){ var t=document.getElementById(anchor); if(t){ t.scrollIntoView(); return; } }
+    window.scrollTo(0,0);
+  }
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('[data-nav]'); if(!a) return;
+    e.preventDefault();
+    if(window.speechSynthesis) window.speechSynthesis.cancel();
+    show(a.getAttribute('data-nav'), a.getAttribute('data-anchor'));
+    var links=document.querySelector('.links'); if(links) links.classList.remove('open');
+    var tog=document.querySelector('.nav-toggle'); if(tog) tog.setAttribute('aria-expanded','false');
+  });
+})();
+</script>
+
+<!-- ============================================================
+     MedAI chat overlay
+     Full-screen chat embedded over the site. All CSS is namespaced
+     under #medai-chat and reuses the site's :root tokens verbatim.
+     Keyframes and SVG gradient ids are prefixed to avoid collisions.
+     ============================================================ -->
+<style>
+#medai-chat{position:fixed;inset:0;z-index:500;background:var(--bg);display:flex;height:100dvh;width:100%;overflow:hidden}
+#medai-chat[hidden]{display:none !important;}
+#medai-chat button,#medai-chat textarea{font-family:inherit}
+/* sidebar */
+#medai-chat .mc-side{width:280px;flex:none;background:var(--surface);border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0}
+#medai-chat .mc-side-head{display:flex;align-items:center;gap:10px;padding:16px 16px 12px}
+#medai-chat .mc-logo{height:26px;width:auto;display:block;flex:none}
+#medai-chat .mc-wm{font-family:var(--serif);font-weight:600;font-size:20px;letter-spacing:-.01em}
+#medai-chat .mc-wm i{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+#medai-chat .mc-newchat{margin:2px 12px 8px;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:14px;color:#fff;background:var(--grad);border:none;border-radius:var(--r-pill);padding:11px 14px;cursor:pointer;box-shadow:var(--sh-sm);transition:box-shadow .15s,transform .1s}
+#medai-chat .mc-newchat:hover{box-shadow:var(--sh-md)}
+#medai-chat .mc-newchat:active{transform:translateY(1px)}
+#medai-chat .mc-newchat svg{width:16px;height:16px}
+#medai-chat .mc-side-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-faint);font-weight:700;padding:10px 18px 4px}
+#medai-chat .mc-convos{flex:1;overflow-y:auto;min-height:0;padding:0 8px 16px;display:flex;flex-direction:column;gap:2px}
+#medai-chat .mc-convo{display:block;width:100%;text-align:left;font-size:13.5px;font-weight:500;color:var(--ink-soft);background:transparent;border:none;border-radius:var(--r-sm);padding:9px 10px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#medai-chat .mc-convo:hover{background:var(--surface-2);color:var(--ink)}
+#medai-chat .mc-convo.mc-active{background:var(--grad-soft);color:var(--ink);font-weight:600}
+#medai-chat .mc-empty{font-size:13px;color:var(--ink-faint);padding:8px 10px}
+#medai-chat .mc-scrim{display:none}
+/* main */
+#medai-chat .mc-main{flex:1;min-width:0;display:flex;flex-direction:column;min-height:0;background:var(--bg)}
+#medai-chat .mc-topbar{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--line);min-height:56px}
+#medai-chat .mc-back{display:inline-flex;align-items:center;gap:7px;font-weight:700;font-size:13px;color:var(--ink-soft);background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--r-pill);padding:8px 14px;cursor:pointer;flex:none;min-height:38px}
+#medai-chat .mc-back:hover{border-color:var(--violet);color:var(--ink)}
+#medai-chat .mc-back svg{width:15px;height:15px}
+#medai-chat .mc-burger{display:none;flex:none;width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--bg);cursor:pointer;align-items:center;justify-content:center;color:var(--ink-soft)}
+#medai-chat .mc-burger:hover{background:var(--surface)}
+#medai-chat .mc-burger svg{width:20px;height:20px}
+#medai-chat .mc-title{font-weight:600;font-size:15px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* chat log */
+#medai-chat .mc-log{flex:1;overflow-y:auto;min-height:0;padding:22px 16px 12px;scroll-behavior:smooth}
+#medai-chat .mc-logcol{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+#medai-chat .mc-row{display:flex;gap:9px;align-items:flex-end;max-width:100%}
+#medai-chat .mc-row.mc-user{flex-direction:row-reverse}
+#medai-chat .mc-av{flex:none;width:30px;height:30px;border-radius:9px;background:var(--grad);box-shadow:var(--sh-sm);display:flex;align-items:center;justify-content:center}
+#medai-chat .mc-av svg{width:18px;height:13px;display:block}
+#medai-chat .mc-stack{display:flex;flex-direction:column;gap:5px;max-width:82%}
+#medai-chat .mc-row.mc-user .mc-stack{align-items:flex-end}
+#medai-chat .mc-bubble{padding:11px 14px;border-radius:16px;font-size:14.5px;line-height:1.55;background:var(--surface);border:1px solid var(--line);border-bottom-left-radius:5px;color:var(--ink);animation:mcRise .3s cubic-bezier(.2,.7,.3,1) both}
+#medai-chat .mc-row.mc-user .mc-bubble{background:var(--grad);color:#fff;border-color:transparent;border-bottom-left-radius:16px;border-bottom-right-radius:5px}
+#medai-chat .mc-bubble :lang(hi),#medai-chat .mc-bubble :lang(ta),#medai-chat .mc-bubble :lang(mr),#medai-chat .mc-bubble :lang(bn){font-family:var(--indic)}
+#medai-chat .mc-bubble strong{font-weight:700}
+/* source chip */
+#medai-chat .mc-src{display:inline-flex;align-items:center;gap:5px;background:var(--verified-tint);color:var(--verified);border:1px solid var(--verified-line);font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:var(--r-pill);width:fit-content;margin-top:2px}
+#medai-chat .mc-src svg{width:12px;height:12px}
+/* emergency card */
+#medai-chat .mc-emerg{background:var(--emergency-tint);border:1px solid var(--emergency-line);border-left:4px solid var(--emergency);border-radius:var(--r-md);padding:13px 14px;animation:mcRise .3s cubic-bezier(.2,.7,.3,1) both}
+#medai-chat .mc-ehead{display:flex;align-items:center;gap:8px;color:var(--emergency);font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
+#medai-chat .mc-ehead svg{width:18px;height:18px}
+#medai-chat .mc-emerg p{font-size:14px;line-height:1.55;color:var(--ink)}
+#medai-chat .mc-call{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:11px;background:var(--emergency);color:#fff;font-weight:800;font-size:15px;text-decoration:none;padding:12px 18px;border-radius:12px;width:100%;transition:transform .1s,filter .15s}
+#medai-chat .mc-call:hover{filter:brightness(.96)}
+#medai-chat .mc-call:active{transform:scale(.985)}
+#medai-chat .mc-call svg{width:18px;height:18px}
+/* misinformation verdict, three-way semantic colors */
+#medai-chat .mc-verdict{border-radius:var(--r-md);padding:12px 14px;border:1px solid;animation:mcRise .3s cubic-bezier(.2,.7,.3,1) both}
+#medai-chat .mc-v{display:flex;align-items:center;gap:6px;font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
+#medai-chat .mc-v svg{width:14px;height:14px}
+#medai-chat .mc-verdict p{font-size:14px;line-height:1.55;color:var(--ink)}
+#medai-chat .mc-true{background:var(--verified-tint);border-color:var(--verified-line)} #medai-chat .mc-true .mc-v{color:var(--verified)}
+#medai-chat .mc-mis{background:var(--caution-tint);border-color:var(--caution-line)} #medai-chat .mc-mis .mc-v{color:var(--caution)}
+#medai-chat .mc-false{background:var(--emergency-tint);border-color:var(--emergency-line)} #medai-chat .mc-false .mc-v{color:var(--emergency)}
+/* brand loader: waveform bars in the gradient */
+#medai-chat .mc-loader{display:flex;align-items:flex-end;gap:3px;height:26px;padding:6px 4px}
+#medai-chat .mc-loader span{width:4px;height:30%;border-radius:var(--r-pill);background:var(--grad);animation:mcEq 1s ease-in-out infinite}
+#medai-chat .mc-loader span:nth-child(2){animation-delay:.12s}
+#medai-chat .mc-loader span:nth-child(3){animation-delay:.24s}
+#medai-chat .mc-loader span:nth-child(4){animation-delay:.36s}
+#medai-chat .mc-loader span:nth-child(5){animation-delay:.48s}
+/* composer */
+#medai-chat .mc-composer{border-top:1px solid var(--line);padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:var(--bg)}
+#medai-chat .mc-composer-col{max-width:720px;margin:0 auto}
+#medai-chat .mc-inbar{display:flex;align-items:flex-end;gap:8px;background:var(--surface);border:1.5px solid var(--line-strong);border-radius:24px;padding:5px 5px 5px 16px;transition:border-color .15s,box-shadow .15s}
+#medai-chat .mc-inbar:focus-within{border-color:var(--violet);box-shadow:0 0 0 3px rgba(124,58,237,.15)}
+#medai-chat .mc-inbar textarea{flex:1;border:none;background:transparent;font-family:var(--sans);font-size:15px;color:var(--ink);resize:none;outline:none;line-height:1.4;max-height:120px;padding:8px 0}
+#medai-chat .mc-inbar textarea::placeholder{color:var(--ink-faint)}
+#medai-chat .mc-iconbtn{flex:none;width:38px;height:38px;border-radius:50%;border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:filter .15s,transform .1s,background .15s}
+#medai-chat .mc-iconbtn svg{width:19px;height:19px}
+#medai-chat .mc-mic{background:var(--surface-2);color:var(--violet)}
+#medai-chat .mc-mic:hover{background:var(--line)}
+#medai-chat .mc-mic.mc-on{background:var(--grad);color:#fff}
+#medai-chat .mc-send{background:var(--grad);color:#fff;box-shadow:var(--sh-sm)}
+#medai-chat .mc-send:hover{filter:brightness(1.05)}
+#medai-chat .mc-send:active{transform:scale(.94)}
+#medai-chat .mc-iconbtn:disabled{opacity:.4;cursor:not-allowed}
+#medai-chat .mc-disclaimer{max-width:720px;margin:8px auto 0;font-size:12px;color:var(--ink-soft);text-align:center;line-height:1.45}
+/* toast */
+#medai-chat .mc-toast{position:absolute;left:50%;bottom:96px;transform:translateX(-50%) translateY(12px);background:var(--ink);color:#fff;font-size:12.5px;font-weight:600;padding:9px 14px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;max-width:88%;text-align:center;z-index:60}
+#medai-chat .mc-toast.mc-show{opacity:1;transform:translateX(-50%) translateY(0)}
+@keyframes mcRise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes mcEq{0%,100%{height:25%}50%{height:100%}}
+/* responsive: sidebar becomes a slide-in drawer */
+@media (max-width:860px){
+  #medai-chat .mc-side{position:fixed;top:0;left:0;height:100dvh;z-index:50;transform:translateX(-100%);transition:transform .25s ease;box-shadow:var(--sh-lg)}
+  #medai-chat .mc-side.mc-open{transform:translateX(0)}
+  #medai-chat .mc-burger{display:inline-flex}
+  #medai-chat .mc-scrim{display:block;position:fixed;inset:0;background:rgba(22,18,31,.42);opacity:0;pointer-events:none;transition:opacity .25s;z-index:40}
+  #medai-chat .mc-scrim.mc-show{opacity:1;pointer-events:auto}
+}
+@media (prefers-reduced-motion:reduce){
+  #medai-chat *{animation:none!important;transition:none!important}
+  #medai-chat .mc-loader span{height:60%}
+  #medai-chat .mc-log{scroll-behavior:auto}
+}
+#medai-chat .mc-log::-webkit-scrollbar,#medai-chat .mc-convos::-webkit-scrollbar{width:8px}
+#medai-chat .mc-log::-webkit-scrollbar-thumb,#medai-chat .mc-convos::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px}
+</style>
+
+<div id="medai-chat" hidden role="dialog" aria-modal="true" aria-label="MedAI chat">
+  <aside class="mc-side" id="mcSide" aria-label="Conversations">
+    <div class="mc-side-head">
+      <svg class="mc-logo" viewBox="84 164 348 188" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MedAI">
+        <defs><linearGradient id="mgChat" x1="96" y1="176" x2="416" y2="336" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4F46E5"/><stop offset=".58" stop-color="#7C3AED"/><stop offset="1" stop-color="#9D4EDD"/></linearGradient></defs>
+        <g fill="url(#mgChat)">
           <path d="M96 320V288C96 279.163 103.163 272 112 272C120.837 272 128 279.163 128 288V320C128 328.837 120.837 336 112 336C103.163 336 96 328.837 96 320Z"/>
           <path d="M144 320L144 240C144 231.163 151.163 224 160 224C168.837 224 176 231.163 176 240V320C176 328.837 168.837 336 160 336C151.163 336 144 328.837 144 320Z"/>
           <path d="M192 320L192 192C192 183.163 199.163 176 208 176C216.837 176 224 183.163 224 192V320C224 328.837 216.837 336 208 336C199.163 336 192 328.837 192 320Z"/>
@@ -198,65 +2092,75 @@
           <path d="M384 320V288C384 279.163 391.163 272 400 272C408.837 272 416 279.163 416 288V320C416 328.837 408.837 336 400 336C391.163 336 384 328.837 384 320Z"/>
         </g>
       </svg>
-      <span class="wm">Med<i>AI</i></span>
+      <span class="mc-wm">Med<i>AI</i></span>
     </div>
-    <button class="newchat" id="newChat" type="button">
+    <button class="mc-newchat" id="mcNewChat" type="button">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
       New chat
     </button>
-    <div class="side-lbl">Conversations</div>
-    <nav class="convo-list" id="convoList" aria-label="Saved conversations"></nav>
+    <div class="mc-side-lbl">Conversations</div>
+    <nav class="mc-convos" id="mcConvos" aria-label="Saved conversations"></nav>
   </aside>
 
-  <div class="scrim" id="scrim"></div>
+  <div class="mc-scrim" id="mcScrim"></div>
 
-  <!-- MAIN CHAT -->
-  <main class="main">
-    <div class="topbar">
-      <button class="hamburger" id="hamburger" type="button" aria-label="Open conversations" aria-controls="sidebar" aria-expanded="false">
+  <main class="mc-main">
+    <div class="mc-topbar">
+      <button class="mc-back" id="mcBack" type="button" aria-label="Back to website">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        Back to website
+      </button>
+      <button class="mc-burger" id="mcBurger" type="button" aria-label="Open conversations" aria-controls="mcSide" aria-expanded="false">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
-      <div class="top-title" id="topTitle">New chat</div>
+      <div class="mc-title" id="mcTitle">New chat</div>
     </div>
 
-    <div class="log" id="log" role="log" aria-live="polite" aria-relevant="additions" aria-label="Conversation">
-      <div class="log-col" id="logCol"></div>
+    <div class="mc-log" id="mcLog" role="log" aria-live="polite" aria-relevant="additions" aria-label="Conversation">
+      <div class="mc-logcol" id="mcLogCol"></div>
     </div>
 
-    <div class="composer">
-      <div class="composer-col">
-        <div class="inbar">
-          <label for="input" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Type your message</label>
-          <textarea id="input" rows="1" placeholder="Tell me what is happening..." autocomplete="off"></textarea>
-          <button class="iconbtn mic" id="mic" type="button" aria-label="Voice input" aria-pressed="false">
+    <div class="mc-composer">
+      <div class="mc-composer-col">
+        <div class="mc-inbar">
+          <label for="mcInput" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Type your message</label>
+          <textarea id="mcInput" rows="1" placeholder="Tell me what is happening..." autocomplete="off"></textarea>
+          <button class="mc-iconbtn mc-mic" id="mcMic" type="button" aria-label="Voice input" aria-pressed="false">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
           </button>
-          <button class="iconbtn send" id="send" type="button" aria-label="Send message" disabled>
+          <button class="mc-iconbtn mc-send" id="mcSend" type="button" aria-label="Send message" disabled>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </button>
         </div>
-        <p class="disclaimer">MedAI is an AI health assistant, not a doctor. It shares verified information and can guide you to care.</p>
+        <p class="mc-disclaimer">MedAI is an AI health assistant, not a doctor. It shares verified information and can guide you to care.</p>
       </div>
     </div>
   </main>
+
+  <div class="mc-toast" id="mcToast" role="status"></div>
 </div>
-<div class="toast" id="toast" role="status"></div>
 
 <script>
+/* ---------- MedAI chat overlay: chat app + hero ask box wiring ---------- */
 (function(){
   "use strict";
-  var log=document.getElementById('log'),
-      logCol=document.getElementById('logCol'),
-      input=document.getElementById('input'),
-      send=document.getElementById('send'),
-      mic=document.getElementById('mic'),
-      newChatBtn=document.getElementById('newChat'),
-      convoList=document.getElementById('convoList'),
-      hamburger=document.getElementById('hamburger'),
-      sidebar=document.getElementById('sidebar'),
-      scrim=document.getElementById('scrim'),
-      topTitle=document.getElementById('topTitle'),
-      toast=document.getElementById('toast');
+  var overlay=document.getElementById('medai-chat'),
+      log=document.getElementById('mcLog'),
+      logCol=document.getElementById('mcLogCol'),
+      input=document.getElementById('mcInput'),
+      send=document.getElementById('mcSend'),
+      mic=document.getElementById('mcMic'),
+      backBtn=document.getElementById('mcBack'),
+      newChatBtn=document.getElementById('mcNewChat'),
+      convoList=document.getElementById('mcConvos'),
+      burger=document.getElementById('mcBurger'),
+      sidebar=document.getElementById('mcSide'),
+      scrim=document.getElementById('mcScrim'),
+      topTitle=document.getElementById('mcTitle'),
+      toast=document.getElementById('mcToast'),
+      heroBox=document.getElementById('askBox'),
+      heroInput=document.getElementById('askInput'),
+      heroMic=document.getElementById('askMic');
 
   var LS_KEY='medai.conversations.v1';
   var current=null;
@@ -270,7 +2174,7 @@
 
   // ---------- helpers ----------
   function scrollDown(){log.scrollTop=log.scrollHeight;}
-  function showToast(m){toast.textContent=m;toast.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(function(){toast.classList.remove('show');},2600);}
+  function showToast(m){toast.textContent=m;toast.classList.add('mc-show');clearTimeout(toast._t);toast._t=setTimeout(function(){toast.classList.remove('mc-show');},2600);}
   function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
   function fmt(s){return esc(s).replace(/\n/g,'<br>');}
   function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,8);}
@@ -287,46 +2191,45 @@
   }
 
   // ---------- rendering ----------
-  function avatar(){var av=document.createElement('div');av.className='av';av.setAttribute('aria-hidden','true');av.innerHTML=ic.wave;return av;}
+  function avatar(){var av=document.createElement('div');av.className='mc-av';av.setAttribute('aria-hidden','true');av.innerHTML=ic.wave;return av;}
   function addUser(text){
-    var row=document.createElement('div');row.className='row user';
-    var st=document.createElement('div');st.className='stack';
-    var b=document.createElement('div');b.className='bubble';b.textContent=text;
+    var row=document.createElement('div');row.className='mc-row mc-user';
+    var st=document.createElement('div');st.className='mc-stack';
+    var b=document.createElement('div');b.className='mc-bubble';b.textContent=text;
     st.appendChild(b);row.appendChild(st);logCol.appendChild(row);scrollDown();
   }
   function addBot(opts){
-    var row=document.createElement('div');row.className='row bot';
+    var row=document.createElement('div');row.className='mc-row';
     row.appendChild(avatar());
-    var st=document.createElement('div');st.className='stack';
+    var st=document.createElement('div');st.className='mc-stack';
     if(opts.node){st.appendChild(opts.node);}
-    else{var b=document.createElement('div');b.className='bubble';b.innerHTML=opts.html;st.appendChild(b);}
-    if(opts.source){var s=document.createElement('div');s.className='src';s.innerHTML=ic.check+'<span>Source: '+esc(opts.source)+'</span>';st.appendChild(s);}
+    else{var b=document.createElement('div');b.className='mc-bubble';b.innerHTML=opts.html;st.appendChild(b);}
+    if(opts.source){var s=document.createElement('div');s.className='mc-src';s.innerHTML=ic.check+'<span>Source: '+esc(opts.source)+'</span>';st.appendChild(s);}
     row.appendChild(st);logCol.appendChild(row);scrollDown();
   }
-  function addEmergency(body,agent){
-    var c=document.createElement('div');c.className='card-emerg';
-    c.innerHTML='<div class="head">'+ic.alert+'This may be an emergency</div><p>'+fmt(body)+'</p>'+
-      '<a class="call-btn" href="tel:108">'+ic.phone+'Call 108 now</a>';
+  function addEmergency(body){
+    var c=document.createElement('div');c.className='mc-emerg';
+    c.innerHTML='<div class="mc-ehead">'+ic.alert+'This may be an emergency</div><p>'+fmt(body)+'</p>'+
+      '<a class="mc-call" href="tel:108">'+ic.phone+'Call 108 now</a>';
     addBot({node:c});
   }
   function addVerdict(text,source){
-    var cls='v-mis',label='Misleading',bodyTxt=text||'';
+    var cls='mc-mis',label='Misleading',bodyTxt=text||'';
     var m=bodyTxt.match(/^\s*(true|misleading|false)\b[\s.:,\u2014-]*/i);
     if(m){var w=m[1].toLowerCase();
-      if(w==='true'){cls='v-true';label='True';}
-      else if(w==='false'){cls='v-false';label='False';}
-      else{cls='v-mis';label='Misleading';}
+      if(w==='true'){cls='mc-true';label='True';}
+      else if(w==='false'){cls='mc-false';label='False';}
+      else{cls='mc-mis';label='Misleading';}
       bodyTxt=bodyTxt.slice(m[0].length);
     }
-    var icon=cls==='v-true'?ic.check:ic.alert;
-    var c=document.createElement('div');c.className='verdict '+cls;
-    c.innerHTML='<div class="v">'+icon+esc(label)+'</div><p>'+fmt(bodyTxt)+'</p>';
+    var icon=cls==='mc-true'?ic.check:ic.alert;
+    var c=document.createElement('div');c.className='mc-verdict '+cls;
+    c.innerHTML='<div class="mc-v">'+icon+esc(label)+'</div><p>'+fmt(bodyTxt)+'</p>';
     addBot({node:c,source:source});
   }
-  // render a stored message object
   function renderMessage(m){
     if(m.role==='user'){addUser(m.content);return;}
-    if(m.type==='emergency'){addEmergency(m.content,m.agent);}
+    if(m.type==='emergency'){addEmergency(m.content);}
     else if(m.type==='myth'){addVerdict(m.content,m.source);}
     else{addBot({html:fmt(m.content),source:m.source||''});}
   }
@@ -335,12 +2238,10 @@
     convo.messages.forEach(renderMessage);
     scrollDown();
   }
-
-  // brand waveform loader row, returned so it can be removed
   function loaderRow(){
-    var row=document.createElement('div');row.className='row bot';
+    var row=document.createElement('div');row.className='mc-row';
     row.appendChild(avatar());
-    var l=document.createElement('div');l.className='loader';l.setAttribute('role','status');l.setAttribute('aria-label','MedAI is thinking');
+    var l=document.createElement('div');l.className='mc-loader';l.setAttribute('role','status');l.setAttribute('aria-label','MedAI is thinking');
     l.innerHTML='<span></span><span></span><span></span><span></span><span></span>';
     row.appendChild(l);logCol.appendChild(row);scrollDown();return row;
   }
@@ -350,12 +2251,12 @@
     var list=loadAll().slice().sort(function(a,b){return b.created-a.created;});
     convoList.innerHTML='';
     if(!list.length){
-      var e=document.createElement('div');e.className='convo-empty';e.textContent='No conversations yet.';
+      var e=document.createElement('div');e.className='mc-empty';e.textContent='No conversations yet.';
       convoList.appendChild(e);return;
     }
     list.forEach(function(c){
       var b=document.createElement('button');b.type='button';
-      b.className='convo-item'+(current&&c.id===current.id?' active':'');
+      b.className='mc-convo'+(current&&c.id===current.id?' mc-active':'');
       if(current&&c.id===current.id)b.setAttribute('aria-current','true');
       b.textContent=c.title||'Conversation';
       b.addEventListener('click',function(){openConversation(c.id);});
@@ -371,15 +2272,15 @@
       {role:'assistant',content:'Tell me what is happening, in your own words.',type:'normal',agent:'Listening',intro:true}
     ];
   }
-  function startNewChat(){
+  function startNewChat(instant){
     current={id:uid(),title:'',created:Date.now(),messages:introMessages()};
     closeDrawer();
     setTopTitle('New chat');
     renderSidebar();
     logCol.innerHTML='';
     input.value='';autosize();send.disabled=true;
-    animateIntro(current.messages.slice());
-    input.focus();
+    if(instant){renderConversation(current);}
+    else{animateIntro(current.messages.slice());}
   }
   function animateIntro(items){
     if(!items.length){return;}
@@ -389,7 +2290,7 @@
       if(row.parentNode)logCol.removeChild(row);
       renderMessage(first);
       animateIntro(items);
-    },first.intro?600:700);
+    },600);
   }
   function openConversation(id){
     var convo=loadAll().filter(function(c){return c.id===id;})[0];
@@ -416,8 +2317,7 @@
 
   function onSend(text){
     if(!text||!current)return;
-    var userMsg={role:'user',content:text};
-    current.messages.push(userMsg);
+    current.messages.push({role:'user',content:text});
     addUser(text);
     if(!current.title){current.title=makeTitle(text);setTopTitle(current.title);}
     persist(current);
@@ -443,27 +2343,26 @@
   input.addEventListener('input',function(){autosize();send.disabled=input.value.trim()==='';});
   input.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();trySend();}});
   send.addEventListener('click',trySend);
-  newChatBtn.addEventListener('click',startNewChat);
+  newChatBtn.addEventListener('click',function(){startNewChat(false);input.focus();});
 
   // ---------- mobile drawer ----------
-  function openDrawer(){sidebar.classList.add('open');scrim.classList.add('show');hamburger.setAttribute('aria-expanded','true');}
-  function closeDrawer(){sidebar.classList.remove('open');scrim.classList.remove('show');hamburger.setAttribute('aria-expanded','false');}
-  hamburger.addEventListener('click',function(){sidebar.classList.contains('open')?closeDrawer():openDrawer();});
+  function openDrawer(){sidebar.classList.add('mc-open');scrim.classList.add('mc-show');burger.setAttribute('aria-expanded','true');}
+  function closeDrawer(){sidebar.classList.remove('mc-open');scrim.classList.remove('mc-show');burger.setAttribute('aria-expanded','false');}
+  burger.addEventListener('click',function(){sidebar.classList.contains('mc-open')?closeDrawer():openDrawer();});
   scrim.addEventListener('click',closeDrawer);
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDrawer();});
 
   // ---------- voice to text (Web Speech API, demo stand-in for ASR) ----------
   var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  var recognition=null,listening=false;
   if(SR){
-    var recognition=new SR();
+    recognition=new SR();
     recognition.lang='en-IN';
     recognition.interimResults=false;
     recognition.maxAlternatives=1;
     recognition.continuous=false;
-    var listening=false;
-    recognition.onstart=function(){listening=true;mic.classList.add('on');mic.setAttribute('aria-pressed','true');};
-    recognition.onend=function(){listening=false;mic.classList.remove('on');mic.setAttribute('aria-pressed','false');};
-    recognition.onerror=function(ev){listening=false;mic.classList.remove('on');mic.setAttribute('aria-pressed','false');
+    recognition.onstart=function(){listening=true;mic.classList.add('mc-on');mic.setAttribute('aria-pressed','true');};
+    recognition.onend=function(){listening=false;mic.classList.remove('mc-on');mic.setAttribute('aria-pressed','false');};
+    recognition.onerror=function(ev){listening=false;mic.classList.remove('mc-on');mic.setAttribute('aria-pressed','false');
       if(ev&&ev.error==='not-allowed'){showToast('Microphone permission is blocked. Allow it to use voice.');}};
     recognition.onresult=function(ev){
       var t='';for(var i=0;i<ev.results.length;i++){t+=ev.results[i][0].transcript;}
@@ -471,19 +2370,77 @@
       if(t){input.value=input.value?(input.value.replace(/\s+$/,'')+' '+t):t;autosize();send.disabled=input.value.trim()==='';}
       input.focus(); // fill the field for review, do not auto-send
     };
-    mic.addEventListener('click',function(){
-      if(listening){try{recognition.stop();}catch(e){}return;}
-      try{recognition.start();showToast('Listening. Speak now.');}catch(e){}
-    });
   }else{
     mic.disabled=true;
     mic.setAttribute('aria-disabled','true');
     mic.title='Voice input needs a supported browser, like Chrome.';
   }
+  function startVoice(){
+    if(!recognition){showToast('Voice input needs a supported browser, like Chrome.');return;}
+    if(listening)return;
+    try{recognition.start();showToast('Listening. Speak now.');}catch(e){}
+  }
+  mic.addEventListener('click',function(){
+    if(listening){try{recognition.stop();}catch(e){}return;}
+    startVoice();
+  });
+
+  // ---------- overlay open and close ----------
+  var savedY=0;
+  function lockBody(){
+    savedY=window.scrollY||window.pageYOffset||0;
+    document.body.style.position='fixed';
+    document.body.style.top=(-savedY)+'px';
+    document.body.style.left='0';
+    document.body.style.right='0';
+    document.body.style.width='100%';
+  }
+  function unlockBody(){
+    document.body.style.position='';
+    document.body.style.top='';
+    document.body.style.left='';
+    document.body.style.right='';
+    document.body.style.width='';
+    var de=document.documentElement,prev=de.style.scrollBehavior;
+    de.style.scrollBehavior='auto';
+    window.scrollTo(0,savedY);
+    de.style.scrollBehavior=prev;
+  }
+  function isOpen(){return !overlay.hidden;}
+  function openChat(opts){
+    opts=opts||{};
+    var carried=heroInput&&heroInput.value?heroInput.value.trim():'';
+    if(heroInput)heroInput.value='';
+    if(!isOpen()){
+      lockBody();
+      overlay.hidden=false;
+      renderSidebar();
+    }
+    if(carried){startNewChat(true);onSend(carried);}
+    else if(!current){startNewChat(false);}
+    if(opts.mic){startVoice();}
+    input.focus();
+  }
+  function closeChat(){
+    if(!isOpen())return;
+    if(listening&&recognition){try{recognition.stop();}catch(e){}}
+    closeDrawer();
+    overlay.hidden=true;
+    unlockBody();
+  }
+  backBtn.addEventListener('click',closeChat);
+  document.addEventListener('keydown',function(e){
+    if(e.key!=='Escape'||!isOpen())return;
+    if(sidebar.classList.contains('mc-open')){closeDrawer();}else{closeChat();}
+  });
+
+  // ---------- hero ask box wiring ----------
+  if(heroBox){heroBox.addEventListener('submit',function(e){e.preventDefault();openChat({});});}
+  if(heroInput){heroInput.addEventListener('focus',function(){openChat({});});}
+  if(heroMic){heroMic.addEventListener('click',function(){openChat({mic:true});});}
 
   // ---------- init ----------
   renderSidebar();
-  startNewChat();
 })();
 </script>
 </body>
