@@ -149,7 +149,7 @@
   .iconbtn.send:hover{filter:brightness(1.05)}
   .iconbtn.send:active{transform:scale(.94)}
   .iconbtn:disabled{opacity:.4;cursor:not-allowed}
-  .composer .hint{max-width:720px;margin:7px auto 0;font-size:11px;color:var(--ink-faint);text-align:center}
+  .composer .disclaimer{max-width:720px;margin:8px auto 0;font-size:12px;color:var(--ink-soft);text-align:center;line-height:1.45}
 
   /* ---------- Toast ---------- */
   .toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(12px);
@@ -235,6 +235,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </button>
         </div>
+        <p class="disclaimer">MedAI is an AI health assistant, not a doctor. It shares verified information and can guide you to care.</p>
       </div>
     </div>
   </main>
@@ -310,7 +311,7 @@
   }
   function addVerdict(text,source){
     var cls='v-mis',label='Misleading',bodyTxt=text||'';
-    var m=bodyTxt.match(/^\s*(true|misleading|false)\b[\s.:,—-]*/i);
+    var m=bodyTxt.match(/^\s*(true|misleading|false)\b[\s.:,\u2014-]*/i);
     if(m){var w=m[1].toLowerCase();
       if(w==='true'){cls='v-true';label='True';}
       else if(w==='false'){cls='v-false';label='False';}
@@ -366,8 +367,7 @@
   // ---------- conversation lifecycle ----------
   function introMessages(){
     return [
-      {role:'assistant',content:'Namaste. I am MedAI, your health helper.',type:'normal',agent:'Welcome',intro:true},
-      {role:'assistant',content:'I am an AI assistant, not a doctor. I share verified health information from WHO and Indian government sources, and I can guide you to care. I cannot diagnose or prescribe.',type:'normal',agent:'AI disclosure',intro:true},
+      {role:'assistant',content:'Namaste. I am MedAI, your health assistant. How can I help today?',type:'normal',agent:'Welcome',intro:true},
       {role:'assistant',content:'Tell me what is happening, in your own words.',type:'normal',agent:'Listening',intro:true}
     ];
   }
